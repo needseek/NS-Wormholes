@@ -7,6 +7,7 @@ import { ImageBackground, StyleSheet } from 'react-native';
 import { iconTypes } from './iconTypes';
 
 const RemoteIcon = (props) => {
+  console.log('props', props);
   const selectedIcon = iconTypes[props.type] ?? iconTypes['check'];
   const assetSource = props.full && selectedIcon.fullAsset 
     ? { uri: selectedIcon.fullAsset } 

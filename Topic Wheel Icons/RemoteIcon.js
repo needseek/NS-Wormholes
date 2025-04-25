@@ -18,6 +18,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 // 2. add, commit, push to main
 var RemoteIcon = function RemoteIcon(props) {
   var _iconTypes$props$type;
+  console.log('props', props);
   var selectedIcon = (_iconTypes$props$type = _iconTypes.iconTypes[props.type]) !== null && _iconTypes$props$type !== void 0 ? _iconTypes$props$type : _iconTypes.iconTypes['check'];
   var assetSource = props.full && selectedIcon.fullAsset ? {
     uri: selectedIcon.fullAsset
