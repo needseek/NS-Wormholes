@@ -1,27 +1,27 @@
 export const iconTypes = {
     arrowRight: {
-        asset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/arrowRight.png',
+        asset: 'https://imgur.com/frEP0aa.png',
         ratio: {
           width: 1,
           height: 1
         }
       },
       back: {
-        asset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/back.png',
+        asset: 'https://i.imgur.com/y27mqc4.png',
         ratio: {
           width: 1,
           height: 1
         }
       },
       backWhite: {
-        asset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/arrowBack24Px.png',
+        asset: 'https://i.imgur.com/rb64cfN.png',
         ratio: {
           width: 1,
           height: 1
         }
       },
       bankline: {
-        asset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/bankline2X.png',
+        asset: 'https://i.imgur.com/4lzTAhT.png',
         // fullAsset: require('./bankline2X.png'),
         ratio: {
           width: 0.9310344828,
@@ -29,7 +29,7 @@ export const iconTypes = {
         }
       },
       certificate: {
-        asset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/g-certificate2X.png',
+        asset: 'https://i.imgur.com/CZCXZvr.png',
         // fullAsset: require('./g-certificate2X.png'),
         ratio: {
           width: 1,
@@ -37,7 +37,7 @@ export const iconTypes = {
         }
       },
       check: {
-        asset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/g-check2X.png',
+        asset: 'https://i.imgur.com/FC2oVzq.png',
         // fullAsset: require('./g-check2X.png'),
         ratio: {
           width: 1,
@@ -45,7 +45,7 @@ export const iconTypes = {
         }
       },
       close: {
-        asset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/close.png',
+        asset: 'https://i.imgur.com/ciZZkR5.png',
         ratio: {
           width: 1,
           height: 1
@@ -53,14 +53,14 @@ export const iconTypes = {
       },
       dollar: {
         // asset: require('./dolla2X.png'),
-        fullAsset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/dolla2X.png',
+        fullAsset: 'https://i.imgur.com/1FkRVH3.png',
         ratio: {
           width: 1,
           height: 0.511627907
         }
       },
       faqLine: {
-        asset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/faqLine2X.png',
+        asset: 'https://i.imgur.com/qP8Ipyy.png',
         // fullAsset: require('./faqLine2X.png'),
         ratio: {
           width: 1,
@@ -68,14 +68,14 @@ export const iconTypes = {
         }
       },
       globe: {
-        asset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/g-globe2X.png',
+        asset: 'https://i.imgur.com/FRJduiJ.png',
         ratio: {
           width: 0.8888888889,
           height: 1
         }
       },
       group: {
-        asset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/g-group.png',
+        asset: 'https://i.imgur.com/CspcaQ8.png',
         // fullAsset: require('./g-group.png'),
         ratio: {
           width: 1,
@@ -83,7 +83,7 @@ export const iconTypes = {
         }
       },
       info: {
-        asset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/info24Px.png',
+        asset: 'https://i.imgur.com/uW9C6YO.png',
         ratio: {
           width: 1,
           height: 1
@@ -91,14 +91,14 @@ export const iconTypes = {
       },
       loan: {
         // asset: require('./loan2X.png'),
-        fullAsset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/loan2X.png',
+        fullAsset: 'https://i.imgur.com/3t32coA.png',
         ratio: {
           width: 1,
           height: 1
         }
       },
       logoIcon: {
-        asset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/logoIcon2X.png',
+        asset: 'https://i.imgur.com/ypo1GAY.png',
         // fullAsset: require('./g-logoIcon2X.png'),
         ratio: {
           width: 1,
@@ -107,28 +107,28 @@ export const iconTypes = {
       },
       mma: {
         // asset: require('./mma2X.png'),
-        fullAsset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/mma2X.png',
+        fullAsset: 'https://i.imgur.com/e7wlYD1.png',
         ratio: {
           width: 1,
           height: 0.8823529412
         }
       },
       mobilemoney: {
-        asset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/g-mobilemoney2X.png',
+        asset: 'https://i.imgur.com/4PzL8xp.png',
         ratio: {
           width: 1,
           height: 1
         }
       },
       moneyorder: {
-        asset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/g-moneyorder2X.png',
+        asset: 'https://i.imgur.com/4OoQPw6.png',
         ratio: {
           width: 1,
           height: 0.7333333333
         }
       },
       peeps: {
-        asset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/g-peeps2X.png',
+        asset: 'https://i.imgur.com/ezDvd9q.png',
         // fullAsset: require('./peeps2X.png'),
         ratio: {
           width: 1,
@@ -136,7 +136,7 @@ export const iconTypes = {
         }
       },
       phoneLine: {
-        asset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/phoneLine2X.png',
+        asset: 'https://i.imgur.com/z1iAAaC.png',
         // fullAsset: require('./phoneLine2X.png'),
         ratio: {
           width: 1,
@@ -144,7 +144,7 @@ export const iconTypes = {
         }
       },
       retire: {
-        asset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/g-retire2X.png',
+        asset: 'https://i.imgur.com/aQsuDBN.png',
         // fullAsset: require('./g-retire2X.png'),
         ratio: {
           width: 1,
@@ -152,7 +152,7 @@ export const iconTypes = {
         }
       },
       savings: {
-        asset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/g-savings2X.png',
+        asset: 'https://imgur.com/3t32coA',
         // fullAsset: require('./g-savings2X.png'),
         ratio: {
           width: 1,
@@ -160,50 +160,50 @@ export const iconTypes = {
         }
       },
       selectLeft: {
-        asset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/selectLeft2X.png',
+        asset: 'https://i.imgur.com/pcWQAbm.png',
         ratio: {
           width: 0.5333333333,
           height: 1
         }
       },
       selectRight: {
-        asset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/selectRight2X.png',
+        asset: 'https://i.imgur.com/pfZyMOr.png',
         ratio: {
           width: 0.5333333333,
           height: 1
         }
       },
       smallbiz: {
-        asset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/g-smallbiz2X.png',
-        fullAsset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/smallbiz2X.png',
+        asset: 'https://i.imgur.com/imKesdW.png',
+        fullAsset: 'https://i.imgur.com/yViaq30.png',
         ratio: {
           width: 1,
           height: 1
         }
       },
       solidArrow: {
-        asset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/triangle.png',
+        asset: 'https://i.imgur.com/NrcxyQ4.png',
         ratio: {
           width: 0.375,
           height: 1
         }
       },
       star: {
-        asset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/fave2X.png',
+        asset: 'https://i.imgur.com/soQQ0u9.png',
         ratio: {
           width: 1,
           height: 0.9375
         }
       },
       transfermoney: {
-        asset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/g-transfermoney2X.png',
+        asset: 'https://i.imgur.com/vtwKdtf.png',
         ratio: {
           width: 1,
           height: 1
         }
       },
       usa: {
-        asset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/g-usa2X.png',
+        asset: 'https://i.imgur.com/xwoMn2t.png',
         ratio: {
           width: 1,
           height: 0.75
@@ -211,7 +211,7 @@ export const iconTypes = {
       },
       wire: {
         // asset: require('./wire2X.png'),
-        fullAsset: 'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/icons/wire2X.png',
+        fullAsset: 'https://i.imgur.com/UAjVFyp.png',
         ratio: {
           width: 1,
           height: 0.652173913
