@@ -1,17 +1,18 @@
 {
-    "dependencies": {
-      "@react-native-async-storage/async-storage": "^2.1.0",
-      "react-native-wormhole": "^0.2.0"
-    },
-    "name": "Wormhole",
-    "version": "1.0.0",
-    "main": "index.js",
-    "license": "MIT",
-    "devDependencies": {
-      "@babel/cli": "^7.26.4",
-      "@babel/core": "^7.26.0",
-      "@babel/preset-env": "^7.26.0",
-      "@babel/preset-react": "^7.26.3"
-    }
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "^2.1.0",
+    "react": "^19.1.0",
+    "react-native": "^0.79.1",
+    "react-native-wormhole": "^0.2.0"
+  },
+  "name": "Wormhole",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.26.4",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.26.3"
   }
-  
+}
