@@ -4,14 +4,17 @@
 
 import React from 'react';
 import { ImageBackground, StyleSheet } from 'react-native';
-import { iconTypes } from 'https://raw.githubusercontent.com/needseek/NS-Wormholes/refs/heads/main/Topic%20Wheel%20Icons/iconTypes.js';
 
-const RemoteIcon = (props) => {
-  console.log('props', props);
-  const selectedIcon = iconTypes[props.type] ?? iconTypes['check'];
-  const assetSource = props.full && selectedIcon.fullAsset 
-    ? { uri: selectedIcon.fullAsset } 
-    : { uri: selectedIcon.asset };
+const RemoteIcon = async (props) => {
+  try {
+    // Fetch the iconTypes JSON
+    const response = await fetch('https://raw.githubusercontent.com/.../iconTypes.json');
+    const iconTypes = await response.json();
+
+    const selectedIcon = iconTypes[props.type] || iconTypes.check;
+    const assetSource = props.full && selectedIcon.fullAsset 
+      ? { uri: selectedIcon.fullAsset } 
+      : { uri: selectedIcon.asset };
 
   const styles = StyleSheet.create({
     icon: {
@@ -26,13 +29,11 @@ const RemoteIcon = (props) => {
     }
   });
 
-  return (
-    <ImageBackground
-      style={styles.icon}
-      source={assetSource}
-      resizeMode="contain"
-    />
-  );
+  return <ImageBackground style={styles.icon} source={assetSource} resizeMode="contain" />;
+  } catch (error) {
+    console.error('Failed to load icons:', error);
+    return null;
+  }
 };
 
 export default RemoteIcon;
