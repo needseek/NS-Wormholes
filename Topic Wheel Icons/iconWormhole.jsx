@@ -1,5 +1,5 @@
 //  <-- MUST DO ON UPDATE!! --> 
-// 1. transpile command: npx babel --presets=@babel/preset-env,@babel/preset-react iconIndex.jsx -o iconIndex.js
+// 1. transpile command: npx babel --presets=@babel/preset-env,@babel/preset-react iconWormhole.jsx -o iconWormhole.js
 // 2. add, commit, push to main
 
 import React from 'react';
