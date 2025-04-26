@@ -97,13 +97,13 @@ const iconTypes = {
       height: 1
     }
   },
-  loan: {
-    fullAsset: "https://i.imgur.com/3t32coA.png",
-    ratio: {
-      width: 1,
-      height: 1
-    }
-  },
+  // loan: {
+  //   fullAsset: "https://i.imgur.com/3t32coA.png",
+  //   ratio: {
+  //     width: 1,
+  //     height: 1
+  //   }
+  // },
   logoIcon: {
     asset: "https://i.imgur.com/ypo1GAY.png",
     ratio: {
