@@ -77,7 +77,7 @@
     }
   },
   "home": {
-    "asset": "https://i.imgur.com/VMvhzEG.png",
+    "fullAsset": "https://i.imgur.com/VMvhzEG.png",
     "ratio": {
       "width": 1,
       "height": 1
@@ -190,7 +190,7 @@
     }
   },
   "trade": {
-    "asset": "https://i.imgur.com/QJNDogf.png",
+    "fullAsset": "https://i.imgur.com/QJNDogf.png",
     "ratio": {
       "width": 1,
       "height": 1
