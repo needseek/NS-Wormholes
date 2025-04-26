@@ -208,7 +208,7 @@ var iconTypes = {
     }
   },
   trade: {
-    fullAsset: "https://i.imgur.com/L6qGUWd.png",
+    fullAsset: "https://i.imgur.com/pgJwxrF.png",
     ratio: {
       width: 1.2,
       height: 1.2
