@@ -43,7 +43,7 @@ var RemoteIcon = function RemoteIcon(props) {
             case 0:
               _context.prev = 0;
               _context.next = 3;
-              return fetch('https://cdn.jsdelivr.net/gh/needseek/NS-Wormholes@main/Topic%20Wheel%20Icons/iconTypes.json');
+              return fetch('https://raw.githubusercontent.com/needseek/NS-Wormholes/refs/heads/main/Topic%20Wheel%20Icons/iconTypes.json');
             case 3:
               response = _context.sent;
               _context.next = 6;
