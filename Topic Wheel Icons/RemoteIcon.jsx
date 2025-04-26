@@ -84,7 +84,7 @@ const iconTypes = {
     }
   },
   home: {
-    fullAsset: "https://i.imgur.com/VMvhzEG.png",
+    fullAsset: "https://i.imgur.com/HKCwwfQ.png",
     ratio: {
       width: 1,
       height: 1
