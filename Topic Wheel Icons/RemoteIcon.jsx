@@ -2,24 +2,37 @@
 // 1. transpile command: npx babel --presets=@babel/preset-env,@babel/preset-react RemoteIcon.jsx -o RemoteIcon.js
 // 2. add, commit, push to main
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ImageBackground, StyleSheet } from 'react-native';
 
-const RemoteIcon = async (props) => {
-  try {
-    // Fetch the iconTypes JSON
-    console.log('RemoteIcon props:', props);
-    const response = await fetch('https://cdn.jsdelivr.net/gh/needseek/NS-Wormholes@main/Topic%20Wheel%20Icons/iconTypes.json');
-    const iconTypes = await response.json();
+const RemoteIcon = (props) => {
+  const [iconTypes, setIconTypes] = useState(null);
+  const [error, setError] = useState(null);
 
-    const selectedIcon = iconTypes[props.type] || iconTypes.check;
-    const assetSource = props.full && selectedIcon.fullAsset 
-      ? { uri: selectedIcon.fullAsset } 
-      : { uri: selectedIcon.asset };
+  useEffect(() => {
+    const loadIconTypes = async () => {
+      try {
+        const response = await fetch('https://cdn.jsdelivr.net/gh/needseek/NS-Wormholes@main/Topic%20Wheel%20Icons/iconTypes.json');
+        const data = await response.json();
+        setIconTypes(data);
+      } catch (err) {
+        setError(err);
+        console.error('Failed to load icons:', err);
+      }
+    };
 
-    console.log('selectedIcon', selectedIcon);
-    console.log('assetSource', assetSource);
-    
+    loadIconTypes();
+  }, []);
+
+  if (error || !iconTypes) {
+    return null; // Or a loading fallback
+  }
+
+  const selectedIcon = iconTypes[props.type] || iconTypes.check;
+  const assetSource = props.full && selectedIcon.fullAsset 
+    ? { uri: selectedIcon.fullAsset } 
+    : { uri: selectedIcon.asset };
+
   const styles = StyleSheet.create({
     icon: {
       ...props.style,
@@ -34,10 +47,6 @@ const RemoteIcon = async (props) => {
   });
 
   return <ImageBackground style={styles.icon} source={assetSource} resizeMode="contain" />;
-  } catch (error) {
-    console.error('Failed to load icons:', error);
-    return null;
-  }
 };
 
 export default RemoteIcon;
