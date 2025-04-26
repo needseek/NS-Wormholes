@@ -26,7 +26,7 @@ var RemoteIcon = /*#__PURE__*/function () {
         case 0:
           _context.prev = 0;
           _context.next = 3;
-          return fetch('https://raw.githubusercontent.com/.../iconTypes.json');
+          return fetch('https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/iconTypes.json');
         case 3:
           response = _context.sent;
           console.log('response', response);
