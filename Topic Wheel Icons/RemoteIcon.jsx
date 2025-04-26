@@ -11,7 +11,8 @@ const RemoteIcon = async (props) => {
     const response = await fetch('https://cdn.jsdelivr.net/gh/needseek/NS-Wormholes@main/Topic%20Wheel%20Icons/iconTypes.json');
     console.log('response', response);
     const iconTypes = await response.json();
-
+    console.log('iconTypes', iconTypes);
+    
     const selectedIcon = iconTypes[props.type] || iconTypes.check;
     const assetSource = props.full && selectedIcon.fullAsset 
       ? { uri: selectedIcon.fullAsset } 

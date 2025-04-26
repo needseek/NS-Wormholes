@@ -34,6 +34,7 @@ var RemoteIcon = /*#__PURE__*/function () {
           return response.json();
         case 7:
           iconTypes = _context.sent;
+          console.log('iconTypes', iconTypes);
           selectedIcon = iconTypes[props.type] || iconTypes.check;
           assetSource = props.full && selectedIcon.fullAsset ? {
             uri: selectedIcon.fullAsset
@@ -56,16 +57,16 @@ var RemoteIcon = /*#__PURE__*/function () {
             source: assetSource,
             resizeMode: "contain"
           }));
-        case 14:
-          _context.prev = 14;
+        case 15:
+          _context.prev = 15;
           _context.t0 = _context["catch"](0);
           console.error('Failed to load icons:', _context.t0);
           return _context.abrupt("return", null);
-        case 18:
+        case 19:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 14]]);
+    }, _callee, null, [[0, 15]]);
   }));
   return function RemoteIcon(_x) {
     return _ref.apply(this, arguments);
