@@ -197,7 +197,7 @@ const iconTypes = {
     }
   },
   trade: {
-    fullAsset: "https://i.imgur.com/QJNDogf.png",
+    fullAsset: "https://i.imgur.com/xKS5HqN.png",
     ratio: {
       width: 1,
       height: 1
