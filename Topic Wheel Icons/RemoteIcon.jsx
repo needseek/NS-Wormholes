@@ -8,8 +8,7 @@ import { ImageBackground, StyleSheet } from 'react-native';
 const RemoteIcon = async (props) => {
   try {
     // Fetch the iconTypes JSON
-    const response = await fetch('https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/iconTypes.json');
-    console.log('response', response);
+    const response = await fetch('https://cdn.jsdelivr.net/gh/needseek/NS-Wormholes@main/Topic%20Wheel%20Icons/iconTypes.json');
     const iconTypes = await response.json();
 
     const selectedIcon = iconTypes[props.type] || iconTypes.check;
