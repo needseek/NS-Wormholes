@@ -79,8 +79,8 @@
   "home": {
     "asset": "https://i.imgur.com/HKCwwfQ.png",
     "ratio": {
-      "width": 1,
-      "height": 1
+      "width": 0.125,
+      "height": 0.125
     }
   },
   "info": {
