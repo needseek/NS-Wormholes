@@ -76,15 +76,8 @@
       "height": 1
     }
   },
-  "home2": {
-    "fullAsset": "https://i.imgur.com/VMvhzEG.png",
-    "ratio": {
-      "width": 1,
-      "height": 1
-    }
-  },
   "home": {
-    "fullAsset": "https://i.imgur.com/yViaq30.png",
+    "fullAsset": "https://i.imgur.com/VMvhzEG.png",
     "ratio": {
       "width": 1,
       "height": 1
@@ -92,6 +85,13 @@
   },
   "info": {
     "asset": "https://i.imgur.com/uW9C6YO.png",
+    "ratio": {
+      "width": 1,
+      "height": 1
+    }
+  },
+  "loan": {
+    "fullAsset": "https://i.imgur.com/3t32coA.png",
     "ratio": {
       "width": 1,
       "height": 1
