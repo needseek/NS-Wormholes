@@ -49,7 +49,7 @@
     }
   },
   "dollar": {
-    "asset": "https://i.imgur.com/1FkRVH3.png",
+    "fullAsset": "https://i.imgur.com/1FkRVH3.png",
     "ratio": {
       "width": 1,
       "height": 0.511627907
@@ -84,7 +84,7 @@
     }
   },
   "loan": {
-    "asset": "https://i.imgur.com/3t32coA.png",
+    "fullAsset": "https://i.imgur.com/3t32coA.png",
     "ratio": {
       "width": 1,
       "height": 1
@@ -98,7 +98,7 @@
     }
   },
   "mma": {
-    "asset": "https://i.imgur.com/e7wlYD1.png",
+    "fullAsset": "https://i.imgur.com/e7wlYD1.png",
     "ratio": {
       "width": 1,
       "height": 0.8823529412
@@ -197,7 +197,7 @@
     }
   },
   "wire": {
-    "asset": "https://i.imgur.com/UAjVFyp.png",
+    "fullAsset": "https://i.imgur.com/UAjVFyp.png",
     "ratio": {
       "width": 1,
       "height": 0.652173913
