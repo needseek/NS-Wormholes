@@ -85,6 +85,7 @@
   },
   "home": {
     "fullAsset": "https://i.imgur.com/yViaq30.png",
+    "asset": "https://i.imgur.com/yViaq30.png",
     "ratio": {
       "width": 1,
       "height": 1
