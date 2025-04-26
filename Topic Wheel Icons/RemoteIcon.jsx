@@ -12,7 +12,9 @@ const RemoteIcon = (props) => {
   useEffect(() => {
     const loadIconTypes = async () => {
       try {
-        const response = await fetch('https://raw.githubusercontent.com/needseek/NS-Wormholes/refs/heads/main/Topic%20Wheel%20Icons/iconTypes.json');
+        const response = await fetch(
+          'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/iconTypes.json?t=' + Date.now()
+        );
         const data = await response.json();
         setIconTypes(data);
       } catch (err) {
