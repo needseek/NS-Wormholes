@@ -31,12 +31,10 @@ var RemoteIcon = /*#__PURE__*/function () {
           return fetch('https://cdn.jsdelivr.net/gh/needseek/NS-Wormholes@main/Topic%20Wheel%20Icons/iconTypes.json');
         case 4:
           response = _context.sent;
-          console.log('response', response);
-          _context.next = 8;
+          _context.next = 7;
           return response.json();
-        case 8:
+        case 7:
           iconTypes = _context.sent;
-          console.log('iconTypes', iconTypes);
           selectedIcon = iconTypes[props.type] || iconTypes.check;
           assetSource = props.full && selectedIcon.fullAsset ? {
             uri: selectedIcon.fullAsset
@@ -59,16 +57,16 @@ var RemoteIcon = /*#__PURE__*/function () {
             source: assetSource,
             resizeMode: "contain"
           }));
-        case 16:
-          _context.prev = 16;
+        case 14:
+          _context.prev = 14;
           _context.t0 = _context["catch"](0);
           console.error('Failed to load icons:', _context.t0);
           return _context.abrupt("return", null);
-        case 20:
+        case 18:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 16]]);
+    }, _callee, null, [[0, 14]]);
   }));
   return function RemoteIcon(_x) {
     return _ref.apply(this, arguments);
