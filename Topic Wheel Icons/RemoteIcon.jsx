@@ -227,31 +227,8 @@ const iconTypes = {
 }
 
 const RemoteIcon = (props) => {
-  const [iconTypes, setIconTypes] = useState(iconTypes);
-  const [error, setError] = useState(null);
-
-  // useEffect(() => {
-  //   const loadIconTypes = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         'https://raw.githubusercontent.com/needseek/NS-Wormholes/main/Topic%20Wheel%20Icons/iconTypes.json?t=' + Date.now()
-  //       );
-  //       const data = await response.json();
-  //       setIconTypes(data);
-  //     } catch (err) {
-  //       setError(err);
-  //       console.error('Failed to load icons:', err);
-  //     }
-  //   };
-
-  //   loadIconTypes();
-  // }, []);
-
-  if (error || !iconTypes) {
-    return null; // Or a loading fallback
-  }
-
   const selectedIcon = iconTypes[props.type] || iconTypes.check;
+  
   const assetSource = props.full && selectedIcon.fullAsset 
     ? { uri: selectedIcon.fullAsset } 
     : { uri: selectedIcon.asset };
