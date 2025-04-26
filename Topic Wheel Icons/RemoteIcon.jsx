@@ -17,6 +17,9 @@ const RemoteIcon = async (props) => {
       ? { uri: selectedIcon.fullAsset } 
       : { uri: selectedIcon.asset };
 
+    console.log('selectedIcon', selectedIcon);
+    console.log('assetSource', assetSource);
+    
   const styles = StyleSheet.create({
     icon: {
       ...props.style,

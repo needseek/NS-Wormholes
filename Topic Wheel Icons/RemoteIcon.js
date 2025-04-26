@@ -41,6 +41,8 @@ var RemoteIcon = /*#__PURE__*/function () {
           } : {
             uri: selectedIcon.asset
           };
+          console.log('selectedIcon', selectedIcon);
+          console.log('assetSource', assetSource);
           styles = _reactNative.StyleSheet.create({
             icon: _objectSpread(_objectSpread({}, props.style), {}, {
               display: 'flex',
@@ -57,16 +59,16 @@ var RemoteIcon = /*#__PURE__*/function () {
             source: assetSource,
             resizeMode: "contain"
           }));
-        case 14:
-          _context.prev = 14;
+        case 16:
+          _context.prev = 16;
           _context.t0 = _context["catch"](0);
           console.error('Failed to load icons:', _context.t0);
           return _context.abrupt("return", null);
-        case 18:
+        case 20:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 14]]);
+    }, _callee, null, [[0, 16]]);
   }));
   return function RemoteIcon(_x) {
     return _ref.apply(this, arguments);
