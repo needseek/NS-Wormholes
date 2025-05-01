@@ -5,8 +5,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, Switch, TouchableOpacity, Dimensions, Modal, Alert, FlatList, Platform } from 'react-native';
 import { parsePhoneNumberFromString, isValidPhoneNumber } from 'libphonenumber-js';
-// import { IconButton } from 'react-native-paper';
-import DateTimePicker from '@react-native-community/datetimepicker';
 // import {
 //   CustomDropdown,
 //   LicenseForm,
@@ -28,7 +26,7 @@ const PlumbingForm = ({
 } = {}) => {
   // Get styles by merging parent styles with component-specific styles
   const styles = { ...parentStyles, ...localStyles };
-  const { DropDownPicker } = registry
+  const { DropDownPicker, DateTimePicker, IconButton } = registry
   // Add console warnings for missing critical props
   useEffect(() => {
     if (!navigation) {
@@ -748,19 +746,6 @@ useEffect(() => {
         <View style={[styles.formGroup, {zIndex: getZIndex(openEntity)}]}>
           <Text style={styles.label}>forced again change Entity Type<Text style={styles.requiredStar}>*</Text></Text>
           <DropDownPicker
-            open={false}
-            value={null}
-            items={[
-              { label: 'Individual', value: 'individual' },
-              { label: 'Business', value: 'business' },
-              { label: 'Non-Profit', value: 'non-profit' }
-            ]}
-            setOpen={() => {}}
-            setValue={() => {}}
-            setItems={() => {}}
-            placeholder="Select entity type"
-          />
-          {/* <DropDownPicker
             open={openEntity}
             value={formData.entity}
             items={getEntityItems()}
@@ -778,705 +763,701 @@ useEffect(() => {
             scrollViewProps={{
               nestedScrollEnabled: true,
             }}
-          /> */}
+          />
         </View>
+        {/* Business Commencement Date - replaced Years In Business */}
+        <View style={styles.formGroup}>
+          <Text style={styles.label}>Business Commencement Date <Text style={styles.requiredStar}>*</Text></Text>
+          <TouchableOpacity 
+            style={styles.datePickerButton}
+            onPress={openDatePicker}
+          >
+            <Text style={styles.datePickerButtonText}>
+              {formData.businessCommencementDate 
+                ? getFormattedDate(formData.businessCommencementDate) 
+                : 'Select commencement date'}
+            </Text>
+            <View style={styles.calendarIcon}>
+              {/* <IconButton
+                icon="calendar"
+                size={24}
+                iconColor="#6750a4"
+              /> */}
+            </View>
+          </TouchableOpacity>
+          
+          {Platform.OS === 'ios' ? (
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={showDatePicker}
+              onRequestClose={cancelIOSDate}
+            >
+              <TouchableOpacity
+                style={styles.datePickerModalOverlay}
+                activeOpacity={1}
+                onPress={cancelIOSDate}
+              >
+                <View style={styles.datePickerContainer}>
+                  <View style={styles.datePickerHeader}>
+                    <TouchableOpacity onPress={cancelIOSDate}>
+                      <Text style={styles.datePickerCancel}>Cancel</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.datePickerTitle}>Select Date</Text>
+                    <TouchableOpacity onPress={confirmIOSDate}>
+                      <Text style={styles.datePickerDone}>Done</Text>
+                    </TouchableOpacity>
+                  </View>
+                  <DateTimePicker
+                    value={tempDate || new Date()}
+                    mode="date"
+                    display="spinner"
+                    onChange={onDateChange}
+                    maximumDate={new Date()}
+                    style={styles.datePickerIOS}
+                  />
+                </View>
+              </TouchableOpacity>
+            </Modal>
+          ) : (
+            showDatePicker && (
+              <DateTimePicker
+                value={formData.businessCommencementDate || new Date()}
+                mode="date"
+                display="default"
+                onChange={onDateChange}
+                maximumDate={new Date()}
+              />
+            )
+          )}
+        </View>
+
+        <View style={[styles.formGroup, {zIndex: (openWarrantyParts || openWarrantyLabor) ? 900 : 1, marginTop: 20}]}>
+          <Text style={styles.label}>Warranty <Text style={styles.requiredStar}>*</Text></Text>
+          <View style={styles.warrantyContainer}>
+            <View style={[styles.warrantyInput, {zIndex: getZIndex(openWarrantyParts)}]}>
+              <Text style={styles.warrantyLabel}>Parts</Text>
+              <DropDownPicker
+                open={openWarrantyParts}
+                value={formData.warrantyParts}
+                items={getWarrantyPartsItems()}
+                setOpen={(value) => handleOpenDropdown(setOpenWarrantyParts, openWarrantyParts)}
+                setValue={(callback) => {
+                  const value = callback(formData.warrantyParts);
+                  if (value === 'custom') {
+                    handleCustomWarranty('parts');
+                  } else {
+                    setFormData({...formData, warrantyParts: value});
+                  }
+                }}
+                placeholder="Select"
+                style={styles.dropdownStyle}
+                textStyle={styles.dropdownTextStyle}
+                dropDownContainerStyle={styles.dropdownContainerStyle}
+                listItemContainerStyle={styles.dropdownItemStyle}
+                zIndex={openWarrantyLabor ? 998 : 999}
+                zIndexInverse={openWarrantyLabor ? 999 : 998}
+                listMode="SCROLLVIEW"
+                scrollViewProps={{
+                  nestedScrollEnabled: true,
+                }}
+              />
+            </View>
+            <View style={[styles.warrantyInput, {zIndex: getZIndex(openWarrantyLabor)}]}>
+              <Text style={styles.warrantyLabel}>Labor</Text>
+              <DropDownPicker
+                open={openWarrantyLabor}
+                value={formData.warrantyLabor}
+                items={getWarrantyLaborItems()}
+                setOpen={(value) => handleOpenDropdown(setOpenWarrantyLabor, openWarrantyLabor)}
+                setValue={(callback) => {
+                  const value = callback(formData.warrantyLabor);
+                  if (value === 'custom') {
+                    handleCustomWarranty('labor');
+                  } else {
+                    setFormData({...formData, warrantyLabor: value});
+                  }
+                }}
+                placeholder="Select"
+                style={styles.dropdownStyle}
+                textStyle={styles.dropdownTextStyle}
+                dropDownContainerStyle={styles.dropdownContainerStyle}
+                listItemContainerStyle={styles.dropdownItemStyle}
+                zIndex={openWarrantyParts ? 998 : 999}
+                zIndexInverse={openWarrantyParts ? 999 : 998}
+                listMode="SCROLLVIEW"
+                scrollViewProps={{
+                  nestedScrollEnabled: true,
+                }}
+              />
+            </View>
+          </View>
+        </View>
+
+        {/* Custom Warranty Modal */}
+        <Modal
+          visible={showCustomWarrantyModal}
+          transparent={true}
+          animationType="fade"
+          onRequestClose={() => setShowCustomWarrantyModal(false)}
+        >
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>
+                Custom {customWarrantyType === 'parts' ? 'Parts' : 'Labor'} Warranty
+              </Text>
+              
+              <View style={styles.modalForm}>
+                <View style={styles.modalInputRow}>
+                  <TextInput
+                    style={styles.modalInput}
+                    value={customWarrantyValue}
+                    onChangeText={setCustomWarrantyValue}
+                    placeholder="Enter number"
+                    placeholderTextColor="#999"
+                    keyboardType="numeric"
+                  />
+                  
+                  <View style={[styles.modalDropdown, {zIndex: getZIndex(openCustomWarrantyUnit)}]}>
+                    <DropDownPicker
+                      open={openCustomWarrantyUnit}
+                      value={customWarrantyUnit}
+                      items={getTimeUnitItems()}
+                      setOpen={setOpenCustomWarrantyUnit}
+                      setValue={(callback) => {
+                        const value = callback(customWarrantyUnit);
+                        setCustomWarrantyUnit(value);
+                      }}
+                      placeholder="Select"
+                      style={styles.dropdownStyle}
+                      textStyle={styles.dropdownTextStyle}
+                      dropDownContainerStyle={styles.dropdownContainerStyle}
+                      listItemContainerStyle={styles.dropdownItemStyle}
+                    />
+                  </View>
+                </View>
+                
+                <View style={styles.modalButtons}>
+                  <TouchableOpacity
+                    style={styles.modalCancelButton}
+                    onPress={() => setShowCustomWarrantyModal(false)}
+                  >
+                    <Text style={styles.modalCancelButtonText}>Cancel</Text>
+                  </TouchableOpacity>
+                  
+                  <TouchableOpacity
+                    style={[
+                      styles.modalSaveButton,
+                      (!customWarrantyValue || customWarrantyValue === '0') && styles.modalButtonDisabled
+                    ]}
+                    onPress={saveCustomWarranty}
+                    disabled={!customWarrantyValue || customWarrantyValue === '0'}
+                  >
+                    <Text style={styles.modalSaveButtonText}>Save</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        <View style={[styles.formGroup, {zIndex: (openWarrantyParts || openWarrantyLabor) ? -1 : 1}]}>
+          <Text style={styles.label}>Emergency Services Provided</Text>
+        <View style={styles.switchContainer}>
+          <Switch
+              value={formData.emergencyServicesProvided}
+              onValueChange={(value) => setFormData({...formData, emergencyServicesProvided: value})}
+            trackColor={{ false: "#767577", true: "#81b0ff" }}
+              thumbColor={formData.emergencyServicesProvided ? "#007AFF" : "#f4f3f4"}
+          />
+          <Text style={styles.switchLabel}>
+              {formData.emergencyServicesProvided ? "Yes" : "No"}
+          </Text>
+        </View>
+      </View>
+      
+      <View style={styles.formGroup}>
+          <Text style={styles.label}>Permitting Included</Text>
+          <View style={styles.switchContainer}>
+            <Switch
+              value={formData.permittingIncluded === "yes"}
+              onValueChange={(value) => setFormData({...formData, permittingIncluded: value ? "yes" : "no"})}
+              trackColor={{ false: "#767577", true: "#81b0ff" }}
+              thumbColor={formData.permittingIncluded === "yes" ? "#007AFF" : "#f4f3f4"}
+            />
+            <Text style={styles.switchLabel}>
+              {formData.permittingIncluded === "yes" ? "Yes" : "No"}
+            </Text>
+          </View>
+        </View>
+
+        {/* Personal Details */}
+        <View style={[styles.mainSectionHeader, {zIndex: openEntity ? -1 : 1}]}>
+          <Text style={styles.mainSectionHeaderText}>Personal Details</Text>
+        </View>
+        
+        <View style={styles.formGroup}>
+          <Text style={styles.label}>Phone <Text style={styles.requiredStar}>*</Text></Text>
+          <TextInput
+            style={styles.input}
+            value={formData.contact.phone}
+            onChangeText={(text) => {
+              // Only allow numbers, +, and spaces for readability
+              const filteredText = text.replace(/[^\d\s+]/g, '');
+              updateContact('phone', filteredText);
+            }}
+            placeholder="e.g. +1 650 288 7596"
+            placeholderTextColor="#999"
+            keyboardType="phone-pad"
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+          {formData.contact.phone && !isValidPhoneNumber(formData.contact.phone) && (
+            <Text style={styles.errorText}>Please enter a valid phone number with country code (e.g. +1 for US)</Text>
+          )}
+        </View>
+        
+        <View style={styles.formGroup}>
+          <Text style={styles.label}>Email <Text style={styles.requiredStar}>*</Text></Text>
+          <TextInput
+            style={styles.input}
+            value={formData.contact.email}
+            onChangeText={(text) => updateContact('email', text)}
+            placeholder="e.g. needseek@aol.com"
+            placeholderTextColor="#999"
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
+          {formData.contact.email && !isValidEmail(formData.contact.email) && (
+            <Text style={styles.errorText}>Please enter a valid email address</Text>
+          )}
+        </View>
+        
+        <View style={styles.formGroup}>
+          <Text style={styles.label}>Website</Text>
+        <TextInput
+          style={styles.input}
+            value={formData.contact.website}
+            onChangeText={(text) => updateContact('website', text)}
+            placeholder="e.g. www.needseek.com"
+          placeholderTextColor="#999"
+          autoCapitalize="none"
+        />
+      </View>
+      
+        {/* Address with autocomplete */}
+        <View style={styles.formGroup}>
+          <Text style={styles.label}>Address <Text style={styles.requiredStar}>*</Text></Text>
+          
+          {formData.contact.address ? (
+            /* Selected Address Block */
+            <View style={styles.selectedAddressContainer}>
+              <Text 
+                style={styles.selectedAddressText}
+                numberOfLines={2}
+              >
+                {formData.contact.address}
+              </Text>
+              <TouchableOpacity
+                style={styles.removeAddressButton}
+                onPress={clearSelectedAddress}
+              >
+                <Text style={styles.removeAddressButtonText}>✕</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            /* Search Input Field */
+            <View style={styles.searchContainer}>
+              <TextInput
+                style={styles.addressInput}
+                value={addressSearchQuery}
+                onChangeText={setAddressSearchQuery}
+                placeholder="Where is your service headquartered?"
+                placeholderTextColor="#999"
+              />
+              <View style={{ position: 'absolute', right: 0 }}>
+                {/* <IconButton
+                  icon="magnify"
+                  size={21}
+                  mode="contained"
+                  onPress={() => searchAddressPlaces(addressSearchQuery)}
+                /> */}
+              </View>
+            </View>
+          )}
+          
+          {/* Address Search Results */}
+          {showAddressResults && addressSearchResults.length > 0 && !formData.contact.address && (
+            <FlatList
+              data={addressSearchResults}
+              keyExtractor={(item) => item.place_id}
+              keyboardShouldPersistTaps="handled"
+              style={styles.suggestionsList}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={styles.suggestionItem}
+                  onPress={() => handleSelectPlace(item)}
+                >
+                  <Text style={styles.suggestionText}>{item.description}</Text>
+                </TouchableOpacity>
+              )}
+            />
+          )}
+        </View>
+
+        {/* Credentials & Coverage */}
+        <View style={styles.mainSectionHeader}>
+          <Text style={styles.mainSectionHeaderText}>Credentials & Coverage</Text>
+        </View>
+
+        {/* Licenses */}
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionHeaderText}>Licenses</Text>
+          <TouchableOpacity 
+            style={styles.addButton} 
+            onPress={() => setShowLicenseForm(true)}
+          >
+            <Text style={styles.addButtonText}>+ Add License</Text>
+          </TouchableOpacity>
+        </View>
+
+        {formData.licenses.map((license, index) => (
+          <View key={index} style={styles.listItem}>
+            <View style={styles.itemContent}>
+              <Text style={styles.itemTitle}>{license.title}</Text>
+              <Text style={styles.itemDetail}>Issued by: {license.issuer}</Text>
+              <Text style={styles.itemDetail}>Type: {license.type}</Text>
+              <Text style={styles.itemDetail}>Scope: {license.scope}</Text>
+              <Text style={styles.itemDetail}>Licensee: {license.licensee}</Text>
+            </View>
+            <TouchableOpacity style={styles.removeItemButton} onPress={() => removeLicense(index)}>
+              <Text style={styles.removeItemButtonText}>✕</Text>
+            </TouchableOpacity>
+          </View>
+        ))}
+
+        {showLicenseForm && (
+          <View style={styles.subForm}>
+            <View style={styles.formGroup}>
+              <Text style={styles.label}>License Title</Text>
+        <TextInput
+          style={styles.input}
+                value={newLicense.title}
+                onChangeText={(text) => setNewLicense({...newLicense, title: text})}
+                placeholder="e.g. Plumber Trade Certification"
+          placeholderTextColor="#999"
+        />
+      </View>
+      
+      <View style={styles.formGroup}>
+              <Text style={styles.label}>Issuer</Text>
+              <TextInput
+                style={styles.input}
+                value={newLicense.issuer}
+                onChangeText={(text) => setNewLicense({...newLicense, issuer: text})}
+                placeholder="e.g. City of Hollywood"
+                placeholderTextColor="#999"
+              />
+            </View>
+
+            <View style={[styles.formGroup, {zIndex: getZIndex(openLicenseType)}]}>
+              <Text style={styles.label}>License Type</Text>
+              <DropDownPicker
+                open={openLicenseType}
+                value={newLicense.type}
+                items={getLicenseTypeItems()}
+                setOpen={(value) => handleOpenDropdown(setOpenLicenseType, openLicenseType)}
+                setValue={(callback) => {
+                  const value = callback(newLicense.type);
+                  setNewLicense({...newLicense, type: value});
+                }}
+                placeholder="Select"
+                style={styles.dropdownStyle}
+                textStyle={styles.dropdownTextStyle}
+                dropDownContainerStyle={styles.dropdownContainerStyle}
+                listItemContainerStyle={styles.dropdownItemStyle}
+                listMode="SCROLLVIEW"
+                scrollViewProps={{
+                  nestedScrollEnabled: true,
+                }}
+              />
+            </View>
+            
+            <View style={[styles.formGroup, {zIndex: openLicenseType ? -1 : 1}]}>
+              <Text style={styles.label}>Scope</Text>
+        <TextInput
+          style={styles.input}
+                value={newLicense.scope}
+                onChangeText={(text) => setNewLicense({...newLicense, scope: text})}
+                placeholder="e.g. FL.Hollywood"
+          placeholderTextColor="#999"
+        />
+      </View>
+      
+      <View style={styles.formGroup}>
+              <Text style={styles.label}>Licensee</Text>
+              <TextInput
+                style={styles.input}
+                value={newLicense.licensee}
+                onChangeText={(text) => setNewLicense({...newLicense, licensee: text})}
+                placeholder="e.g. Westwood Plumbers"
+                placeholderTextColor="#999"
+              />
+            </View>
+
+            <View style={styles.buttonRow}>
+              <TouchableOpacity style={styles.cancelButton} onPress={() => setShowLicenseForm(false)}>
+                <Text style={styles.buttonText}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.saveButton} onPress={addLicense}>
+                <Text style={styles.buttonText}>Save</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
+
+        {/* Certifications */}
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionHeaderText}>Certifications</Text>
+        </View>
+        
+        <View style={styles.formGroup}>
+          <Text style={styles.label}>Add Certification</Text>
+          <View style={styles.rowContainer}>
+            <TextInput
+              style={[styles.input, { flex: 1 }]}
+              placeholder="e.g. Florida certified plumber"
+              placeholderTextColor="#999"
+              value={certificationInput}
+              onChangeText={setCertificationInput}
+              onSubmitEditing={handleAddCertification}
+            />
+            {certificationInput ? (
+              <TouchableOpacity 
+                style={styles.clearButton} 
+                onPress={() => setCertificationInput('')}
+              >
+                <Text style={styles.clearButtonText}>✕</Text>
+              </TouchableOpacity>
+            ) : null}
+            <TouchableOpacity 
+              style={[styles.addSmallButton, !certificationInput.trim() && styles.addButtonDisabled]} 
+              onPress={handleAddCertification}
+              disabled={!certificationInput.trim()}
+            >
+              <Text style={styles.buttonText}>Add</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {formData.certifications.map((cert, index) => (
+          <View key={index} style={styles.listItem}>
+            <View style={styles.itemContent}>
+              <Text style={styles.itemTitle}>{cert}</Text>
+            </View>
+            <TouchableOpacity
+              style={styles.removeItemButton}
+              onPress={() => {
+                const updatedCertifications = [...formData.certifications];
+                updatedCertifications.splice(index, 1);
+                setFormData({...formData, certifications: updatedCertifications});
+              }}
+            >
+              <Text style={styles.removeItemButtonText}>✕</Text>
+            </TouchableOpacity>
+          </View>
+        ))}
+
+        {/* Insurances */}
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionHeaderText}>Insurances</Text>
+          <TouchableOpacity 
+            style={styles.addButton} 
+            onPress={() => setShowInsuranceForm(true)}
+          >
+            <Text style={styles.addButtonText}>+ Add Insurance</Text>
+          </TouchableOpacity>
+        </View>
+
+        {formData.insurances.map((insurance, index) => (
+          <View key={index} style={styles.listItem}>
+            <View style={styles.itemContent}>
+              <Text style={styles.itemTitle}>{insurance.type}</Text>
+              <Text style={styles.itemDetail}>Coverage: {insurance.coverage}</Text>
+              <Text style={styles.itemDetail}>Issuer: {insurance.issuer}</Text>
+            </View>
+            <TouchableOpacity style={styles.removeItemButton} onPress={() => removeInsurance(index)}>
+              <Text style={styles.removeItemButtonText}>✕</Text>
+            </TouchableOpacity>
+          </View>
+        ))}
+
+        {showInsuranceForm && (
+          <View style={styles.subForm}>
+            <View style={[styles.formGroup, {zIndex: getZIndex(openInsuranceType)}]}>
+              <Text style={styles.label}>Insurance Type</Text>
+              <DropDownPicker
+                open={openInsuranceType}
+                value={newInsurance.type}
+                items={getInsuranceTypeItems()}
+                setOpen={(value) => handleOpenDropdown(setOpenInsuranceType, openInsuranceType)}
+                setValue={(callback) => {
+                  const value = callback(newInsurance.type);
+                  setNewInsurance({...newInsurance, type: value});
+                }}
+                placeholder="Select"
+                style={styles.dropdownStyle}
+                textStyle={styles.dropdownTextStyle}
+                dropDownContainerStyle={styles.dropdownContainerStyle}
+                listItemContainerStyle={styles.dropdownItemStyle}
+                listMode="SCROLLVIEW"
+                scrollViewProps={{
+                  nestedScrollEnabled: true,
+                }}
+              />
+            </View>
+            
+            <View style={[styles.formGroup, {zIndex: getZIndex(openInsuranceCoverage)}]}>
+              <Text style={styles.label}>Coverage</Text>
+              <DropDownPicker
+                open={openInsuranceCoverage}
+                value={newInsurance.coverage}
+                items={getInsuranceCoverageItems()}
+                setOpen={(value) => handleOpenDropdown(setOpenInsuranceCoverage, openInsuranceCoverage)}
+                setValue={(callback) => {
+                  const value = callback(newInsurance.coverage);
+                  if (value === 'custom') {
+                    handleCustomCoverage();
+                  } else {
+                    setNewInsurance({...newInsurance, coverage: value});
+                  }
+                }}
+                placeholder="Select"
+                style={styles.dropdownStyle}
+                textStyle={styles.dropdownTextStyle}
+                dropDownContainerStyle={styles.dropdownContainerStyle}
+                listItemContainerStyle={styles.dropdownItemStyle}
+                zIndex={openInsuranceType ? 998 : 999}
+                zIndexInverse={openInsuranceType ? 999 : 998}
+                listMode="SCROLLVIEW"
+                scrollViewProps={{
+                  nestedScrollEnabled: true,
+                }}
+              />
+            </View>
+            
+            <View style={[styles.formGroup, {zIndex: (openInsuranceType || openInsuranceCoverage) ? -1 : 1}]}>
+              <Text style={styles.label}>Issuer</Text>
+        <TextInput
+          style={styles.input}
+                value={newInsurance.issuer}
+                onChangeText={(text) => setNewInsurance({...newInsurance, issuer: text})}
+                placeholder="e.g. Lloyds"
+          placeholderTextColor="#999"
+              />
+            </View>
+
+            <View style={styles.buttonRow}>
+              <TouchableOpacity style={styles.cancelButton} onPress={() => setShowInsuranceForm(false)}>
+                <Text style={styles.buttonText}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.saveButton} onPress={addInsurance}>
+                <Text style={styles.buttonText}>Save</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
+
+        {/* Custom Coverage Modal */}
+        <Modal
+          visible={showCustomCoverageModal}
+          transparent={true}
+          animationType="fade"
+          onRequestClose={() => setShowCustomCoverageModal(false)}
+        >
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>Custom Coverage Amount</Text>
+              
+              <View style={styles.modalForm}>
+                <View style={styles.modalInputRow}>
+                  <TextInput
+                    style={styles.modalInput}
+                    value={customCoverageAmount}
+                    onChangeText={(text) => {
+                      if (/^(\d+)?(\.\d*)?$/.test(text) || text === '') {
+                        setCustomCoverageAmount(text);
+                      }
+                    }}
+                    placeholder="Enter amount"
+                    placeholderTextColor="#999"
+                    keyboardType="numeric"
+                  />
+                  
+                  <View style={[styles.modalDropdown, {zIndex: getZIndex(openCustomCoverageUnit)}]}>
+                    <DropDownPicker
+                      open={openCustomCoverageUnit}
+                      value={customCoverageUnit}
+                      items={getCoverageUnitItems()}
+                      setOpen={setOpenCustomCoverageUnit}
+                      setValue={(callback) => {
+                        const value = callback(customCoverageUnit);
+                        setCustomCoverageUnit(value);
+                      }}
+                      placeholder="Select"
+                      style={styles.dropdownStyle}
+                      textStyle={styles.dropdownTextStyle}
+                      dropDownContainerStyle={styles.dropdownContainerStyle}
+                      listItemContainerStyle={styles.dropdownItemStyle}
+                    />
+                  </View>
+                </View>
+                
+                <View style={styles.modalButtons}>
+                  <TouchableOpacity
+                    style={styles.modalCancelButton}
+                    onPress={() => setShowCustomCoverageModal(false)}
+                  >
+                    <Text style={styles.modalCancelButtonText}>Cancel</Text>
+                  </TouchableOpacity>
+                  
+                  <TouchableOpacity
+                    style={[
+                      styles.modalSaveButton,
+                      (!customCoverageAmount || customCoverageAmount === '0') && styles.modalButtonDisabled
+                    ]}
+                    onPress={saveCustomCoverage}
+                    disabled={!customCoverageAmount || customCoverageAmount === '0'}
+                  >
+                    <Text style={styles.modalSaveButtonText}>Save</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        {/* Photos */}
+        <View style={styles.mainSectionHeader}>
+          <Text style={styles.mainSectionHeaderText}>Photos</Text>
+        </View>
+        
+        {/* <PhotoAlbum
+          photos={photos}
+          onPhotoChange={setPhotos}
+          maxPhotos={8}
+          containerStyle={{ paddingHorizontal: 16 }}
+        /> */}
+        <TouchableOpacity 
+          style={styles.submitButton}
+          onPress={handleSubmit}
+        >
+          <Text style={styles.submitButtonText}>Create Offering</Text>
+        </TouchableOpacity>
+
       </View>
     </View>
   );
-
-//         {/* Business Commencement Date - replaced Years In Business */}
-//         <View style={styles.formGroup}>
-//           <Text style={styles.label}>Business Commencement Date <Text style={styles.requiredStar}>*</Text></Text>
-//           <TouchableOpacity 
-//             style={styles.datePickerButton}
-//             onPress={openDatePicker}
-//           >
-//             <Text style={styles.datePickerButtonText}>
-//               {formData.businessCommencementDate 
-//                 ? getFormattedDate(formData.businessCommencementDate) 
-//                 : 'Select commencement date'}
-//             </Text>
-//             <View style={styles.calendarIcon}>
-//               {/* <IconButton
-//                 icon="calendar"
-//                 size={24}
-//                 iconColor="#6750a4"
-//               /> */}
-//             </View>
-//           </TouchableOpacity>
-          
-//           {Platform.OS === 'ios' ? (
-//             <Modal
-//               animationType="slide"
-//               transparent={true}
-//               visible={showDatePicker}
-//               onRequestClose={cancelIOSDate}
-//             >
-//               <TouchableOpacity
-//                 style={styles.datePickerModalOverlay}
-//                 activeOpacity={1}
-//                 onPress={cancelIOSDate}
-//               >
-//                 <View style={styles.datePickerContainer}>
-//                   <View style={styles.datePickerHeader}>
-//                     <TouchableOpacity onPress={cancelIOSDate}>
-//                       <Text style={styles.datePickerCancel}>Cancel</Text>
-//                     </TouchableOpacity>
-//                     <Text style={styles.datePickerTitle}>Select Date</Text>
-//                     <TouchableOpacity onPress={confirmIOSDate}>
-//                       <Text style={styles.datePickerDone}>Done</Text>
-//                     </TouchableOpacity>
-//                   </View>
-//                   <DateTimePicker
-//                     value={tempDate || new Date()}
-//                     mode="date"
-//                     display="spinner"
-//                     onChange={onDateChange}
-//                     maximumDate={new Date()}
-//                     style={styles.datePickerIOS}
-//                   />
-//                 </View>
-//               </TouchableOpacity>
-//             </Modal>
-//           ) : (
-//             showDatePicker && (
-//               <DateTimePicker
-//                 value={formData.businessCommencementDate || new Date()}
-//                 mode="date"
-//                 display="default"
-//                 onChange={onDateChange}
-//                 maximumDate={new Date()}
-//               />
-//             )
-//           )}
-//         </View>
-
-//         <View style={[styles.formGroup, {zIndex: (openWarrantyParts || openWarrantyLabor) ? 900 : 1, marginTop: 20}]}>
-//           <Text style={styles.label}>Warranty <Text style={styles.requiredStar}>*</Text></Text>
-//           <View style={styles.warrantyContainer}>
-//             <View style={[styles.warrantyInput, {zIndex: getZIndex(openWarrantyParts)}]}>
-//               <Text style={styles.warrantyLabel}>Parts</Text>
-//               <DropDownPicker
-//                 open={openWarrantyParts}
-//                 value={formData.warrantyParts}
-//                 items={getWarrantyPartsItems()}
-//                 setOpen={(value) => handleOpenDropdown(setOpenWarrantyParts, openWarrantyParts)}
-//                 setValue={(callback) => {
-//                   const value = callback(formData.warrantyParts);
-//                   if (value === 'custom') {
-//                     handleCustomWarranty('parts');
-//                   } else {
-//                     setFormData({...formData, warrantyParts: value});
-//                   }
-//                 }}
-//                 placeholder="Select"
-//                 style={styles.dropdownStyle}
-//                 textStyle={styles.dropdownTextStyle}
-//                 dropDownContainerStyle={styles.dropdownContainerStyle}
-//                 listItemContainerStyle={styles.dropdownItemStyle}
-//                 zIndex={openWarrantyLabor ? 998 : 999}
-//                 zIndexInverse={openWarrantyLabor ? 999 : 998}
-//                 listMode="SCROLLVIEW"
-//                 scrollViewProps={{
-//                   nestedScrollEnabled: true,
-//                 }}
-//               />
-//             </View>
-//             <View style={[styles.warrantyInput, {zIndex: getZIndex(openWarrantyLabor)}]}>
-//               <Text style={styles.warrantyLabel}>Labor</Text>
-//               <DropDownPicker
-//                 open={openWarrantyLabor}
-//                 value={formData.warrantyLabor}
-//                 items={getWarrantyLaborItems()}
-//                 setOpen={(value) => handleOpenDropdown(setOpenWarrantyLabor, openWarrantyLabor)}
-//                 setValue={(callback) => {
-//                   const value = callback(formData.warrantyLabor);
-//                   if (value === 'custom') {
-//                     handleCustomWarranty('labor');
-//                   } else {
-//                     setFormData({...formData, warrantyLabor: value});
-//                   }
-//                 }}
-//                 placeholder="Select"
-//                 style={styles.dropdownStyle}
-//                 textStyle={styles.dropdownTextStyle}
-//                 dropDownContainerStyle={styles.dropdownContainerStyle}
-//                 listItemContainerStyle={styles.dropdownItemStyle}
-//                 zIndex={openWarrantyParts ? 998 : 999}
-//                 zIndexInverse={openWarrantyParts ? 999 : 998}
-//                 listMode="SCROLLVIEW"
-//                 scrollViewProps={{
-//                   nestedScrollEnabled: true,
-//                 }}
-//               />
-//             </View>
-//           </View>
-//         </View>
-
-//         {/* Custom Warranty Modal */}
-//         <Modal
-//           visible={showCustomWarrantyModal}
-//           transparent={true}
-//           animationType="fade"
-//           onRequestClose={() => setShowCustomWarrantyModal(false)}
-//         >
-//           <View style={styles.modalOverlay}>
-//             <View style={styles.modalContent}>
-//               <Text style={styles.modalTitle}>
-//                 Custom {customWarrantyType === 'parts' ? 'Parts' : 'Labor'} Warranty
-//               </Text>
-              
-//               <View style={styles.modalForm}>
-//                 <View style={styles.modalInputRow}>
-//                   <TextInput
-//                     style={styles.modalInput}
-//                     value={customWarrantyValue}
-//                     onChangeText={setCustomWarrantyValue}
-//                     placeholder="Enter number"
-//                     placeholderTextColor="#999"
-//                     keyboardType="numeric"
-//                   />
-                  
-//                   <View style={[styles.modalDropdown, {zIndex: getZIndex(openCustomWarrantyUnit)}]}>
-//                     <DropDownPicker
-//                       open={openCustomWarrantyUnit}
-//                       value={customWarrantyUnit}
-//                       items={getTimeUnitItems()}
-//                       setOpen={setOpenCustomWarrantyUnit}
-//                       setValue={(callback) => {
-//                         const value = callback(customWarrantyUnit);
-//                         setCustomWarrantyUnit(value);
-//                       }}
-//                       placeholder="Select"
-//                       style={styles.dropdownStyle}
-//                       textStyle={styles.dropdownTextStyle}
-//                       dropDownContainerStyle={styles.dropdownContainerStyle}
-//                       listItemContainerStyle={styles.dropdownItemStyle}
-//                     />
-//                   </View>
-//                 </View>
-                
-//                 <View style={styles.modalButtons}>
-//                   <TouchableOpacity
-//                     style={styles.modalCancelButton}
-//                     onPress={() => setShowCustomWarrantyModal(false)}
-//                   >
-//                     <Text style={styles.modalCancelButtonText}>Cancel</Text>
-//                   </TouchableOpacity>
-                  
-//                   <TouchableOpacity
-//                     style={[
-//                       styles.modalSaveButton,
-//                       (!customWarrantyValue || customWarrantyValue === '0') && styles.modalButtonDisabled
-//                     ]}
-//                     onPress={saveCustomWarranty}
-//                     disabled={!customWarrantyValue || customWarrantyValue === '0'}
-//                   >
-//                     <Text style={styles.modalSaveButtonText}>Save</Text>
-//                   </TouchableOpacity>
-//                 </View>
-//               </View>
-//             </View>
-//           </View>
-//         </Modal>
-
-//         <View style={[styles.formGroup, {zIndex: (openWarrantyParts || openWarrantyLabor) ? -1 : 1}]}>
-//           <Text style={styles.label}>Emergency Services Provided</Text>
-//         <View style={styles.switchContainer}>
-//           <Switch
-//               value={formData.emergencyServicesProvided}
-//               onValueChange={(value) => setFormData({...formData, emergencyServicesProvided: value})}
-//             trackColor={{ false: "#767577", true: "#81b0ff" }}
-//               thumbColor={formData.emergencyServicesProvided ? "#007AFF" : "#f4f3f4"}
-//           />
-//           <Text style={styles.switchLabel}>
-//               {formData.emergencyServicesProvided ? "Yes" : "No"}
-//           </Text>
-//         </View>
-//       </View>
-      
-//       <View style={styles.formGroup}>
-//           <Text style={styles.label}>Permitting Included</Text>
-//           <View style={styles.switchContainer}>
-//             <Switch
-//               value={formData.permittingIncluded === "yes"}
-//               onValueChange={(value) => setFormData({...formData, permittingIncluded: value ? "yes" : "no"})}
-//               trackColor={{ false: "#767577", true: "#81b0ff" }}
-//               thumbColor={formData.permittingIncluded === "yes" ? "#007AFF" : "#f4f3f4"}
-//             />
-//             <Text style={styles.switchLabel}>
-//               {formData.permittingIncluded === "yes" ? "Yes" : "No"}
-//             </Text>
-//           </View>
-//         </View>
-
-//         {/* Personal Details */}
-//         <View style={[styles.mainSectionHeader, {zIndex: openEntity ? -1 : 1}]}>
-//           <Text style={styles.mainSectionHeaderText}>Personal Details</Text>
-//         </View>
-        
-//         <View style={styles.formGroup}>
-//           <Text style={styles.label}>Phone <Text style={styles.requiredStar}>*</Text></Text>
-//           <TextInput
-//             style={styles.input}
-//             value={formData.contact.phone}
-//             onChangeText={(text) => {
-//               // Only allow numbers, +, and spaces for readability
-//               const filteredText = text.replace(/[^\d\s+]/g, '');
-//               updateContact('phone', filteredText);
-//             }}
-//             placeholder="e.g. +1 650 288 7596"
-//             placeholderTextColor="#999"
-//             keyboardType="phone-pad"
-//             autoCapitalize="none"
-//             autoCorrect={false}
-//           />
-//           {formData.contact.phone && !isValidPhoneNumber(formData.contact.phone) && (
-//             <Text style={styles.errorText}>Please enter a valid phone number with country code (e.g. +1 for US)</Text>
-//           )}
-//         </View>
-        
-//         <View style={styles.formGroup}>
-//           <Text style={styles.label}>Email <Text style={styles.requiredStar}>*</Text></Text>
-//           <TextInput
-//             style={styles.input}
-//             value={formData.contact.email}
-//             onChangeText={(text) => updateContact('email', text)}
-//             placeholder="e.g. needseek@aol.com"
-//             placeholderTextColor="#999"
-//             keyboardType="email-address"
-//             autoCapitalize="none"
-//           />
-//           {formData.contact.email && !isValidEmail(formData.contact.email) && (
-//             <Text style={styles.errorText}>Please enter a valid email address</Text>
-//           )}
-//         </View>
-        
-//         <View style={styles.formGroup}>
-//           <Text style={styles.label}>Website</Text>
-//         <TextInput
-//           style={styles.input}
-//             value={formData.contact.website}
-//             onChangeText={(text) => updateContact('website', text)}
-//             placeholder="e.g. www.needseek.com"
-//           placeholderTextColor="#999"
-//           autoCapitalize="none"
-//         />
-//       </View>
-      
-//         {/* Address with autocomplete */}
-//         <View style={styles.formGroup}>
-//           <Text style={styles.label}>Address <Text style={styles.requiredStar}>*</Text></Text>
-          
-//           {formData.contact.address ? (
-//             /* Selected Address Block */
-//             <View style={styles.selectedAddressContainer}>
-//               <Text 
-//                 style={styles.selectedAddressText}
-//                 numberOfLines={2}
-//               >
-//                 {formData.contact.address}
-//               </Text>
-//               <TouchableOpacity
-//                 style={styles.removeAddressButton}
-//                 onPress={clearSelectedAddress}
-//               >
-//                 <Text style={styles.removeAddressButtonText}>✕</Text>
-//               </TouchableOpacity>
-//             </View>
-//           ) : (
-//             /* Search Input Field */
-//             <View style={styles.searchContainer}>
-//               <TextInput
-//                 style={styles.addressInput}
-//                 value={addressSearchQuery}
-//                 onChangeText={setAddressSearchQuery}
-//                 placeholder="Where is your service headquartered?"
-//                 placeholderTextColor="#999"
-//               />
-//               <View style={{ position: 'absolute', right: 0 }}>
-//                 {/* <IconButton
-//                   icon="magnify"
-//                   size={21}
-//                   mode="contained"
-//                   onPress={() => searchAddressPlaces(addressSearchQuery)}
-//                 /> */}
-//               </View>
-//             </View>
-//           )}
-          
-//           {/* Address Search Results */}
-//           {showAddressResults && addressSearchResults.length > 0 && !formData.contact.address && (
-//             <FlatList
-//               data={addressSearchResults}
-//               keyExtractor={(item) => item.place_id}
-//               keyboardShouldPersistTaps="handled"
-//               style={styles.suggestionsList}
-//               renderItem={({ item }) => (
-//                 <TouchableOpacity
-//                   style={styles.suggestionItem}
-//                   onPress={() => handleSelectPlace(item)}
-//                 >
-//                   <Text style={styles.suggestionText}>{item.description}</Text>
-//                 </TouchableOpacity>
-//               )}
-//             />
-//           )}
-//         </View>
-
-//         {/* Credentials & Coverage */}
-//         <View style={styles.mainSectionHeader}>
-//           <Text style={styles.mainSectionHeaderText}>Credentials & Coverage</Text>
-//         </View>
-
-//         {/* Licenses */}
-//         <View style={styles.sectionHeader}>
-//           <Text style={styles.sectionHeaderText}>Licenses</Text>
-//           <TouchableOpacity 
-//             style={styles.addButton} 
-//             onPress={() => setShowLicenseForm(true)}
-//           >
-//             <Text style={styles.addButtonText}>+ Add License</Text>
-//           </TouchableOpacity>
-//         </View>
-
-//         {formData.licenses.map((license, index) => (
-//           <View key={index} style={styles.listItem}>
-//             <View style={styles.itemContent}>
-//               <Text style={styles.itemTitle}>{license.title}</Text>
-//               <Text style={styles.itemDetail}>Issued by: {license.issuer}</Text>
-//               <Text style={styles.itemDetail}>Type: {license.type}</Text>
-//               <Text style={styles.itemDetail}>Scope: {license.scope}</Text>
-//               <Text style={styles.itemDetail}>Licensee: {license.licensee}</Text>
-//             </View>
-//             <TouchableOpacity style={styles.removeItemButton} onPress={() => removeLicense(index)}>
-//               <Text style={styles.removeItemButtonText}>✕</Text>
-//             </TouchableOpacity>
-//           </View>
-//         ))}
-
-//         {showLicenseForm && (
-//           <View style={styles.subForm}>
-//             <View style={styles.formGroup}>
-//               <Text style={styles.label}>License Title</Text>
-//         <TextInput
-//           style={styles.input}
-//                 value={newLicense.title}
-//                 onChangeText={(text) => setNewLicense({...newLicense, title: text})}
-//                 placeholder="e.g. Plumber Trade Certification"
-//           placeholderTextColor="#999"
-//         />
-//       </View>
-      
-//       <View style={styles.formGroup}>
-//               <Text style={styles.label}>Issuer</Text>
-//               <TextInput
-//                 style={styles.input}
-//                 value={newLicense.issuer}
-//                 onChangeText={(text) => setNewLicense({...newLicense, issuer: text})}
-//                 placeholder="e.g. City of Hollywood"
-//                 placeholderTextColor="#999"
-//               />
-//             </View>
-
-//             <View style={[styles.formGroup, {zIndex: getZIndex(openLicenseType)}]}>
-//               <Text style={styles.label}>License Type</Text>
-//               <DropDownPicker
-//                 open={openLicenseType}
-//                 value={newLicense.type}
-//                 items={getLicenseTypeItems()}
-//                 setOpen={(value) => handleOpenDropdown(setOpenLicenseType, openLicenseType)}
-//                 setValue={(callback) => {
-//                   const value = callback(newLicense.type);
-//                   setNewLicense({...newLicense, type: value});
-//                 }}
-//                 placeholder="Select"
-//                 style={styles.dropdownStyle}
-//                 textStyle={styles.dropdownTextStyle}
-//                 dropDownContainerStyle={styles.dropdownContainerStyle}
-//                 listItemContainerStyle={styles.dropdownItemStyle}
-//                 listMode="SCROLLVIEW"
-//                 scrollViewProps={{
-//                   nestedScrollEnabled: true,
-//                 }}
-//               />
-//             </View>
-            
-//             <View style={[styles.formGroup, {zIndex: openLicenseType ? -1 : 1}]}>
-//               <Text style={styles.label}>Scope</Text>
-//         <TextInput
-//           style={styles.input}
-//                 value={newLicense.scope}
-//                 onChangeText={(text) => setNewLicense({...newLicense, scope: text})}
-//                 placeholder="e.g. FL.Hollywood"
-//           placeholderTextColor="#999"
-//         />
-//       </View>
-      
-//       <View style={styles.formGroup}>
-//               <Text style={styles.label}>Licensee</Text>
-//               <TextInput
-//                 style={styles.input}
-//                 value={newLicense.licensee}
-//                 onChangeText={(text) => setNewLicense({...newLicense, licensee: text})}
-//                 placeholder="e.g. Westwood Plumbers"
-//                 placeholderTextColor="#999"
-//               />
-//             </View>
-
-//             <View style={styles.buttonRow}>
-//               <TouchableOpacity style={styles.cancelButton} onPress={() => setShowLicenseForm(false)}>
-//                 <Text style={styles.buttonText}>Cancel</Text>
-//               </TouchableOpacity>
-//               <TouchableOpacity style={styles.saveButton} onPress={addLicense}>
-//                 <Text style={styles.buttonText}>Save</Text>
-//               </TouchableOpacity>
-//             </View>
-//           </View>
-//         )}
-
-//         {/* Certifications */}
-//         <View style={styles.sectionHeader}>
-//           <Text style={styles.sectionHeaderText}>Certifications</Text>
-//         </View>
-        
-//         <View style={styles.formGroup}>
-//           <Text style={styles.label}>Add Certification</Text>
-//           <View style={styles.rowContainer}>
-//             <TextInput
-//               style={[styles.input, { flex: 1 }]}
-//               placeholder="e.g. Florida certified plumber"
-//               placeholderTextColor="#999"
-//               value={certificationInput}
-//               onChangeText={setCertificationInput}
-//               onSubmitEditing={handleAddCertification}
-//             />
-//             {certificationInput ? (
-//               <TouchableOpacity 
-//                 style={styles.clearButton} 
-//                 onPress={() => setCertificationInput('')}
-//               >
-//                 <Text style={styles.clearButtonText}>✕</Text>
-//               </TouchableOpacity>
-//             ) : null}
-//             <TouchableOpacity 
-//               style={[styles.addSmallButton, !certificationInput.trim() && styles.addButtonDisabled]} 
-//               onPress={handleAddCertification}
-//               disabled={!certificationInput.trim()}
-//             >
-//               <Text style={styles.buttonText}>Add</Text>
-//             </TouchableOpacity>
-//           </View>
-//         </View>
-
-//         {formData.certifications.map((cert, index) => (
-//           <View key={index} style={styles.listItem}>
-//             <View style={styles.itemContent}>
-//               <Text style={styles.itemTitle}>{cert}</Text>
-//             </View>
-//             <TouchableOpacity
-//               style={styles.removeItemButton}
-//               onPress={() => {
-//                 const updatedCertifications = [...formData.certifications];
-//                 updatedCertifications.splice(index, 1);
-//                 setFormData({...formData, certifications: updatedCertifications});
-//               }}
-//             >
-//               <Text style={styles.removeItemButtonText}>✕</Text>
-//             </TouchableOpacity>
-//           </View>
-//         ))}
-
-//         {/* Insurances */}
-//         <View style={styles.sectionHeader}>
-//           <Text style={styles.sectionHeaderText}>Insurances</Text>
-//           <TouchableOpacity 
-//             style={styles.addButton} 
-//             onPress={() => setShowInsuranceForm(true)}
-//           >
-//             <Text style={styles.addButtonText}>+ Add Insurance</Text>
-//           </TouchableOpacity>
-//         </View>
-
-//         {formData.insurances.map((insurance, index) => (
-//           <View key={index} style={styles.listItem}>
-//             <View style={styles.itemContent}>
-//               <Text style={styles.itemTitle}>{insurance.type}</Text>
-//               <Text style={styles.itemDetail}>Coverage: {insurance.coverage}</Text>
-//               <Text style={styles.itemDetail}>Issuer: {insurance.issuer}</Text>
-//             </View>
-//             <TouchableOpacity style={styles.removeItemButton} onPress={() => removeInsurance(index)}>
-//               <Text style={styles.removeItemButtonText}>✕</Text>
-//             </TouchableOpacity>
-//           </View>
-//         ))}
-
-//         {showInsuranceForm && (
-//           <View style={styles.subForm}>
-//             <View style={[styles.formGroup, {zIndex: getZIndex(openInsuranceType)}]}>
-//               <Text style={styles.label}>Insurance Type</Text>
-//               <DropDownPicker
-//                 open={openInsuranceType}
-//                 value={newInsurance.type}
-//                 items={getInsuranceTypeItems()}
-//                 setOpen={(value) => handleOpenDropdown(setOpenInsuranceType, openInsuranceType)}
-//                 setValue={(callback) => {
-//                   const value = callback(newInsurance.type);
-//                   setNewInsurance({...newInsurance, type: value});
-//                 }}
-//                 placeholder="Select"
-//                 style={styles.dropdownStyle}
-//                 textStyle={styles.dropdownTextStyle}
-//                 dropDownContainerStyle={styles.dropdownContainerStyle}
-//                 listItemContainerStyle={styles.dropdownItemStyle}
-//                 listMode="SCROLLVIEW"
-//                 scrollViewProps={{
-//                   nestedScrollEnabled: true,
-//                 }}
-//               />
-//             </View>
-            
-//             <View style={[styles.formGroup, {zIndex: getZIndex(openInsuranceCoverage)}]}>
-//               <Text style={styles.label}>Coverage</Text>
-//               <DropDownPicker
-//                 open={openInsuranceCoverage}
-//                 value={newInsurance.coverage}
-//                 items={getInsuranceCoverageItems()}
-//                 setOpen={(value) => handleOpenDropdown(setOpenInsuranceCoverage, openInsuranceCoverage)}
-//                 setValue={(callback) => {
-//                   const value = callback(newInsurance.coverage);
-//                   if (value === 'custom') {
-//                     handleCustomCoverage();
-//                   } else {
-//                     setNewInsurance({...newInsurance, coverage: value});
-//                   }
-//                 }}
-//                 placeholder="Select"
-//                 style={styles.dropdownStyle}
-//                 textStyle={styles.dropdownTextStyle}
-//                 dropDownContainerStyle={styles.dropdownContainerStyle}
-//                 listItemContainerStyle={styles.dropdownItemStyle}
-//                 zIndex={openInsuranceType ? 998 : 999}
-//                 zIndexInverse={openInsuranceType ? 999 : 998}
-//                 listMode="SCROLLVIEW"
-//                 scrollViewProps={{
-//                   nestedScrollEnabled: true,
-//                 }}
-//               />
-//             </View>
-            
-//             <View style={[styles.formGroup, {zIndex: (openInsuranceType || openInsuranceCoverage) ? -1 : 1}]}>
-//               <Text style={styles.label}>Issuer</Text>
-//         <TextInput
-//           style={styles.input}
-//                 value={newInsurance.issuer}
-//                 onChangeText={(text) => setNewInsurance({...newInsurance, issuer: text})}
-//                 placeholder="e.g. Lloyds"
-//           placeholderTextColor="#999"
-//               />
-//             </View>
-
-//             <View style={styles.buttonRow}>
-//               <TouchableOpacity style={styles.cancelButton} onPress={() => setShowInsuranceForm(false)}>
-//                 <Text style={styles.buttonText}>Cancel</Text>
-//               </TouchableOpacity>
-//               <TouchableOpacity style={styles.saveButton} onPress={addInsurance}>
-//                 <Text style={styles.buttonText}>Save</Text>
-//               </TouchableOpacity>
-//             </View>
-//           </View>
-//         )}
-
-//         {/* Custom Coverage Modal */}
-//         <Modal
-//           visible={showCustomCoverageModal}
-//           transparent={true}
-//           animationType="fade"
-//           onRequestClose={() => setShowCustomCoverageModal(false)}
-//         >
-//           <View style={styles.modalOverlay}>
-//             <View style={styles.modalContent}>
-//               <Text style={styles.modalTitle}>Custom Coverage Amount</Text>
-              
-//               <View style={styles.modalForm}>
-//                 <View style={styles.modalInputRow}>
-//                   <TextInput
-//                     style={styles.modalInput}
-//                     value={customCoverageAmount}
-//                     onChangeText={(text) => {
-//                       if (/^(\d+)?(\.\d*)?$/.test(text) || text === '') {
-//                         setCustomCoverageAmount(text);
-//                       }
-//                     }}
-//                     placeholder="Enter amount"
-//                     placeholderTextColor="#999"
-//                     keyboardType="numeric"
-//                   />
-                  
-//                   <View style={[styles.modalDropdown, {zIndex: getZIndex(openCustomCoverageUnit)}]}>
-//                     <DropDownPicker
-//                       open={openCustomCoverageUnit}
-//                       value={customCoverageUnit}
-//                       items={getCoverageUnitItems()}
-//                       setOpen={setOpenCustomCoverageUnit}
-//                       setValue={(callback) => {
-//                         const value = callback(customCoverageUnit);
-//                         setCustomCoverageUnit(value);
-//                       }}
-//                       placeholder="Select"
-//                       style={styles.dropdownStyle}
-//                       textStyle={styles.dropdownTextStyle}
-//                       dropDownContainerStyle={styles.dropdownContainerStyle}
-//                       listItemContainerStyle={styles.dropdownItemStyle}
-//                     />
-//                   </View>
-//                 </View>
-                
-//                 <View style={styles.modalButtons}>
-//                   <TouchableOpacity
-//                     style={styles.modalCancelButton}
-//                     onPress={() => setShowCustomCoverageModal(false)}
-//                   >
-//                     <Text style={styles.modalCancelButtonText}>Cancel</Text>
-//                   </TouchableOpacity>
-                  
-//                   <TouchableOpacity
-//                     style={[
-//                       styles.modalSaveButton,
-//                       (!customCoverageAmount || customCoverageAmount === '0') && styles.modalButtonDisabled
-//                     ]}
-//                     onPress={saveCustomCoverage}
-//                     disabled={!customCoverageAmount || customCoverageAmount === '0'}
-//                   >
-//                     <Text style={styles.modalSaveButtonText}>Save</Text>
-//                   </TouchableOpacity>
-//                 </View>
-//               </View>
-//             </View>
-//           </View>
-//         </Modal>
-
-//         {/* Photos */}
-//         <View style={styles.mainSectionHeader}>
-//           <Text style={styles.mainSectionHeaderText}>Photos</Text>
-//         </View>
-        
-//         {/* <PhotoAlbum
-//           photos={photos}
-//           onPhotoChange={setPhotos}
-//           maxPhotos={8}
-//           containerStyle={{ paddingHorizontal: 16 }}
-//         /> */}
-//         <TouchableOpacity 
-//           style={styles.submitButton}
-//           onPress={handleSubmit}
-//         >
-//           <Text style={styles.submitButtonText}>Create Offering</Text>
-//         </TouchableOpacity>
-
-//       </View>
-//     </View>
-//   );
 };
 
 // Local styles for the PlumbingForm component
