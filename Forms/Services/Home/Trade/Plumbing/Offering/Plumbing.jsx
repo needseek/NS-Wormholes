@@ -6,7 +6,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, Switch, TouchableOpacity, Dimensions, Modal, Alert, FlatList, Platform } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { parsePhoneNumberFromString, isValidPhoneNumber } from 'libphonenumber-js';
-import { IconButton } from 'react-native-paper';
+// import { IconButton } from 'react-native-paper';
 import DateTimePicker from '@react-native-community/datetimepicker';
 // import {
 //   CustomDropdown,
@@ -714,11 +714,11 @@ const PlumbingForm = ({ formData: initialFormData, setFormData: setParentFormDat
                 : 'Select commencement date'}
             </Text>
             <View style={styles.calendarIcon}>
-              <IconButton
+              {/* <IconButton
                 icon="calendar"
                 size={24}
                 iconColor="#6750a4"
-              />
+              /> */}
             </View>
           </TouchableOpacity>
           
@@ -1012,12 +1012,12 @@ const PlumbingForm = ({ formData: initialFormData, setFormData: setParentFormDat
                 placeholderTextColor="#999"
               />
               <View style={{ position: 'absolute', right: 0 }}>
-                <IconButton
+                {/* <IconButton
                   icon="magnify"
                   size={21}
                   mode="contained"
                   onPress={() => searchAddressPlaces(addressSearchQuery)}
-                />
+                /> */}
               </View>
             </View>
           )}

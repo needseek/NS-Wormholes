@@ -8,7 +8,6 @@ var _react = _interopRequireWildcard(require("react"));
 var _reactNative = require("react-native");
 var _reactNativeDropdownPicker = _interopRequireDefault(require("react-native-dropdown-picker"));
 var _libphonenumberJs = require("libphonenumber-js");
-var _reactNativePaper = require("react-native-paper");
 var _datetimepicker = _interopRequireDefault(require("@react-native-community/datetimepicker"));
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
 function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function _interopRequireWildcard(e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, "default": e }; if (null === e || "object" != _typeof(e) && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (var _t in e) "default" !== _t && {}.hasOwnProperty.call(e, _t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, _t)) && (i.get || i.set) ? o(f, _t, i) : f[_t] = e[_t]); return f; })(e, t); }
@@ -33,6 +32,7 @@ function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" 
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); } //  <-- MUST DO ON UPDATE!! --> 
 // 1. transpile command: npx babel --presets=@babel/preset-env,@babel/preset-react Plumbing.jsx -o Plumbing.js
 // 2. add, commit, push to main
+// import { IconButton } from 'react-native-paper';
 // import {
 //   CustomDropdown,
 //   LicenseForm,
@@ -955,11 +955,7 @@ var PlumbingForm = function PlumbingForm(_ref) {
     style: styles.datePickerButtonText
   }, formData.businessCommencementDate ? getFormattedDate(formData.businessCommencementDate) : 'Select commencement date'), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
     style: styles.calendarIcon
-  }, /*#__PURE__*/_react["default"].createElement(_reactNativePaper.IconButton, {
-    icon: "calendar",
-    size: 24,
-    iconColor: "#6750a4"
-  }))), _reactNative.Platform.OS === 'ios' ? /*#__PURE__*/_react["default"].createElement(_reactNative.Modal, {
+  })), _reactNative.Platform.OS === 'ios' ? /*#__PURE__*/_react["default"].createElement(_reactNative.Modal, {
     animationType: "slide",
     transparent: true,
     visible: showDatePicker,
@@ -1266,14 +1262,7 @@ var PlumbingForm = function PlumbingForm(_ref) {
       position: 'absolute',
       right: 0
     }
-  }, /*#__PURE__*/_react["default"].createElement(_reactNativePaper.IconButton, {
-    icon: "magnify",
-    size: 21,
-    mode: "contained",
-    onPress: function onPress() {
-      return searchAddressPlaces(addressSearchQuery);
-    }
-  }))), showAddressResults && addressSearchResults.length > 0 && !formData.contact.address && /*#__PURE__*/_react["default"].createElement(_reactNative.FlatList, {
+  })), showAddressResults && addressSearchResults.length > 0 && !formData.contact.address && /*#__PURE__*/_react["default"].createElement(_reactNative.FlatList, {
     data: addressSearchResults,
     keyExtractor: function keyExtractor(item) {
       return item.place_id;
