@@ -700,31 +700,34 @@ useEffect(() => {
   console.log('breadcrumb', breadcrumb);
   console.log('meta', meta);
 }, [formData]);
-return (
-  <View style={styles.label}>
-    <Text>I'm not totally FUCKED updated!</Text>
-  </View>
-);
+// return (
+//   <View style={styles.label}>
+//     <Text>I'm not totally FUCKED updated!</Text>
+//   </View>
+// );
 
   // Return the form directly without FlatList
-//   return (
-//     <View style={styles.container}>
-//       <View style={styles.formContentContainer}>
-//         {/* Service Information (including Business Details) */}
-//         <View style={styles.mainSectionHeader}>
-//           <Text style={styles.mainSectionHeaderText}>Service Information</Text>
-//         </View>
-        
-//       <View style={styles.formGroup}>
-//         <Text style={styles.label}>Title <Text style={styles.requiredStar}>*</Text></Text>
-//         <TextInput
-//           style={styles.input}
-//           value={formData.title}
-//           onChangeText={(text) => setFormData({ ...formData, title: text })}
-//             placeholder="e.g. Garry's Plumbing"
-//           placeholderTextColor="#999"
-//         />
-//       </View>
+  return (
+    <View style={styles.container}>
+      <View style={styles.formContentContainer}>
+        {/* Service Information (including Business Details) */}
+        <View style={styles.mainSectionHeader}>
+          <Text style={styles.mainSectionHeaderText}>Service Information</Text>
+        </View>
+      </View>
+      <View style={styles.formGroup}>
+        <Text style={styles.label}>Title <Text style={styles.requiredStar}>*</Text></Text>
+        <TextInput
+          style={styles.input}
+          value={formData.title}
+          onChangeText={(text) => setFormData({ ...formData, title: text })}
+            placeholder="e.g. Garry's Plumbing"
+          placeholderTextColor="#999"
+        />
+      </View>
+    </View>
+  
+  );
       
 //       <View style={styles.formGroup}>
 //         <Text style={styles.label}>Description <Text style={styles.requiredStar}>*</Text></Text>
