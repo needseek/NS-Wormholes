@@ -4,7 +4,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, Switch, TouchableOpacity, Dimensions, Modal, Alert, FlatList, Platform } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
 import { parsePhoneNumberFromString, isValidPhoneNumber } from 'libphonenumber-js';
 // import { IconButton } from 'react-native-paper';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -24,11 +23,12 @@ const PlumbingForm = ({
   breadcrumb = '',
   meta = {},
   navigation = null,
-  GOOGLE_API = ''
+  GOOGLE_API = '',
+  registry
 } = {}) => {
   // Get styles by merging parent styles with component-specific styles
   const styles = { ...parentStyles, ...localStyles };
-  
+  const { DropDownPicker } = registry
   // Add console warnings for missing critical props
   useEffect(() => {
     if (!navigation) {

@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("react"));
 var _reactNative = require("react-native");
-var _reactNativeDropdownPicker = _interopRequireDefault(require("react-native-dropdown-picker"));
 var _libphonenumberJs = require("libphonenumber-js");
 var _datetimepicker = _interopRequireDefault(require("@react-native-community/datetimepicker"));
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
@@ -59,10 +58,11 @@ var PlumbingForm = function PlumbingForm() {
     _ref$navigation = _ref.navigation,
     navigation = _ref$navigation === void 0 ? null : _ref$navigation,
     _ref$GOOGLE_API = _ref.GOOGLE_API,
-    GOOGLE_API = _ref$GOOGLE_API === void 0 ? '' : _ref$GOOGLE_API;
+    GOOGLE_API = _ref$GOOGLE_API === void 0 ? '' : _ref$GOOGLE_API,
+    registry = _ref.registry;
   // Get styles by merging parent styles with component-specific styles
   var styles = _objectSpread(_objectSpread({}, parentStyles), localStyles);
-
+  var DropDownPicker = registry.DropDownPicker;
   // Add console warnings for missing critical props
   (0, _react.useEffect)(function () {
     if (!navigation) {
@@ -976,7 +976,7 @@ var PlumbingForm = function PlumbingForm() {
     style: styles.label
   }, "fed force Entity Type", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.requiredStar
-  }, "*")), /*#__PURE__*/_react["default"].createElement(_reactNativeDropdownPicker["default"], {
+  }, "*")), /*#__PURE__*/_react["default"].createElement(DropDownPicker, {
     open: false,
     value: null,
     items: [{
