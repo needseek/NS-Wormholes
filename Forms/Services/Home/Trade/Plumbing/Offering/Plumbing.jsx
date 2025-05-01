@@ -747,7 +747,19 @@ useEffect(() => {
         {/* Entity Type */}
         <View style={[styles.formGroup, {zIndex: getZIndex(openEntity)}]}>
           <Text style={styles.label}>forced forced Entity Type<Text style={styles.requiredStar}>*</Text></Text>
-          <DropDownPicker/>
+          <DropDownPicker
+            open={false}
+            value={null}
+            items={[
+              { label: 'Individual', value: 'individual' },
+              { label: 'Business', value: 'business' },
+              { label: 'Non-Profit', value: 'non-profit' }
+            ]}
+            setOpen={() => {}}
+            setValue={() => {}}
+            setItems={() => {}}
+            placeholder="Select entity type"
+          />
           {/* <DropDownPicker
             open={openEntity}
             value={formData.entity}

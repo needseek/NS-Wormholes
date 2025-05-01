@@ -976,7 +976,24 @@ var PlumbingForm = function PlumbingForm() {
     style: styles.label
   }, "forced forced Entity Type", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.requiredStar
-  }, "*")), /*#__PURE__*/_react["default"].createElement(_reactNativeDropdownPicker["default"], null))));
+  }, "*")), /*#__PURE__*/_react["default"].createElement(_reactNativeDropdownPicker["default"], {
+    open: false,
+    value: null,
+    items: [{
+      label: 'Individual',
+      value: 'individual'
+    }, {
+      label: 'Business',
+      value: 'business'
+    }, {
+      label: 'Non-Profit',
+      value: 'non-profit'
+    }],
+    setOpen: function setOpen() {},
+    setValue: function setValue() {},
+    setItems: function setItems() {},
+    placeholder: "Select entity type"
+  }))));
 
   //         {/* Business Commencement Date - replaced Years In Business */}
   //         <View style={styles.formGroup}>
