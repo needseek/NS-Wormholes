@@ -1010,7 +1010,11 @@ var PlumbingForm = function PlumbingForm() {
     style: styles.datePickerButtonText
   }, formData.businessCommencementDate ? getFormattedDate(formData.businessCommencementDate) : 'Select commencement date'), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
     style: styles.calendarIcon
-  })), _reactNative.Platform.OS === 'ios' ? /*#__PURE__*/_react["default"].createElement(_reactNative.Modal, {
+  }, /*#__PURE__*/_react["default"].createElement(IconButton, {
+    icon: "calendar",
+    size: 24,
+    iconColor: "#6750a4"
+  }))), _reactNative.Platform.OS === 'ios' ? /*#__PURE__*/_react["default"].createElement(_reactNative.Modal, {
     animationType: "slide",
     transparent: true,
     visible: showDatePicker,
@@ -1317,7 +1321,14 @@ var PlumbingForm = function PlumbingForm() {
       position: 'absolute',
       right: 0
     }
-  })), showAddressResults && addressSearchResults.length > 0 && !formData.contact.address && /*#__PURE__*/_react["default"].createElement(_reactNative.FlatList, {
+  }, /*#__PURE__*/_react["default"].createElement(IconButton, {
+    icon: "magnify",
+    size: 21,
+    mode: "contained",
+    onPress: function onPress() {
+      return searchAddressPlaces(addressSearchQuery);
+    }
+  }))), showAddressResults && addressSearchResults.length > 0 && !formData.contact.address && /*#__PURE__*/_react["default"].createElement(_reactNative.FlatList, {
     data: addressSearchResults,
     keyExtractor: function keyExtractor(item) {
       return item.place_id;

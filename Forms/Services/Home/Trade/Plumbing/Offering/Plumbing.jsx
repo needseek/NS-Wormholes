@@ -778,11 +778,11 @@ useEffect(() => {
                 : 'Select commencement date'}
             </Text>
             <View style={styles.calendarIcon}>
-              {/* <IconButton
+              <IconButton
                 icon="calendar"
                 size={24}
                 iconColor="#6750a4"
-              /> */}
+              />
             </View>
           </TouchableOpacity>
           
@@ -1076,12 +1076,12 @@ useEffect(() => {
                 placeholderTextColor="#999"
               />
               <View style={{ position: 'absolute', right: 0 }}>
-                {/* <IconButton
+                <IconButton
                   icon="magnify"
                   size={21}
                   mode="contained"
                   onPress={() => searchAddressPlaces(addressSearchQuery)}
-                /> */}
+                />
               </View>
             </View>
           )}
