@@ -8,5 +8,10 @@
     "@babel/plugin-transform-optional-chaining": "^7.27.1",
     "@babel/preset-env": "^7.27.1",
     "@babel/preset-react": "^7.27.1"
+  },
+  "dependencies": {
+    "@react-native-community/datetimepicker": "^8.3.0",
+    "libphonenumber-js": "^1.12.7",
+    "react-native-paper": "^5.14.0"
   }
 }
