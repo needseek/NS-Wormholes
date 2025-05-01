@@ -741,7 +741,7 @@ useEffect(() => {
 
         {/* Entity Type */}
         <View style={[styles.formGroup, {zIndex: getZIndex(openEntity)}]}>
-          <Text style={styles.label}>Entity Type <Text style={styles.requiredStar}>*</Text></Text>
+          <Text style={styles.label}>Entity Type force <Text style={styles.requiredStar}>*</Text></Text>
           <DropDownPicker
             open={openEntity}
             value={formData.entity}
