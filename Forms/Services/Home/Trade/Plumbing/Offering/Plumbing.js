@@ -443,6 +443,45 @@ var PlumbingForm = function PlumbingForm() {
 
   // Add this function to your component
   var handleSubmit = function handleSubmit() {
+    // Validate data
+    // if (!formData.title.trim()) {
+    //   Alert.alert('Error', 'Please enter a title for your offering');
+    //   return;
+    // }
+
+    // if (!formData.description.trim()) {
+    //   Alert.alert('Error', 'Please enter a description for your offering');
+    //   return;
+    // }
+    // if (formData.entity == "unselected") {
+    //     Alert.alert('Error', 'Please select an entity type for your offering');
+    //     return;
+    // }
+    // if (!formData.businessCommencementDate) {
+    //     Alert.alert('Error', 'Please select a business commencement date for your offering');
+    //     return;
+    // }
+    // if (formData.warrantyParts === null) {
+    //     Alert.alert('Error', 'Please select a parts warranty period for your offering');
+    //     return;
+    // }
+    // if (formData.warrantyLabor === null) {
+    //     Alert.alert('Error', 'Please select a labor warranty period for your offering');
+    //     return;
+    // }
+    // if (formData.contact.phone && !isValidPhoneNumber(formData.contact.phone)) {
+    //     Alert.alert('Error', 'Please enter a valid phone number with country code (e.g. +1 for US)');
+    //     return;
+    // }
+    // if (formData.contact.email && !isValidEmail(formData.contact.email)) {
+    //     Alert.alert('Error', 'Please enter a valid email address');
+    //     return;
+    // }
+    // if (!formData.contact.address.trim()) {
+    //     Alert.alert('Error', 'Please enter an address for your offering');
+    //     return;
+    // }
+
     // Format the data according to the required JSON structure
     var formattedData = {
       offering: {
@@ -870,808 +909,759 @@ var PlumbingForm = function PlumbingForm() {
     }
     setShowCustomCoverageModal(false);
   };
+  return /*#__PURE__*/_react["default"].createElement(_reactNative.View, null, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, null, "I'm not totally FUCKED!"));
 
   // Return the form directly without FlatList
-  return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.container
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.formContentContainer
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.mainSectionHeader
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.mainSectionHeaderText
-  }, "Service Information")), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.formGroup
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.label
-  }, "Title ", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.requiredStar
-  }, "*")), /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
-    style: styles.input,
-    value: formData.title,
-    onChangeText: function onChangeText(text) {
-      return setFormData(_objectSpread(_objectSpread({}, formData), {}, {
-        title: text
-      }));
-    },
-    placeholder: "e.g. Garry's Plumbing",
-    placeholderTextColor: "#999"
-  })), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.formGroup
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.label
-  }, "Description ", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.requiredStar
-  }, "*")), /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
-    style: [styles.input, styles.textArea],
-    value: formData.description,
-    onChangeText: function onChangeText(text) {
-      return setFormData(_objectSpread(_objectSpread({}, formData), {}, {
-        description: text
-      }));
-    },
-    placeholder: "Describe your plumbing service and specialties",
-    placeholderTextColor: "#999",
-    multiline: true,
-    numberOfLines: 4,
-    textAlignVertical: "top"
-  })), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: [styles.formGroup, {
-      zIndex: getZIndex(openEntity)
-    }]
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.label
-  }, "Entity Type ", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.requiredStar
-  }, "*")), /*#__PURE__*/_react["default"].createElement(_reactNativeDropdownPicker["default"], {
-    open: openEntity,
-    value: formData.entity,
-    items: getEntityItems(),
-    setOpen: function setOpen(value) {
-      return handleOpenDropdown(setOpenEntity, openEntity);
-    },
-    setValue: function setValue(callback) {
-      var value = callback(formData.entity);
-      setFormData(_objectSpread(_objectSpread({}, formData), {}, {
-        entity: value
-      }));
-    },
-    placeholder: "Select",
-    style: styles.dropdownStyle,
-    textStyle: styles.dropdownTextStyle,
-    dropDownContainerStyle: styles.dropdownContainerStyle,
-    listItemContainerStyle: styles.dropdownItemStyle,
-    listMode: "SCROLLVIEW",
-    scrollViewProps: {
-      nestedScrollEnabled: true
-    }
-  })), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.formGroup
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.label
-  }, "Business Commencement Date ", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.requiredStar
-  }, "*")), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-    style: styles.datePickerButton,
-    onPress: openDatePicker
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.datePickerButtonText
-  }, formData.businessCommencementDate ? getFormattedDate(formData.businessCommencementDate) : 'Select commencement date'), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.calendarIcon
-  })), _reactNative.Platform.OS === 'ios' ? /*#__PURE__*/_react["default"].createElement(_reactNative.Modal, {
-    animationType: "slide",
-    transparent: true,
-    visible: showDatePicker,
-    onRequestClose: cancelIOSDate
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-    style: styles.datePickerModalOverlay,
-    activeOpacity: 1,
-    onPress: cancelIOSDate
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.datePickerContainer
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.datePickerHeader
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-    onPress: cancelIOSDate
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.datePickerCancel
-  }, "Cancel")), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.datePickerTitle
-  }, "Select Date"), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-    onPress: confirmIOSDate
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.datePickerDone
-  }, "Done"))), /*#__PURE__*/_react["default"].createElement(_datetimepicker["default"], {
-    value: tempDate || new Date(),
-    mode: "date",
-    display: "spinner",
-    onChange: onDateChange,
-    maximumDate: new Date(),
-    style: styles.datePickerIOS
-  })))) : showDatePicker && /*#__PURE__*/_react["default"].createElement(_datetimepicker["default"], {
-    value: formData.businessCommencementDate || new Date(),
-    mode: "date",
-    display: "default",
-    onChange: onDateChange,
-    maximumDate: new Date()
-  })), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: [styles.formGroup, {
-      zIndex: openWarrantyParts || openWarrantyLabor ? 900 : 1,
-      marginTop: 20
-    }]
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.label
-  }, "Warranty ", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.requiredStar
-  }, "*")), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.warrantyContainer
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: [styles.warrantyInput, {
-      zIndex: getZIndex(openWarrantyParts)
-    }]
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.warrantyLabel
-  }, "Parts"), /*#__PURE__*/_react["default"].createElement(_reactNativeDropdownPicker["default"], {
-    open: openWarrantyParts,
-    value: formData.warrantyParts,
-    items: getWarrantyPartsItems(),
-    setOpen: function setOpen(value) {
-      return handleOpenDropdown(setOpenWarrantyParts, openWarrantyParts);
-    },
-    setValue: function setValue(callback) {
-      var value = callback(formData.warrantyParts);
-      if (value === 'custom') {
-        handleCustomWarranty('parts');
-      } else {
-        setFormData(_objectSpread(_objectSpread({}, formData), {}, {
-          warrantyParts: value
-        }));
-      }
-    },
-    placeholder: "Select",
-    style: styles.dropdownStyle,
-    textStyle: styles.dropdownTextStyle,
-    dropDownContainerStyle: styles.dropdownContainerStyle,
-    listItemContainerStyle: styles.dropdownItemStyle,
-    zIndex: openWarrantyLabor ? 998 : 999,
-    zIndexInverse: openWarrantyLabor ? 999 : 998,
-    listMode: "SCROLLVIEW",
-    scrollViewProps: {
-      nestedScrollEnabled: true
-    }
-  })), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: [styles.warrantyInput, {
-      zIndex: getZIndex(openWarrantyLabor)
-    }]
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.warrantyLabel
-  }, "Labor"), /*#__PURE__*/_react["default"].createElement(_reactNativeDropdownPicker["default"], {
-    open: openWarrantyLabor,
-    value: formData.warrantyLabor,
-    items: getWarrantyLaborItems(),
-    setOpen: function setOpen(value) {
-      return handleOpenDropdown(setOpenWarrantyLabor, openWarrantyLabor);
-    },
-    setValue: function setValue(callback) {
-      var value = callback(formData.warrantyLabor);
-      if (value === 'custom') {
-        handleCustomWarranty('labor');
-      } else {
-        setFormData(_objectSpread(_objectSpread({}, formData), {}, {
-          warrantyLabor: value
-        }));
-      }
-    },
-    placeholder: "Select",
-    style: styles.dropdownStyle,
-    textStyle: styles.dropdownTextStyle,
-    dropDownContainerStyle: styles.dropdownContainerStyle,
-    listItemContainerStyle: styles.dropdownItemStyle,
-    zIndex: openWarrantyParts ? 998 : 999,
-    zIndexInverse: openWarrantyParts ? 999 : 998,
-    listMode: "SCROLLVIEW",
-    scrollViewProps: {
-      nestedScrollEnabled: true
-    }
-  })))), /*#__PURE__*/_react["default"].createElement(_reactNative.Modal, {
-    visible: showCustomWarrantyModal,
-    transparent: true,
-    animationType: "fade",
-    onRequestClose: function onRequestClose() {
-      return setShowCustomWarrantyModal(false);
-    }
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.modalOverlay
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.modalContent
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.modalTitle
-  }, "Custom ", customWarrantyType === 'parts' ? 'Parts' : 'Labor', " Warranty"), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.modalForm
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.modalInputRow
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
-    style: styles.modalInput,
-    value: customWarrantyValue,
-    onChangeText: setCustomWarrantyValue,
-    placeholder: "Enter number",
-    placeholderTextColor: "#999",
-    keyboardType: "numeric"
-  }), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: [styles.modalDropdown, {
-      zIndex: getZIndex(openCustomWarrantyUnit)
-    }]
-  }, /*#__PURE__*/_react["default"].createElement(_reactNativeDropdownPicker["default"], {
-    open: openCustomWarrantyUnit,
-    value: customWarrantyUnit,
-    items: getTimeUnitItems(),
-    setOpen: setOpenCustomWarrantyUnit,
-    setValue: function setValue(callback) {
-      var value = callback(customWarrantyUnit);
-      setCustomWarrantyUnit(value);
-    },
-    placeholder: "Select",
-    style: styles.dropdownStyle,
-    textStyle: styles.dropdownTextStyle,
-    dropDownContainerStyle: styles.dropdownContainerStyle,
-    listItemContainerStyle: styles.dropdownItemStyle
-  }))), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.modalButtons
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-    style: styles.modalCancelButton,
-    onPress: function onPress() {
-      return setShowCustomWarrantyModal(false);
-    }
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.modalCancelButtonText
-  }, "Cancel")), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-    style: [styles.modalSaveButton, (!customWarrantyValue || customWarrantyValue === '0') && styles.modalButtonDisabled],
-    onPress: saveCustomWarranty,
-    disabled: !customWarrantyValue || customWarrantyValue === '0'
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.modalSaveButtonText
-  }, "Save"))))))), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: [styles.formGroup, {
-      zIndex: openWarrantyParts || openWarrantyLabor ? -1 : 1
-    }]
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.label
-  }, "Emergency Services Provided"), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.switchContainer
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Switch, {
-    value: formData.emergencyServicesProvided,
-    onValueChange: function onValueChange(value) {
-      return setFormData(_objectSpread(_objectSpread({}, formData), {}, {
-        emergencyServicesProvided: value
-      }));
-    },
-    trackColor: {
-      "false": "#767577",
-      "true": "#81b0ff"
-    },
-    thumbColor: formData.emergencyServicesProvided ? "#007AFF" : "#f4f3f4"
-  }), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.switchLabel
-  }, formData.emergencyServicesProvided ? "Yes" : "No"))), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.formGroup
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.label
-  }, "Permitting Included"), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.switchContainer
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Switch, {
-    value: formData.permittingIncluded === "yes",
-    onValueChange: function onValueChange(value) {
-      return setFormData(_objectSpread(_objectSpread({}, formData), {}, {
-        permittingIncluded: value ? "yes" : "no"
-      }));
-    },
-    trackColor: {
-      "false": "#767577",
-      "true": "#81b0ff"
-    },
-    thumbColor: formData.permittingIncluded === "yes" ? "#007AFF" : "#f4f3f4"
-  }), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.switchLabel
-  }, formData.permittingIncluded === "yes" ? "Yes" : "No"))), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: [styles.mainSectionHeader, {
-      zIndex: openEntity ? -1 : 1
-    }]
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.mainSectionHeaderText
-  }, "Personal Details")), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.formGroup
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.label
-  }, "Phone ", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.requiredStar
-  }, "*")), /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
-    style: styles.input,
-    value: formData.contact.phone,
-    onChangeText: function onChangeText(text) {
-      // Only allow numbers, +, and spaces for readability
-      var filteredText = text.replace(/[^\d\s+]/g, '');
-      updateContact('phone', filteredText);
-    },
-    placeholder: "e.g. +1 650 288 7596",
-    placeholderTextColor: "#999",
-    keyboardType: "phone-pad",
-    autoCapitalize: "none",
-    autoCorrect: false
-  }), formData.contact.phone && !(0, _libphonenumberJs.isValidPhoneNumber)(formData.contact.phone) && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.errorText
-  }, "Please enter a valid phone number with country code (e.g. +1 for US)")), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.formGroup
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.label
-  }, "Email ", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.requiredStar
-  }, "*")), /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
-    style: styles.input,
-    value: formData.contact.email,
-    onChangeText: function onChangeText(text) {
-      return updateContact('email', text);
-    },
-    placeholder: "e.g. needseek@aol.com",
-    placeholderTextColor: "#999",
-    keyboardType: "email-address",
-    autoCapitalize: "none"
-  }), formData.contact.email && !isValidEmail(formData.contact.email) && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.errorText
-  }, "Please enter a valid email address")), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.formGroup
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.label
-  }, "Website"), /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
-    style: styles.input,
-    value: formData.contact.website,
-    onChangeText: function onChangeText(text) {
-      return updateContact('website', text);
-    },
-    placeholder: "e.g. www.needseek.com",
-    placeholderTextColor: "#999",
-    autoCapitalize: "none"
-  })), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.formGroup
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.label
-  }, "Address ", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.requiredStar
-  }, "*")), formData.contact.address ?
-  /*#__PURE__*/
-  /* Selected Address Block */
-  _react["default"].createElement(_reactNative.View, {
-    style: styles.selectedAddressContainer
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.selectedAddressText,
-    numberOfLines: 2
-  }, formData.contact.address), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-    style: styles.removeAddressButton,
-    onPress: clearSelectedAddress
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.removeAddressButtonText
-  }, "\u2715"))) :
-  /*#__PURE__*/
-  /* Search Input Field */
-  _react["default"].createElement(_reactNative.View, {
-    style: styles.searchContainer
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
-    style: styles.addressInput,
-    value: addressSearchQuery,
-    onChangeText: setAddressSearchQuery,
-    placeholder: "Where is your service headquartered?",
-    placeholderTextColor: "#999"
-  }), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: {
-      position: 'absolute',
-      right: 0
-    }
-  })), showAddressResults && addressSearchResults.length > 0 && !formData.contact.address && /*#__PURE__*/_react["default"].createElement(_reactNative.FlatList, {
-    data: addressSearchResults,
-    keyExtractor: function keyExtractor(item) {
-      return item.place_id;
-    },
-    keyboardShouldPersistTaps: "handled",
-    style: styles.suggestionsList,
-    renderItem: function renderItem(_ref3) {
-      var item = _ref3.item;
-      return /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-        style: styles.suggestionItem,
-        onPress: function onPress() {
-          return handleSelectPlace(item);
-        }
-      }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-        style: styles.suggestionText
-      }, item.description));
-    }
-  })), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.mainSectionHeader
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.mainSectionHeaderText
-  }, "Credentials & Coverage")), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.sectionHeader
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.sectionHeaderText
-  }, "Licenses"), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-    style: styles.addButton,
-    onPress: function onPress() {
-      return setShowLicenseForm(true);
-    }
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.addButtonText
-  }, "+ Add License"))), formData.licenses.map(function (license, index) {
-    return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-      key: index,
-      style: styles.listItem
-    }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-      style: styles.itemContent
-    }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-      style: styles.itemTitle
-    }, license.title), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-      style: styles.itemDetail
-    }, "Issued by: ", license.issuer), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-      style: styles.itemDetail
-    }, "Type: ", license.type), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-      style: styles.itemDetail
-    }, "Scope: ", license.scope), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-      style: styles.itemDetail
-    }, "Licensee: ", license.licensee)), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-      style: styles.removeItemButton,
-      onPress: function onPress() {
-        return removeLicense(index);
-      }
-    }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-      style: styles.removeItemButtonText
-    }, "\u2715")));
-  }), showLicenseForm && /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.subForm
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.formGroup
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.label
-  }, "License Title"), /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
-    style: styles.input,
-    value: newLicense.title,
-    onChangeText: function onChangeText(text) {
-      return setNewLicense(_objectSpread(_objectSpread({}, newLicense), {}, {
-        title: text
-      }));
-    },
-    placeholder: "e.g. Plumber Trade Certification",
-    placeholderTextColor: "#999"
-  })), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.formGroup
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.label
-  }, "Issuer"), /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
-    style: styles.input,
-    value: newLicense.issuer,
-    onChangeText: function onChangeText(text) {
-      return setNewLicense(_objectSpread(_objectSpread({}, newLicense), {}, {
-        issuer: text
-      }));
-    },
-    placeholder: "e.g. City of Hollywood",
-    placeholderTextColor: "#999"
-  })), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: [styles.formGroup, {
-      zIndex: getZIndex(openLicenseType)
-    }]
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.label
-  }, "License Type"), /*#__PURE__*/_react["default"].createElement(_reactNativeDropdownPicker["default"], {
-    open: openLicenseType,
-    value: newLicense.type,
-    items: getLicenseTypeItems(),
-    setOpen: function setOpen(value) {
-      return handleOpenDropdown(setOpenLicenseType, openLicenseType);
-    },
-    setValue: function setValue(callback) {
-      var value = callback(newLicense.type);
-      setNewLicense(_objectSpread(_objectSpread({}, newLicense), {}, {
-        type: value
-      }));
-    },
-    placeholder: "Select",
-    style: styles.dropdownStyle,
-    textStyle: styles.dropdownTextStyle,
-    dropDownContainerStyle: styles.dropdownContainerStyle,
-    listItemContainerStyle: styles.dropdownItemStyle,
-    listMode: "SCROLLVIEW",
-    scrollViewProps: {
-      nestedScrollEnabled: true
-    }
-  })), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: [styles.formGroup, {
-      zIndex: openLicenseType ? -1 : 1
-    }]
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.label
-  }, "Scope"), /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
-    style: styles.input,
-    value: newLicense.scope,
-    onChangeText: function onChangeText(text) {
-      return setNewLicense(_objectSpread(_objectSpread({}, newLicense), {}, {
-        scope: text
-      }));
-    },
-    placeholder: "e.g. FL.Hollywood",
-    placeholderTextColor: "#999"
-  })), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.formGroup
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.label
-  }, "Licensee"), /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
-    style: styles.input,
-    value: newLicense.licensee,
-    onChangeText: function onChangeText(text) {
-      return setNewLicense(_objectSpread(_objectSpread({}, newLicense), {}, {
-        licensee: text
-      }));
-    },
-    placeholder: "e.g. Westwood Plumbers",
-    placeholderTextColor: "#999"
-  })), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.buttonRow
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-    style: styles.cancelButton,
-    onPress: function onPress() {
-      return setShowLicenseForm(false);
-    }
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.buttonText
-  }, "Cancel")), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-    style: styles.saveButton,
-    onPress: addLicense
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.buttonText
-  }, "Save")))), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.sectionHeader
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.sectionHeaderText
-  }, "Certifications")), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.formGroup
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.label
-  }, "Add Certification"), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.rowContainer
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
-    style: [styles.input, {
-      flex: 1
-    }],
-    placeholder: "e.g. Florida certified plumber",
-    placeholderTextColor: "#999",
-    value: certificationInput,
-    onChangeText: setCertificationInput,
-    onSubmitEditing: handleAddCertification
-  }), certificationInput ? /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-    style: styles.clearButton,
-    onPress: function onPress() {
-      return setCertificationInput('');
-    }
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.clearButtonText
-  }, "\u2715")) : null, /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-    style: [styles.addSmallButton, !certificationInput.trim() && styles.addButtonDisabled],
-    onPress: handleAddCertification,
-    disabled: !certificationInput.trim()
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.buttonText
-  }, "Add")))), formData.certifications.map(function (cert, index) {
-    return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-      key: index,
-      style: styles.listItem
-    }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-      style: styles.itemContent
-    }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-      style: styles.itemTitle
-    }, cert)), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-      style: styles.removeItemButton,
-      onPress: function onPress() {
-        var updatedCertifications = _toConsumableArray(formData.certifications);
-        updatedCertifications.splice(index, 1);
-        setFormData(_objectSpread(_objectSpread({}, formData), {}, {
-          certifications: updatedCertifications
-        }));
-      }
-    }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-      style: styles.removeItemButtonText
-    }, "\u2715")));
-  }), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.sectionHeader
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.sectionHeaderText
-  }, "Insurances"), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-    style: styles.addButton,
-    onPress: function onPress() {
-      return setShowInsuranceForm(true);
-    }
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.addButtonText
-  }, "+ Add Insurance"))), formData.insurances.map(function (insurance, index) {
-    return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-      key: index,
-      style: styles.listItem
-    }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-      style: styles.itemContent
-    }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-      style: styles.itemTitle
-    }, insurance.type), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-      style: styles.itemDetail
-    }, "Coverage: ", insurance.coverage), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-      style: styles.itemDetail
-    }, "Issuer: ", insurance.issuer)), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-      style: styles.removeItemButton,
-      onPress: function onPress() {
-        return removeInsurance(index);
-      }
-    }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-      style: styles.removeItemButtonText
-    }, "\u2715")));
-  }), showInsuranceForm && /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.subForm
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: [styles.formGroup, {
-      zIndex: getZIndex(openInsuranceType)
-    }]
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.label
-  }, "Insurance Type"), /*#__PURE__*/_react["default"].createElement(_reactNativeDropdownPicker["default"], {
-    open: openInsuranceType,
-    value: newInsurance.type,
-    items: getInsuranceTypeItems(),
-    setOpen: function setOpen(value) {
-      return handleOpenDropdown(setOpenInsuranceType, openInsuranceType);
-    },
-    setValue: function setValue(callback) {
-      var value = callback(newInsurance.type);
-      setNewInsurance(_objectSpread(_objectSpread({}, newInsurance), {}, {
-        type: value
-      }));
-    },
-    placeholder: "Select",
-    style: styles.dropdownStyle,
-    textStyle: styles.dropdownTextStyle,
-    dropDownContainerStyle: styles.dropdownContainerStyle,
-    listItemContainerStyle: styles.dropdownItemStyle,
-    listMode: "SCROLLVIEW",
-    scrollViewProps: {
-      nestedScrollEnabled: true
-    }
-  })), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: [styles.formGroup, {
-      zIndex: getZIndex(openInsuranceCoverage)
-    }]
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.label
-  }, "Coverage"), /*#__PURE__*/_react["default"].createElement(_reactNativeDropdownPicker["default"], {
-    open: openInsuranceCoverage,
-    value: newInsurance.coverage,
-    items: getInsuranceCoverageItems(),
-    setOpen: function setOpen(value) {
-      return handleOpenDropdown(setOpenInsuranceCoverage, openInsuranceCoverage);
-    },
-    setValue: function setValue(callback) {
-      var value = callback(newInsurance.coverage);
-      if (value === 'custom') {
-        handleCustomCoverage();
-      } else {
-        setNewInsurance(_objectSpread(_objectSpread({}, newInsurance), {}, {
-          coverage: value
-        }));
-      }
-    },
-    placeholder: "Select",
-    style: styles.dropdownStyle,
-    textStyle: styles.dropdownTextStyle,
-    dropDownContainerStyle: styles.dropdownContainerStyle,
-    listItemContainerStyle: styles.dropdownItemStyle,
-    zIndex: openInsuranceType ? 998 : 999,
-    zIndexInverse: openInsuranceType ? 999 : 998,
-    listMode: "SCROLLVIEW",
-    scrollViewProps: {
-      nestedScrollEnabled: true
-    }
-  })), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: [styles.formGroup, {
-      zIndex: openInsuranceType || openInsuranceCoverage ? -1 : 1
-    }]
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.label
-  }, "Issuer"), /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
-    style: styles.input,
-    value: newInsurance.issuer,
-    onChangeText: function onChangeText(text) {
-      return setNewInsurance(_objectSpread(_objectSpread({}, newInsurance), {}, {
-        issuer: text
-      }));
-    },
-    placeholder: "e.g. Lloyds",
-    placeholderTextColor: "#999"
-  })), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.buttonRow
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-    style: styles.cancelButton,
-    onPress: function onPress() {
-      return setShowInsuranceForm(false);
-    }
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.buttonText
-  }, "Cancel")), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-    style: styles.saveButton,
-    onPress: addInsurance
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.buttonText
-  }, "Save")))), /*#__PURE__*/_react["default"].createElement(_reactNative.Modal, {
-    visible: showCustomCoverageModal,
-    transparent: true,
-    animationType: "fade",
-    onRequestClose: function onRequestClose() {
-      return setShowCustomCoverageModal(false);
-    }
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.modalOverlay
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.modalContent
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.modalTitle
-  }, "Custom Coverage Amount"), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.modalForm
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.modalInputRow
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
-    style: styles.modalInput,
-    value: customCoverageAmount,
-    onChangeText: function onChangeText(text) {
-      if (/^(\d+)?(\.\d*)?$/.test(text) || text === '') {
-        setCustomCoverageAmount(text);
-      }
-    },
-    placeholder: "Enter amount",
-    placeholderTextColor: "#999",
-    keyboardType: "numeric"
-  }), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: [styles.modalDropdown, {
-      zIndex: getZIndex(openCustomCoverageUnit)
-    }]
-  }, /*#__PURE__*/_react["default"].createElement(_reactNativeDropdownPicker["default"], {
-    open: openCustomCoverageUnit,
-    value: customCoverageUnit,
-    items: getCoverageUnitItems(),
-    setOpen: setOpenCustomCoverageUnit,
-    setValue: function setValue(callback) {
-      var value = callback(customCoverageUnit);
-      setCustomCoverageUnit(value);
-    },
-    placeholder: "Select",
-    style: styles.dropdownStyle,
-    textStyle: styles.dropdownTextStyle,
-    dropDownContainerStyle: styles.dropdownContainerStyle,
-    listItemContainerStyle: styles.dropdownItemStyle
-  }))), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.modalButtons
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-    style: styles.modalCancelButton,
-    onPress: function onPress() {
-      return setShowCustomCoverageModal(false);
-    }
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.modalCancelButtonText
-  }, "Cancel")), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-    style: [styles.modalSaveButton, (!customCoverageAmount || customCoverageAmount === '0') && styles.modalButtonDisabled],
-    onPress: saveCustomCoverage,
-    disabled: !customCoverageAmount || customCoverageAmount === '0'
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.modalSaveButtonText
-  }, "Save"))))))), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.mainSectionHeader
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.mainSectionHeaderText
-  }, "Photos")), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-    style: styles.submitButton,
-    onPress: handleSubmit
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.submitButtonText
-  }, "Create Offering"))));
+  //   return (
+  //     <View style={styles.container}>
+  //       <View style={styles.formContentContainer}>
+  //         {/* Service Information (including Business Details) */}
+  //         <View style={styles.mainSectionHeader}>
+  //           <Text style={styles.mainSectionHeaderText}>Service Information</Text>
+  //         </View>
+
+  //       <View style={styles.formGroup}>
+  //         <Text style={styles.label}>Title <Text style={styles.requiredStar}>*</Text></Text>
+  //         <TextInput
+  //           style={styles.input}
+  //           value={formData.title}
+  //           onChangeText={(text) => setFormData({ ...formData, title: text })}
+  //             placeholder="e.g. Garry's Plumbing"
+  //           placeholderTextColor="#999"
+  //         />
+  //       </View>
+
+  //       <View style={styles.formGroup}>
+  //         <Text style={styles.label}>Description <Text style={styles.requiredStar}>*</Text></Text>
+  //         <TextInput
+  //           style={[styles.input, styles.textArea]}
+  //           value={formData.description}
+  //           onChangeText={(text) => setFormData({ ...formData, description: text })}
+  //             placeholder="Describe your plumbing service and specialties"
+  //           placeholderTextColor="#999"
+  //           multiline
+  //           numberOfLines={4}
+  //           textAlignVertical="top"
+  //         />
+  //       </View>
+
+  //         {/* Entity Type */}
+  //         <View style={[styles.formGroup, {zIndex: getZIndex(openEntity)}]}>
+  //           <Text style={styles.label}>Entity Type <Text style={styles.requiredStar}>*</Text></Text>
+  //           <DropDownPicker
+  //             open={openEntity}
+  //             value={formData.entity}
+  //             items={getEntityItems()}
+  //             setOpen={(value) => handleOpenDropdown(setOpenEntity, openEntity)}
+  //             setValue={(callback) => {
+  //               const value = callback(formData.entity);
+  //               setFormData({...formData, entity: value});
+  //             }}
+  //             placeholder="Select"
+  //             style={styles.dropdownStyle}
+  //             textStyle={styles.dropdownTextStyle}
+  //             dropDownContainerStyle={styles.dropdownContainerStyle}
+  //             listItemContainerStyle={styles.dropdownItemStyle}
+  //             listMode="SCROLLVIEW"
+  //             scrollViewProps={{
+  //               nestedScrollEnabled: true,
+  //             }}
+  //           />
+  //         </View>
+
+  //         {/* Business Commencement Date - replaced Years In Business */}
+  //         <View style={styles.formGroup}>
+  //           <Text style={styles.label}>Business Commencement Date <Text style={styles.requiredStar}>*</Text></Text>
+  //           <TouchableOpacity 
+  //             style={styles.datePickerButton}
+  //             onPress={openDatePicker}
+  //           >
+  //             <Text style={styles.datePickerButtonText}>
+  //               {formData.businessCommencementDate 
+  //                 ? getFormattedDate(formData.businessCommencementDate) 
+  //                 : 'Select commencement date'}
+  //             </Text>
+  //             <View style={styles.calendarIcon}>
+  //               {/* <IconButton
+  //                 icon="calendar"
+  //                 size={24}
+  //                 iconColor="#6750a4"
+  //               /> */}
+  //             </View>
+  //           </TouchableOpacity>
+
+  //           {Platform.OS === 'ios' ? (
+  //             <Modal
+  //               animationType="slide"
+  //               transparent={true}
+  //               visible={showDatePicker}
+  //               onRequestClose={cancelIOSDate}
+  //             >
+  //               <TouchableOpacity
+  //                 style={styles.datePickerModalOverlay}
+  //                 activeOpacity={1}
+  //                 onPress={cancelIOSDate}
+  //               >
+  //                 <View style={styles.datePickerContainer}>
+  //                   <View style={styles.datePickerHeader}>
+  //                     <TouchableOpacity onPress={cancelIOSDate}>
+  //                       <Text style={styles.datePickerCancel}>Cancel</Text>
+  //                     </TouchableOpacity>
+  //                     <Text style={styles.datePickerTitle}>Select Date</Text>
+  //                     <TouchableOpacity onPress={confirmIOSDate}>
+  //                       <Text style={styles.datePickerDone}>Done</Text>
+  //                     </TouchableOpacity>
+  //                   </View>
+  //                   <DateTimePicker
+  //                     value={tempDate || new Date()}
+  //                     mode="date"
+  //                     display="spinner"
+  //                     onChange={onDateChange}
+  //                     maximumDate={new Date()}
+  //                     style={styles.datePickerIOS}
+  //                   />
+  //                 </View>
+  //               </TouchableOpacity>
+  //             </Modal>
+  //           ) : (
+  //             showDatePicker && (
+  //               <DateTimePicker
+  //                 value={formData.businessCommencementDate || new Date()}
+  //                 mode="date"
+  //                 display="default"
+  //                 onChange={onDateChange}
+  //                 maximumDate={new Date()}
+  //               />
+  //             )
+  //           )}
+  //         </View>
+
+  //         <View style={[styles.formGroup, {zIndex: (openWarrantyParts || openWarrantyLabor) ? 900 : 1, marginTop: 20}]}>
+  //           <Text style={styles.label}>Warranty <Text style={styles.requiredStar}>*</Text></Text>
+  //           <View style={styles.warrantyContainer}>
+  //             <View style={[styles.warrantyInput, {zIndex: getZIndex(openWarrantyParts)}]}>
+  //               <Text style={styles.warrantyLabel}>Parts</Text>
+  //               <DropDownPicker
+  //                 open={openWarrantyParts}
+  //                 value={formData.warrantyParts}
+  //                 items={getWarrantyPartsItems()}
+  //                 setOpen={(value) => handleOpenDropdown(setOpenWarrantyParts, openWarrantyParts)}
+  //                 setValue={(callback) => {
+  //                   const value = callback(formData.warrantyParts);
+  //                   if (value === 'custom') {
+  //                     handleCustomWarranty('parts');
+  //                   } else {
+  //                     setFormData({...formData, warrantyParts: value});
+  //                   }
+  //                 }}
+  //                 placeholder="Select"
+  //                 style={styles.dropdownStyle}
+  //                 textStyle={styles.dropdownTextStyle}
+  //                 dropDownContainerStyle={styles.dropdownContainerStyle}
+  //                 listItemContainerStyle={styles.dropdownItemStyle}
+  //                 zIndex={openWarrantyLabor ? 998 : 999}
+  //                 zIndexInverse={openWarrantyLabor ? 999 : 998}
+  //                 listMode="SCROLLVIEW"
+  //                 scrollViewProps={{
+  //                   nestedScrollEnabled: true,
+  //                 }}
+  //               />
+  //             </View>
+  //             <View style={[styles.warrantyInput, {zIndex: getZIndex(openWarrantyLabor)}]}>
+  //               <Text style={styles.warrantyLabel}>Labor</Text>
+  //               <DropDownPicker
+  //                 open={openWarrantyLabor}
+  //                 value={formData.warrantyLabor}
+  //                 items={getWarrantyLaborItems()}
+  //                 setOpen={(value) => handleOpenDropdown(setOpenWarrantyLabor, openWarrantyLabor)}
+  //                 setValue={(callback) => {
+  //                   const value = callback(formData.warrantyLabor);
+  //                   if (value === 'custom') {
+  //                     handleCustomWarranty('labor');
+  //                   } else {
+  //                     setFormData({...formData, warrantyLabor: value});
+  //                   }
+  //                 }}
+  //                 placeholder="Select"
+  //                 style={styles.dropdownStyle}
+  //                 textStyle={styles.dropdownTextStyle}
+  //                 dropDownContainerStyle={styles.dropdownContainerStyle}
+  //                 listItemContainerStyle={styles.dropdownItemStyle}
+  //                 zIndex={openWarrantyParts ? 998 : 999}
+  //                 zIndexInverse={openWarrantyParts ? 999 : 998}
+  //                 listMode="SCROLLVIEW"
+  //                 scrollViewProps={{
+  //                   nestedScrollEnabled: true,
+  //                 }}
+  //               />
+  //             </View>
+  //           </View>
+  //         </View>
+
+  //         {/* Custom Warranty Modal */}
+  //         <Modal
+  //           visible={showCustomWarrantyModal}
+  //           transparent={true}
+  //           animationType="fade"
+  //           onRequestClose={() => setShowCustomWarrantyModal(false)}
+  //         >
+  //           <View style={styles.modalOverlay}>
+  //             <View style={styles.modalContent}>
+  //               <Text style={styles.modalTitle}>
+  //                 Custom {customWarrantyType === 'parts' ? 'Parts' : 'Labor'} Warranty
+  //               </Text>
+
+  //               <View style={styles.modalForm}>
+  //                 <View style={styles.modalInputRow}>
+  //                   <TextInput
+  //                     style={styles.modalInput}
+  //                     value={customWarrantyValue}
+  //                     onChangeText={setCustomWarrantyValue}
+  //                     placeholder="Enter number"
+  //                     placeholderTextColor="#999"
+  //                     keyboardType="numeric"
+  //                   />
+
+  //                   <View style={[styles.modalDropdown, {zIndex: getZIndex(openCustomWarrantyUnit)}]}>
+  //                     <DropDownPicker
+  //                       open={openCustomWarrantyUnit}
+  //                       value={customWarrantyUnit}
+  //                       items={getTimeUnitItems()}
+  //                       setOpen={setOpenCustomWarrantyUnit}
+  //                       setValue={(callback) => {
+  //                         const value = callback(customWarrantyUnit);
+  //                         setCustomWarrantyUnit(value);
+  //                       }}
+  //                       placeholder="Select"
+  //                       style={styles.dropdownStyle}
+  //                       textStyle={styles.dropdownTextStyle}
+  //                       dropDownContainerStyle={styles.dropdownContainerStyle}
+  //                       listItemContainerStyle={styles.dropdownItemStyle}
+  //                     />
+  //                   </View>
+  //                 </View>
+
+  //                 <View style={styles.modalButtons}>
+  //                   <TouchableOpacity
+  //                     style={styles.modalCancelButton}
+  //                     onPress={() => setShowCustomWarrantyModal(false)}
+  //                   >
+  //                     <Text style={styles.modalCancelButtonText}>Cancel</Text>
+  //                   </TouchableOpacity>
+
+  //                   <TouchableOpacity
+  //                     style={[
+  //                       styles.modalSaveButton,
+  //                       (!customWarrantyValue || customWarrantyValue === '0') && styles.modalButtonDisabled
+  //                     ]}
+  //                     onPress={saveCustomWarranty}
+  //                     disabled={!customWarrantyValue || customWarrantyValue === '0'}
+  //                   >
+  //                     <Text style={styles.modalSaveButtonText}>Save</Text>
+  //                   </TouchableOpacity>
+  //                 </View>
+  //               </View>
+  //             </View>
+  //           </View>
+  //         </Modal>
+
+  //         <View style={[styles.formGroup, {zIndex: (openWarrantyParts || openWarrantyLabor) ? -1 : 1}]}>
+  //           <Text style={styles.label}>Emergency Services Provided</Text>
+  //         <View style={styles.switchContainer}>
+  //           <Switch
+  //               value={formData.emergencyServicesProvided}
+  //               onValueChange={(value) => setFormData({...formData, emergencyServicesProvided: value})}
+  //             trackColor={{ false: "#767577", true: "#81b0ff" }}
+  //               thumbColor={formData.emergencyServicesProvided ? "#007AFF" : "#f4f3f4"}
+  //           />
+  //           <Text style={styles.switchLabel}>
+  //               {formData.emergencyServicesProvided ? "Yes" : "No"}
+  //           </Text>
+  //         </View>
+  //       </View>
+
+  //       <View style={styles.formGroup}>
+  //           <Text style={styles.label}>Permitting Included</Text>
+  //           <View style={styles.switchContainer}>
+  //             <Switch
+  //               value={formData.permittingIncluded === "yes"}
+  //               onValueChange={(value) => setFormData({...formData, permittingIncluded: value ? "yes" : "no"})}
+  //               trackColor={{ false: "#767577", true: "#81b0ff" }}
+  //               thumbColor={formData.permittingIncluded === "yes" ? "#007AFF" : "#f4f3f4"}
+  //             />
+  //             <Text style={styles.switchLabel}>
+  //               {formData.permittingIncluded === "yes" ? "Yes" : "No"}
+  //             </Text>
+  //           </View>
+  //         </View>
+
+  //         {/* Personal Details */}
+  //         <View style={[styles.mainSectionHeader, {zIndex: openEntity ? -1 : 1}]}>
+  //           <Text style={styles.mainSectionHeaderText}>Personal Details</Text>
+  //         </View>
+
+  //         <View style={styles.formGroup}>
+  //           <Text style={styles.label}>Phone <Text style={styles.requiredStar}>*</Text></Text>
+  //           <TextInput
+  //             style={styles.input}
+  //             value={formData.contact.phone}
+  //             onChangeText={(text) => {
+  //               // Only allow numbers, +, and spaces for readability
+  //               const filteredText = text.replace(/[^\d\s+]/g, '');
+  //               updateContact('phone', filteredText);
+  //             }}
+  //             placeholder="e.g. +1 650 288 7596"
+  //             placeholderTextColor="#999"
+  //             keyboardType="phone-pad"
+  //             autoCapitalize="none"
+  //             autoCorrect={false}
+  //           />
+  //           {formData.contact.phone && !isValidPhoneNumber(formData.contact.phone) && (
+  //             <Text style={styles.errorText}>Please enter a valid phone number with country code (e.g. +1 for US)</Text>
+  //           )}
+  //         </View>
+
+  //         <View style={styles.formGroup}>
+  //           <Text style={styles.label}>Email <Text style={styles.requiredStar}>*</Text></Text>
+  //           <TextInput
+  //             style={styles.input}
+  //             value={formData.contact.email}
+  //             onChangeText={(text) => updateContact('email', text)}
+  //             placeholder="e.g. needseek@aol.com"
+  //             placeholderTextColor="#999"
+  //             keyboardType="email-address"
+  //             autoCapitalize="none"
+  //           />
+  //           {formData.contact.email && !isValidEmail(formData.contact.email) && (
+  //             <Text style={styles.errorText}>Please enter a valid email address</Text>
+  //           )}
+  //         </View>
+
+  //         <View style={styles.formGroup}>
+  //           <Text style={styles.label}>Website</Text>
+  //         <TextInput
+  //           style={styles.input}
+  //             value={formData.contact.website}
+  //             onChangeText={(text) => updateContact('website', text)}
+  //             placeholder="e.g. www.needseek.com"
+  //           placeholderTextColor="#999"
+  //           autoCapitalize="none"
+  //         />
+  //       </View>
+
+  //         {/* Address with autocomplete */}
+  //         <View style={styles.formGroup}>
+  //           <Text style={styles.label}>Address <Text style={styles.requiredStar}>*</Text></Text>
+
+  //           {formData.contact.address ? (
+  //             /* Selected Address Block */
+  //             <View style={styles.selectedAddressContainer}>
+  //               <Text 
+  //                 style={styles.selectedAddressText}
+  //                 numberOfLines={2}
+  //               >
+  //                 {formData.contact.address}
+  //               </Text>
+  //               <TouchableOpacity
+  //                 style={styles.removeAddressButton}
+  //                 onPress={clearSelectedAddress}
+  //               >
+  //                 <Text style={styles.removeAddressButtonText}>✕</Text>
+  //               </TouchableOpacity>
+  //             </View>
+  //           ) : (
+  //             /* Search Input Field */
+  //             <View style={styles.searchContainer}>
+  //               <TextInput
+  //                 style={styles.addressInput}
+  //                 value={addressSearchQuery}
+  //                 onChangeText={setAddressSearchQuery}
+  //                 placeholder="Where is your service headquartered?"
+  //                 placeholderTextColor="#999"
+  //               />
+  //               <View style={{ position: 'absolute', right: 0 }}>
+  //                 {/* <IconButton
+  //                   icon="magnify"
+  //                   size={21}
+  //                   mode="contained"
+  //                   onPress={() => searchAddressPlaces(addressSearchQuery)}
+  //                 /> */}
+  //               </View>
+  //             </View>
+  //           )}
+
+  //           {/* Address Search Results */}
+  //           {showAddressResults && addressSearchResults.length > 0 && !formData.contact.address && (
+  //             <FlatList
+  //               data={addressSearchResults}
+  //               keyExtractor={(item) => item.place_id}
+  //               keyboardShouldPersistTaps="handled"
+  //               style={styles.suggestionsList}
+  //               renderItem={({ item }) => (
+  //                 <TouchableOpacity
+  //                   style={styles.suggestionItem}
+  //                   onPress={() => handleSelectPlace(item)}
+  //                 >
+  //                   <Text style={styles.suggestionText}>{item.description}</Text>
+  //                 </TouchableOpacity>
+  //               )}
+  //             />
+  //           )}
+  //         </View>
+
+  //         {/* Credentials & Coverage */}
+  //         <View style={styles.mainSectionHeader}>
+  //           <Text style={styles.mainSectionHeaderText}>Credentials & Coverage</Text>
+  //         </View>
+
+  //         {/* Licenses */}
+  //         <View style={styles.sectionHeader}>
+  //           <Text style={styles.sectionHeaderText}>Licenses</Text>
+  //           <TouchableOpacity 
+  //             style={styles.addButton} 
+  //             onPress={() => setShowLicenseForm(true)}
+  //           >
+  //             <Text style={styles.addButtonText}>+ Add License</Text>
+  //           </TouchableOpacity>
+  //         </View>
+
+  //         {formData.licenses.map((license, index) => (
+  //           <View key={index} style={styles.listItem}>
+  //             <View style={styles.itemContent}>
+  //               <Text style={styles.itemTitle}>{license.title}</Text>
+  //               <Text style={styles.itemDetail}>Issued by: {license.issuer}</Text>
+  //               <Text style={styles.itemDetail}>Type: {license.type}</Text>
+  //               <Text style={styles.itemDetail}>Scope: {license.scope}</Text>
+  //               <Text style={styles.itemDetail}>Licensee: {license.licensee}</Text>
+  //             </View>
+  //             <TouchableOpacity style={styles.removeItemButton} onPress={() => removeLicense(index)}>
+  //               <Text style={styles.removeItemButtonText}>✕</Text>
+  //             </TouchableOpacity>
+  //           </View>
+  //         ))}
+
+  //         {showLicenseForm && (
+  //           <View style={styles.subForm}>
+  //             <View style={styles.formGroup}>
+  //               <Text style={styles.label}>License Title</Text>
+  //         <TextInput
+  //           style={styles.input}
+  //                 value={newLicense.title}
+  //                 onChangeText={(text) => setNewLicense({...newLicense, title: text})}
+  //                 placeholder="e.g. Plumber Trade Certification"
+  //           placeholderTextColor="#999"
+  //         />
+  //       </View>
+
+  //       <View style={styles.formGroup}>
+  //               <Text style={styles.label}>Issuer</Text>
+  //               <TextInput
+  //                 style={styles.input}
+  //                 value={newLicense.issuer}
+  //                 onChangeText={(text) => setNewLicense({...newLicense, issuer: text})}
+  //                 placeholder="e.g. City of Hollywood"
+  //                 placeholderTextColor="#999"
+  //               />
+  //             </View>
+
+  //             <View style={[styles.formGroup, {zIndex: getZIndex(openLicenseType)}]}>
+  //               <Text style={styles.label}>License Type</Text>
+  //               <DropDownPicker
+  //                 open={openLicenseType}
+  //                 value={newLicense.type}
+  //                 items={getLicenseTypeItems()}
+  //                 setOpen={(value) => handleOpenDropdown(setOpenLicenseType, openLicenseType)}
+  //                 setValue={(callback) => {
+  //                   const value = callback(newLicense.type);
+  //                   setNewLicense({...newLicense, type: value});
+  //                 }}
+  //                 placeholder="Select"
+  //                 style={styles.dropdownStyle}
+  //                 textStyle={styles.dropdownTextStyle}
+  //                 dropDownContainerStyle={styles.dropdownContainerStyle}
+  //                 listItemContainerStyle={styles.dropdownItemStyle}
+  //                 listMode="SCROLLVIEW"
+  //                 scrollViewProps={{
+  //                   nestedScrollEnabled: true,
+  //                 }}
+  //               />
+  //             </View>
+
+  //             <View style={[styles.formGroup, {zIndex: openLicenseType ? -1 : 1}]}>
+  //               <Text style={styles.label}>Scope</Text>
+  //         <TextInput
+  //           style={styles.input}
+  //                 value={newLicense.scope}
+  //                 onChangeText={(text) => setNewLicense({...newLicense, scope: text})}
+  //                 placeholder="e.g. FL.Hollywood"
+  //           placeholderTextColor="#999"
+  //         />
+  //       </View>
+
+  //       <View style={styles.formGroup}>
+  //               <Text style={styles.label}>Licensee</Text>
+  //               <TextInput
+  //                 style={styles.input}
+  //                 value={newLicense.licensee}
+  //                 onChangeText={(text) => setNewLicense({...newLicense, licensee: text})}
+  //                 placeholder="e.g. Westwood Plumbers"
+  //                 placeholderTextColor="#999"
+  //               />
+  //             </View>
+
+  //             <View style={styles.buttonRow}>
+  //               <TouchableOpacity style={styles.cancelButton} onPress={() => setShowLicenseForm(false)}>
+  //                 <Text style={styles.buttonText}>Cancel</Text>
+  //               </TouchableOpacity>
+  //               <TouchableOpacity style={styles.saveButton} onPress={addLicense}>
+  //                 <Text style={styles.buttonText}>Save</Text>
+  //               </TouchableOpacity>
+  //             </View>
+  //           </View>
+  //         )}
+
+  //         {/* Certifications */}
+  //         <View style={styles.sectionHeader}>
+  //           <Text style={styles.sectionHeaderText}>Certifications</Text>
+  //         </View>
+
+  //         <View style={styles.formGroup}>
+  //           <Text style={styles.label}>Add Certification</Text>
+  //           <View style={styles.rowContainer}>
+  //             <TextInput
+  //               style={[styles.input, { flex: 1 }]}
+  //               placeholder="e.g. Florida certified plumber"
+  //               placeholderTextColor="#999"
+  //               value={certificationInput}
+  //               onChangeText={setCertificationInput}
+  //               onSubmitEditing={handleAddCertification}
+  //             />
+  //             {certificationInput ? (
+  //               <TouchableOpacity 
+  //                 style={styles.clearButton} 
+  //                 onPress={() => setCertificationInput('')}
+  //               >
+  //                 <Text style={styles.clearButtonText}>✕</Text>
+  //               </TouchableOpacity>
+  //             ) : null}
+  //             <TouchableOpacity 
+  //               style={[styles.addSmallButton, !certificationInput.trim() && styles.addButtonDisabled]} 
+  //               onPress={handleAddCertification}
+  //               disabled={!certificationInput.trim()}
+  //             >
+  //               <Text style={styles.buttonText}>Add</Text>
+  //             </TouchableOpacity>
+  //           </View>
+  //         </View>
+
+  //         {formData.certifications.map((cert, index) => (
+  //           <View key={index} style={styles.listItem}>
+  //             <View style={styles.itemContent}>
+  //               <Text style={styles.itemTitle}>{cert}</Text>
+  //             </View>
+  //             <TouchableOpacity
+  //               style={styles.removeItemButton}
+  //               onPress={() => {
+  //                 const updatedCertifications = [...formData.certifications];
+  //                 updatedCertifications.splice(index, 1);
+  //                 setFormData({...formData, certifications: updatedCertifications});
+  //               }}
+  //             >
+  //               <Text style={styles.removeItemButtonText}>✕</Text>
+  //             </TouchableOpacity>
+  //           </View>
+  //         ))}
+
+  //         {/* Insurances */}
+  //         <View style={styles.sectionHeader}>
+  //           <Text style={styles.sectionHeaderText}>Insurances</Text>
+  //           <TouchableOpacity 
+  //             style={styles.addButton} 
+  //             onPress={() => setShowInsuranceForm(true)}
+  //           >
+  //             <Text style={styles.addButtonText}>+ Add Insurance</Text>
+  //           </TouchableOpacity>
+  //         </View>
+
+  //         {formData.insurances.map((insurance, index) => (
+  //           <View key={index} style={styles.listItem}>
+  //             <View style={styles.itemContent}>
+  //               <Text style={styles.itemTitle}>{insurance.type}</Text>
+  //               <Text style={styles.itemDetail}>Coverage: {insurance.coverage}</Text>
+  //               <Text style={styles.itemDetail}>Issuer: {insurance.issuer}</Text>
+  //             </View>
+  //             <TouchableOpacity style={styles.removeItemButton} onPress={() => removeInsurance(index)}>
+  //               <Text style={styles.removeItemButtonText}>✕</Text>
+  //             </TouchableOpacity>
+  //           </View>
+  //         ))}
+
+  //         {showInsuranceForm && (
+  //           <View style={styles.subForm}>
+  //             <View style={[styles.formGroup, {zIndex: getZIndex(openInsuranceType)}]}>
+  //               <Text style={styles.label}>Insurance Type</Text>
+  //               <DropDownPicker
+  //                 open={openInsuranceType}
+  //                 value={newInsurance.type}
+  //                 items={getInsuranceTypeItems()}
+  //                 setOpen={(value) => handleOpenDropdown(setOpenInsuranceType, openInsuranceType)}
+  //                 setValue={(callback) => {
+  //                   const value = callback(newInsurance.type);
+  //                   setNewInsurance({...newInsurance, type: value});
+  //                 }}
+  //                 placeholder="Select"
+  //                 style={styles.dropdownStyle}
+  //                 textStyle={styles.dropdownTextStyle}
+  //                 dropDownContainerStyle={styles.dropdownContainerStyle}
+  //                 listItemContainerStyle={styles.dropdownItemStyle}
+  //                 listMode="SCROLLVIEW"
+  //                 scrollViewProps={{
+  //                   nestedScrollEnabled: true,
+  //                 }}
+  //               />
+  //             </View>
+
+  //             <View style={[styles.formGroup, {zIndex: getZIndex(openInsuranceCoverage)}]}>
+  //               <Text style={styles.label}>Coverage</Text>
+  //               <DropDownPicker
+  //                 open={openInsuranceCoverage}
+  //                 value={newInsurance.coverage}
+  //                 items={getInsuranceCoverageItems()}
+  //                 setOpen={(value) => handleOpenDropdown(setOpenInsuranceCoverage, openInsuranceCoverage)}
+  //                 setValue={(callback) => {
+  //                   const value = callback(newInsurance.coverage);
+  //                   if (value === 'custom') {
+  //                     handleCustomCoverage();
+  //                   } else {
+  //                     setNewInsurance({...newInsurance, coverage: value});
+  //                   }
+  //                 }}
+  //                 placeholder="Select"
+  //                 style={styles.dropdownStyle}
+  //                 textStyle={styles.dropdownTextStyle}
+  //                 dropDownContainerStyle={styles.dropdownContainerStyle}
+  //                 listItemContainerStyle={styles.dropdownItemStyle}
+  //                 zIndex={openInsuranceType ? 998 : 999}
+  //                 zIndexInverse={openInsuranceType ? 999 : 998}
+  //                 listMode="SCROLLVIEW"
+  //                 scrollViewProps={{
+  //                   nestedScrollEnabled: true,
+  //                 }}
+  //               />
+  //             </View>
+
+  //             <View style={[styles.formGroup, {zIndex: (openInsuranceType || openInsuranceCoverage) ? -1 : 1}]}>
+  //               <Text style={styles.label}>Issuer</Text>
+  //         <TextInput
+  //           style={styles.input}
+  //                 value={newInsurance.issuer}
+  //                 onChangeText={(text) => setNewInsurance({...newInsurance, issuer: text})}
+  //                 placeholder="e.g. Lloyds"
+  //           placeholderTextColor="#999"
+  //               />
+  //             </View>
+
+  //             <View style={styles.buttonRow}>
+  //               <TouchableOpacity style={styles.cancelButton} onPress={() => setShowInsuranceForm(false)}>
+  //                 <Text style={styles.buttonText}>Cancel</Text>
+  //               </TouchableOpacity>
+  //               <TouchableOpacity style={styles.saveButton} onPress={addInsurance}>
+  //                 <Text style={styles.buttonText}>Save</Text>
+  //               </TouchableOpacity>
+  //             </View>
+  //           </View>
+  //         )}
+
+  //         {/* Custom Coverage Modal */}
+  //         <Modal
+  //           visible={showCustomCoverageModal}
+  //           transparent={true}
+  //           animationType="fade"
+  //           onRequestClose={() => setShowCustomCoverageModal(false)}
+  //         >
+  //           <View style={styles.modalOverlay}>
+  //             <View style={styles.modalContent}>
+  //               <Text style={styles.modalTitle}>Custom Coverage Amount</Text>
+
+  //               <View style={styles.modalForm}>
+  //                 <View style={styles.modalInputRow}>
+  //                   <TextInput
+  //                     style={styles.modalInput}
+  //                     value={customCoverageAmount}
+  //                     onChangeText={(text) => {
+  //                       if (/^(\d+)?(\.\d*)?$/.test(text) || text === '') {
+  //                         setCustomCoverageAmount(text);
+  //                       }
+  //                     }}
+  //                     placeholder="Enter amount"
+  //                     placeholderTextColor="#999"
+  //                     keyboardType="numeric"
+  //                   />
+
+  //                   <View style={[styles.modalDropdown, {zIndex: getZIndex(openCustomCoverageUnit)}]}>
+  //                     <DropDownPicker
+  //                       open={openCustomCoverageUnit}
+  //                       value={customCoverageUnit}
+  //                       items={getCoverageUnitItems()}
+  //                       setOpen={setOpenCustomCoverageUnit}
+  //                       setValue={(callback) => {
+  //                         const value = callback(customCoverageUnit);
+  //                         setCustomCoverageUnit(value);
+  //                       }}
+  //                       placeholder="Select"
+  //                       style={styles.dropdownStyle}
+  //                       textStyle={styles.dropdownTextStyle}
+  //                       dropDownContainerStyle={styles.dropdownContainerStyle}
+  //                       listItemContainerStyle={styles.dropdownItemStyle}
+  //                     />
+  //                   </View>
+  //                 </View>
+
+  //                 <View style={styles.modalButtons}>
+  //                   <TouchableOpacity
+  //                     style={styles.modalCancelButton}
+  //                     onPress={() => setShowCustomCoverageModal(false)}
+  //                   >
+  //                     <Text style={styles.modalCancelButtonText}>Cancel</Text>
+  //                   </TouchableOpacity>
+
+  //                   <TouchableOpacity
+  //                     style={[
+  //                       styles.modalSaveButton,
+  //                       (!customCoverageAmount || customCoverageAmount === '0') && styles.modalButtonDisabled
+  //                     ]}
+  //                     onPress={saveCustomCoverage}
+  //                     disabled={!customCoverageAmount || customCoverageAmount === '0'}
+  //                   >
+  //                     <Text style={styles.modalSaveButtonText}>Save</Text>
+  //                   </TouchableOpacity>
+  //                 </View>
+  //               </View>
+  //             </View>
+  //           </View>
+  //         </Modal>
+
+  //         {/* Photos */}
+  //         <View style={styles.mainSectionHeader}>
+  //           <Text style={styles.mainSectionHeaderText}>Photos</Text>
+  //         </View>
+
+  //         {/* <PhotoAlbum
+  //           photos={photos}
+  //           onPhotoChange={setPhotos}
+  //           maxPhotos={8}
+  //           containerStyle={{ paddingHorizontal: 16 }}
+  //         /> */}
+  //         <TouchableOpacity 
+  //           style={styles.submitButton}
+  //           onPress={handleSubmit}
+  //         >
+  //           <Text style={styles.submitButtonText}>Create Offering</Text>
+  //         </TouchableOpacity>
+
+  //       </View>
+  //     </View>
+  //   );
 };
 
 // Local styles for the PlumbingForm component
