@@ -716,7 +716,7 @@ useEffect(() => {
         </View>
       </View>
       <View style={styles.formGroup}>
-        <Text style={styles.label}>Title <Text style={styles.requiredStar}>*</Text></Text>
+        <Text style={styles.label}>Title force updated <Text style={styles.requiredStar}>*</Text></Text>
         <TextInput
           style={styles.input}
           value={formData.title}

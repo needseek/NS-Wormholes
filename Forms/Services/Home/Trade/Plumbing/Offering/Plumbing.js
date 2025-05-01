@@ -918,29 +918,38 @@ var PlumbingForm = function PlumbingForm() {
     console.log('breadcrumb', breadcrumb);
     console.log('meta', meta);
   }, [formData]);
-  return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.label
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, null, "I'm not totally FUCKED updated!"));
+  // return (
+  //   <View style={styles.label}>
+  //     <Text>I'm not totally FUCKED updated!</Text>
+  //   </View>
+  // );
 
   // Return the form directly without FlatList
-  //   return (
-  //     <View style={styles.container}>
-  //       <View style={styles.formContentContainer}>
-  //         {/* Service Information (including Business Details) */}
-  //         <View style={styles.mainSectionHeader}>
-  //           <Text style={styles.mainSectionHeaderText}>Service Information</Text>
-  //         </View>
-
-  //       <View style={styles.formGroup}>
-  //         <Text style={styles.label}>Title <Text style={styles.requiredStar}>*</Text></Text>
-  //         <TextInput
-  //           style={styles.input}
-  //           value={formData.title}
-  //           onChangeText={(text) => setFormData({ ...formData, title: text })}
-  //             placeholder="e.g. Garry's Plumbing"
-  //           placeholderTextColor="#999"
-  //         />
-  //       </View>
+  return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.container
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.formContentContainer
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.mainSectionHeader
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.mainSectionHeaderText
+  }, "Service Information"))), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.formGroup
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.label
+  }, "Title force updated ", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.requiredStar
+  }, "*")), /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
+    style: styles.input,
+    value: formData.title,
+    onChangeText: function onChangeText(text) {
+      return setFormData(_objectSpread(_objectSpread({}, formData), {}, {
+        title: text
+      }));
+    },
+    placeholder: "e.g. Garry's Plumbing",
+    placeholderTextColor: "#999"
+  })));
 
   //       <View style={styles.formGroup}>
   //         <Text style={styles.label}>Description <Text style={styles.requiredStar}>*</Text></Text>
