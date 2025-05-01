@@ -976,7 +976,29 @@ var PlumbingForm = function PlumbingForm() {
     style: styles.label
   }, "Entity Type force ", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.requiredStar
-  }, "*")))));
+  }, "*")), /*#__PURE__*/_react["default"].createElement(_reactNativeDropdownPicker["default"], {
+    open: openEntity,
+    value: formData.entity,
+    items: getEntityItems(),
+    setOpen: function setOpen(value) {
+      return handleOpenDropdown(setOpenEntity, openEntity);
+    },
+    setValue: function setValue(callback) {
+      var value = callback(formData.entity);
+      setFormData(_objectSpread(_objectSpread({}, formData), {}, {
+        entity: value
+      }));
+    },
+    placeholder: "Select",
+    style: styles.dropdownStyle,
+    textStyle: styles.dropdownTextStyle,
+    dropDownContainerStyle: styles.dropdownContainerStyle,
+    listItemContainerStyle: styles.dropdownItemStyle,
+    listMode: "SCROLLVIEW",
+    scrollViewProps: {
+      nestedScrollEnabled: true
+    }
+  }))));
 
   //         {/* Business Commencement Date - replaced Years In Business */}
   //         <View style={styles.formGroup}>
