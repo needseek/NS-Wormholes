@@ -702,7 +702,7 @@ useEffect(() => {
 }, [formData]);
 return (
   <View style={styles.label}>
-    <Text>I'm not totally FUCKED!</Text>
+    <Text>I'm not totally FUCKED updated!</Text>
   </View>
 );
 
