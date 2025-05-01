@@ -16,10 +16,8 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 //   CustomWarrantySelector,
 //   PhotoAlbum
 // } from '../../components';
-import { useNavigation, CommonActions } from '@react-navigation/native';
-const PlumbingForm = ({ formData: initialFormData, setFormData: setParentFormData, styles: parentStyles, offering, selectedOption, breadcrumb, meta }) => {
+const PlumbingForm = ({ formData: initialFormData, setFormData: setParentFormData, styles: parentStyles, offering, selectedOption, breadcrumb, meta, navigation }) => {
   // Get styles by merging parent styles with component-specific styles
-  const navigation = useNavigation();
   const styles = { ...parentStyles, ...localStyles };
   
   // Initialize form data with defaults and any existing data

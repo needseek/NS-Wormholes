@@ -11,7 +11,6 @@ var _libphonenumberJs = require("libphonenumber-js");
 var _reactNativePaper = require("react-native-paper");
 var _expoConstants = _interopRequireDefault(require("expo-constants"));
 var _datetimepicker = _interopRequireDefault(require("@react-native-community/datetimepicker"));
-var _native = require("@react-navigation/native");
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
 function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function _interopRequireWildcard(e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, "default": e }; if (null === e || "object" != _typeof(e) && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (var _t in e) "default" !== _t && {}.hasOwnProperty.call(e, _t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, _t)) && (i.get || i.set) ? o(f, _t, i) : f[_t] = e[_t]); return f; })(e, t); }
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
@@ -43,16 +42,15 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 //   PhotoAlbum
 // } from '../../components';
 var PlumbingForm = function PlumbingForm(_ref) {
-  var _formData$contact, _formData$contact2, _formData$contact3, _formData$contact4, _formData$contact5, _formData$contact6, _formData$contact7, _formData$licenses, _formData$certificati, _formData$insurances;
   var initialFormData = _ref.formData,
     setParentFormData = _ref.setFormData,
     parentStyles = _ref.styles,
     offering = _ref.offering,
     selectedOption = _ref.selectedOption,
     breadcrumb = _ref.breadcrumb,
-    meta = _ref.meta;
+    meta = _ref.meta,
+    navigation = _ref.navigation;
   // Get styles by merging parent styles with component-specific styles
-  var navigation = (0, _native.useNavigation)();
   var styles = _objectSpread(_objectSpread({}, parentStyles), localStyles);
 
   // Initialize form data with defaults and any existing data
@@ -437,11 +435,11 @@ var PlumbingForm = function PlumbingForm(_ref) {
     //     Alert.alert('Error', 'Please select a labor warranty period for your offering');
     //     return;
     // }
-    // if (formData.contact?.phone && !isValidPhoneNumber(formData.contact.phone)) {
+    // if (formData.contact.phone && !isValidPhoneNumber(formData.contact.phone)) {
     //     Alert.alert('Error', 'Please enter a valid phone number with country code (e.g. +1 for US)');
     //     return;
     // }
-    // if (formData.contact?.email && !isValidEmail(formData.contact.email)) {
+    // if (formData.contact.email && !isValidEmail(formData.contact.email)) {
     //     Alert.alert('Error', 'Please enter a valid email address');
     //     return;
     // }
@@ -1190,7 +1188,7 @@ var PlumbingForm = function PlumbingForm(_ref) {
     style: styles.requiredStar
   }, "*")), /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
     style: styles.input,
-    value: (_formData$contact = formData.contact) === null || _formData$contact === void 0 ? void 0 : _formData$contact.phone,
+    value: formData.contact.phone,
     onChangeText: function onChangeText(text) {
       // Only allow numbers, +, and spaces for readability
       var filteredText = text.replace(/[^\d\s+]/g, '');
@@ -1201,7 +1199,7 @@ var PlumbingForm = function PlumbingForm(_ref) {
     keyboardType: "phone-pad",
     autoCapitalize: "none",
     autoCorrect: false
-  }), ((_formData$contact2 = formData.contact) === null || _formData$contact2 === void 0 ? void 0 : _formData$contact2.phone) && !(0, _libphonenumberJs.isValidPhoneNumber)(formData.contact.phone) && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+  }), formData.contact.phone && !(0, _libphonenumberJs.isValidPhoneNumber)(formData.contact.phone) && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.errorText
   }, "Please enter a valid phone number with country code (e.g. +1 for US)")), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
     style: styles.formGroup
@@ -1211,7 +1209,7 @@ var PlumbingForm = function PlumbingForm(_ref) {
     style: styles.requiredStar
   }, "*")), /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
     style: styles.input,
-    value: (_formData$contact3 = formData.contact) === null || _formData$contact3 === void 0 ? void 0 : _formData$contact3.email,
+    value: formData.contact.email,
     onChangeText: function onChangeText(text) {
       return updateContact('email', text);
     },
@@ -1219,7 +1217,7 @@ var PlumbingForm = function PlumbingForm(_ref) {
     placeholderTextColor: "#999",
     keyboardType: "email-address",
     autoCapitalize: "none"
-  }), ((_formData$contact4 = formData.contact) === null || _formData$contact4 === void 0 ? void 0 : _formData$contact4.email) && !isValidEmail(formData.contact.email) && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+  }), formData.contact.email && !isValidEmail(formData.contact.email) && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.errorText
   }, "Please enter a valid email address")), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
     style: styles.formGroup
@@ -1227,7 +1225,7 @@ var PlumbingForm = function PlumbingForm(_ref) {
     style: styles.label
   }, "Website"), /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
     style: styles.input,
-    value: (_formData$contact5 = formData.contact) === null || _formData$contact5 === void 0 ? void 0 : _formData$contact5.website,
+    value: formData.contact.website,
     onChangeText: function onChangeText(text) {
       return updateContact('website', text);
     },
@@ -1240,7 +1238,7 @@ var PlumbingForm = function PlumbingForm(_ref) {
     style: styles.label
   }, "Address ", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.requiredStar
-  }, "*")), (_formData$contact6 = formData.contact) !== null && _formData$contact6 !== void 0 && _formData$contact6.address ?
+  }, "*")), formData.contact.address ?
   /*#__PURE__*/
   /* Selected Address Block */
   _react["default"].createElement(_reactNative.View, {
@@ -1276,7 +1274,7 @@ var PlumbingForm = function PlumbingForm(_ref) {
     onPress: function onPress() {
       return searchAddressPlaces(addressSearchQuery);
     }
-  }))), showAddressResults && addressSearchResults.length > 0 && !((_formData$contact7 = formData.contact) !== null && _formData$contact7 !== void 0 && _formData$contact7.address) && /*#__PURE__*/_react["default"].createElement(_reactNative.FlatList, {
+  }))), showAddressResults && addressSearchResults.length > 0 && !formData.contact.address && /*#__PURE__*/_react["default"].createElement(_reactNative.FlatList, {
     data: addressSearchResults,
     keyExtractor: function keyExtractor(item) {
       return item.place_id;
@@ -1309,7 +1307,7 @@ var PlumbingForm = function PlumbingForm(_ref) {
     }
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.addButtonText
-  }, "+ Add License"))), (_formData$licenses = formData.licenses) === null || _formData$licenses === void 0 ? void 0 : _formData$licenses.map(function (license, index) {
+  }, "+ Add License"))), formData.licenses.map(function (license, index) {
     return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
       key: index,
       style: styles.listItem
@@ -1467,7 +1465,7 @@ var PlumbingForm = function PlumbingForm(_ref) {
     disabled: !certificationInput.trim()
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.buttonText
-  }, "Add")))), (_formData$certificati = formData.certifications) === null || _formData$certificati === void 0 ? void 0 : _formData$certificati.map(function (cert, index) {
+  }, "Add")))), formData.certifications.map(function (cert, index) {
     return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
       key: index,
       style: styles.listItem
@@ -1498,7 +1496,7 @@ var PlumbingForm = function PlumbingForm(_ref) {
     }
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.addButtonText
-  }, "+ Add Insurance"))), (_formData$insurances = formData.insurances) === null || _formData$insurances === void 0 ? void 0 : _formData$insurances.map(function (insurance, index) {
+  }, "+ Add Insurance"))), formData.insurances.map(function (insurance, index) {
     return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
       key: index,
       style: styles.listItem
