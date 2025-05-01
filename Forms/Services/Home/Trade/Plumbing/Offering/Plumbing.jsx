@@ -16,7 +16,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 //   CustomWarrantySelector,
 //   PhotoAlbum
 // } from '../../components';
-const PlumbingForm = ({ formData: initialFormData, setFormData: setParentFormData, styles: parentStyles, offering, selectedOption, breadcrumb, meta, navigation }) => {
+const PlumbingForm = ({ formData: initialFormData, setFormData: setParentFormData, styles: parentStyles, offering, selectedOption, breadcrumb, meta, navigation, GOOGLE_API }) => {
   // Get styles by merging parent styles with component-specific styles
   const styles = { ...parentStyles, ...localStyles };
   
@@ -147,7 +147,6 @@ const PlumbingForm = ({ formData: initialFormData, setFormData: setParentFormDat
   const [addressSearchQuery, setAddressSearchQuery] = useState('');
   const [addressSearchResults, setAddressSearchResults] = useState([]);
   const [showAddressResults, setShowAddressResults] = useState(false);
-  const { GOOGLE_API } = Constants.expoConfig.extra;
 
   // Search places using Google Places API
   const searchAddressPlaces = async (text) => {

@@ -49,7 +49,8 @@ var PlumbingForm = function PlumbingForm(_ref) {
     selectedOption = _ref.selectedOption,
     breadcrumb = _ref.breadcrumb,
     meta = _ref.meta,
-    navigation = _ref.navigation;
+    navigation = _ref.navigation,
+    GOOGLE_API = _ref.GOOGLE_API;
   // Get styles by merging parent styles with component-specific styles
   var styles = _objectSpread(_objectSpread({}, parentStyles), localStyles);
 
@@ -262,7 +263,6 @@ var PlumbingForm = function PlumbingForm(_ref) {
     _useState54 = _slicedToArray(_useState53, 2),
     showAddressResults = _useState54[0],
     setShowAddressResults = _useState54[1];
-  var GOOGLE_API = _expoConstants["default"].expoConfig.extra.GOOGLE_API;
 
   // Search places using Google Places API
   var searchAddressPlaces = /*#__PURE__*/function () {
