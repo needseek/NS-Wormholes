@@ -15,10 +15,30 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 //   CustomWarrantySelector,
 //   PhotoAlbum
 // } from '../../components';
-const PlumbingForm = ({ formData: initialFormData, setFormData: setParentFormData, styles: parentStyles, offering, selectedOption, breadcrumb, meta, navigation, GOOGLE_API }) => {
+const PlumbingForm = ({ 
+  formData: initialFormData = {},
+  setFormData: setParentFormData = () => {},
+  styles: parentStyles = {},
+  offering = null,
+  selectedOption = '',
+  breadcrumb = '',
+  meta = {},
+  navigation = null,
+  GOOGLE_API = ''
+} = {}) => {
   // Get styles by merging parent styles with component-specific styles
   const styles = { ...parentStyles, ...localStyles };
   
+  // Add console warnings for missing critical props
+  useEffect(() => {
+    if (!navigation) {
+      console.warn('PlumbingForm: navigation prop is missing. Some navigation features may not work.');
+    }
+    if (!GOOGLE_API) {
+      console.warn('PlumbingForm: GOOGLE_API prop is missing. Address search functionality will not work.');
+    }
+  }, [navigation, GOOGLE_API]);
+
   // Initialize form data with defaults and any existing data
   const [formData, setFormData] = useState(() => {
     const initialData = {
@@ -154,12 +174,27 @@ const PlumbingForm = ({ formData: initialFormData, setFormData: setParentFormDat
         setAddressSearchResults([]);
         return;
       }
+      
+      if (!GOOGLE_API) {
+        Alert.alert(
+          'Configuration Error',
+          'Google Places API key is not configured. Address search is not available.',
+          [{ text: 'OK' }]
+        );
+        return;
+      }
+
       const response = await fetch(
         `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(text)}&types=geocode&key=${GOOGLE_API}`
       );
       const data = await response.json();
       if (data.status !== "OK") {
         console.error("Google Places API Error:", data.status, data.error_message);
+        Alert.alert(
+          'Search Error',
+          'Unable to search for addresses at this time. Please try again later.',
+          [{ text: 'OK' }]
+        );
         return;
       }
   
@@ -172,6 +207,11 @@ const PlumbingForm = ({ formData: initialFormData, setFormData: setParentFormDat
       setShowAddressResults(true);
     } catch (error) {
       console.error("Error fetching places:", error);
+      Alert.alert(
+        'Search Error',
+        'Unable to search for addresses at this time. Please try again later.',
+        [{ text: 'OK' }]
+      );
     }
   };
 
@@ -255,45 +295,6 @@ const PlumbingForm = ({ formData: initialFormData, setFormData: setParentFormDat
 
   // Add this function to your component
   const handleSubmit = () => {
-    // Validate data
-    // if (!formData.title.trim()) {
-    //   Alert.alert('Error', 'Please enter a title for your offering');
-    //   return;
-    // }
-    
-    // if (!formData.description.trim()) {
-    //   Alert.alert('Error', 'Please enter a description for your offering');
-    //   return;
-    // }
-    // if (formData.entity == "unselected") {
-    //     Alert.alert('Error', 'Please select an entity type for your offering');
-    //     return;
-    // }
-    // if (!formData.businessCommencementDate) {
-    //     Alert.alert('Error', 'Please select a business commencement date for your offering');
-    //     return;
-    // }
-    // if (formData.warrantyParts === null) {
-    //     Alert.alert('Error', 'Please select a parts warranty period for your offering');
-    //     return;
-    // }
-    // if (formData.warrantyLabor === null) {
-    //     Alert.alert('Error', 'Please select a labor warranty period for your offering');
-    //     return;
-    // }
-    // if (formData.contact.phone && !isValidPhoneNumber(formData.contact.phone)) {
-    //     Alert.alert('Error', 'Please enter a valid phone number with country code (e.g. +1 for US)');
-    //     return;
-    // }
-    // if (formData.contact.email && !isValidEmail(formData.contact.email)) {
-    //     Alert.alert('Error', 'Please enter a valid email address');
-    //     return;
-    // }
-    // if (!formData.contact.address.trim()) {
-    //     Alert.alert('Error', 'Please enter an address for your offering');
-    //     return;
-    // }
-    
     // Format the data according to the required JSON structure
     const formattedData = {
       offering: {
@@ -335,15 +336,24 @@ const PlumbingForm = ({ formData: initialFormData, setFormData: setParentFormDat
     console.log('Submitting offering:', formattedData);
   
     // Navigate to success screen or back to home
-    navigation.navigate('CreateHave', { 
-      selectedOption,
-      topics: [],
-      topicTexts: [],
-      breadcrumb: breadcrumb,
-      address: formData.contact.address,
-      offeringTitle: formData.title,
-      meta,
-    });
+    if (navigation) {
+      navigation.navigate('CreateHave', { 
+        selectedOption,
+        topics: [],
+        topicTexts: [],
+        breadcrumb: breadcrumb,
+        address: formData.contact.address,
+        offeringTitle: formData.title,
+        meta,
+      });
+    } else {
+      console.warn('Navigation is not available. Unable to navigate after form submission.');
+      Alert.alert(
+        'Success',
+        'Form submitted successfully, but navigation is not available.',
+        [{ text: 'OK' }]
+      );
+    }
   };
 
   const updateContact = (field, value) => {

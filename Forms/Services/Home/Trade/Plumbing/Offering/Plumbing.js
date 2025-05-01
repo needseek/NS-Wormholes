@@ -40,18 +40,38 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 //   CustomWarrantySelector,
 //   PhotoAlbum
 // } from '../../components';
-var PlumbingForm = function PlumbingForm(_ref) {
-  var initialFormData = _ref.formData,
-    setParentFormData = _ref.setFormData,
-    parentStyles = _ref.styles,
-    offering = _ref.offering,
-    selectedOption = _ref.selectedOption,
-    breadcrumb = _ref.breadcrumb,
-    meta = _ref.meta,
-    navigation = _ref.navigation,
-    GOOGLE_API = _ref.GOOGLE_API;
+var PlumbingForm = function PlumbingForm() {
+  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+    _ref$formData = _ref.formData,
+    initialFormData = _ref$formData === void 0 ? {} : _ref$formData,
+    _ref$setFormData = _ref.setFormData,
+    setParentFormData = _ref$setFormData === void 0 ? function () {} : _ref$setFormData,
+    _ref$styles = _ref.styles,
+    parentStyles = _ref$styles === void 0 ? {} : _ref$styles,
+    _ref$offering = _ref.offering,
+    offering = _ref$offering === void 0 ? null : _ref$offering,
+    _ref$selectedOption = _ref.selectedOption,
+    selectedOption = _ref$selectedOption === void 0 ? '' : _ref$selectedOption,
+    _ref$breadcrumb = _ref.breadcrumb,
+    breadcrumb = _ref$breadcrumb === void 0 ? '' : _ref$breadcrumb,
+    _ref$meta = _ref.meta,
+    meta = _ref$meta === void 0 ? {} : _ref$meta,
+    _ref$navigation = _ref.navigation,
+    navigation = _ref$navigation === void 0 ? null : _ref$navigation,
+    _ref$GOOGLE_API = _ref.GOOGLE_API,
+    GOOGLE_API = _ref$GOOGLE_API === void 0 ? '' : _ref$GOOGLE_API;
   // Get styles by merging parent styles with component-specific styles
   var styles = _objectSpread(_objectSpread({}, parentStyles), localStyles);
+
+  // Add console warnings for missing critical props
+  (0, _react.useEffect)(function () {
+    if (!navigation) {
+      console.warn('PlumbingForm: navigation prop is missing. Some navigation features may not work.');
+    }
+    if (!GOOGLE_API) {
+      console.warn('PlumbingForm: GOOGLE_API prop is missing. Address search functionality will not work.');
+    }
+  }, [navigation, GOOGLE_API]);
 
   // Initialize form data with defaults and any existing data
   var _useState = (0, _react.useState)(function () {
@@ -278,21 +298,33 @@ var PlumbingForm = function PlumbingForm(_ref) {
             setAddressSearchResults([]);
             return _context.abrupt("return");
           case 4:
-            _context.next = 6;
-            return fetch("https://maps.googleapis.com/maps/api/place/autocomplete/json?input=".concat(encodeURIComponent(text), "&types=geocode&key=").concat(GOOGLE_API));
-          case 6:
-            response = _context.sent;
+            if (GOOGLE_API) {
+              _context.next = 7;
+              break;
+            }
+            _reactNative.Alert.alert('Configuration Error', 'Google Places API key is not configured. Address search is not available.', [{
+              text: 'OK'
+            }]);
+            return _context.abrupt("return");
+          case 7:
             _context.next = 9;
-            return response.json();
+            return fetch("https://maps.googleapis.com/maps/api/place/autocomplete/json?input=".concat(encodeURIComponent(text), "&types=geocode&key=").concat(GOOGLE_API));
           case 9:
+            response = _context.sent;
+            _context.next = 12;
+            return response.json();
+          case 12:
             data = _context.sent;
             if (!(data.status !== "OK")) {
-              _context.next = 13;
+              _context.next = 17;
               break;
             }
             console.error("Google Places API Error:", data.status, data.error_message);
+            _reactNative.Alert.alert('Search Error', 'Unable to search for addresses at this time. Please try again later.', [{
+              text: 'OK'
+            }]);
             return _context.abrupt("return");
-          case 13:
+          case 17:
             setAddressSearchResults(data.predictions.map(function (place) {
               return {
                 place_id: place.place_id,
@@ -300,17 +332,20 @@ var PlumbingForm = function PlumbingForm(_ref) {
               };
             }));
             setShowAddressResults(true);
-            _context.next = 20;
+            _context.next = 25;
             break;
-          case 17:
-            _context.prev = 17;
+          case 21:
+            _context.prev = 21;
             _context.t0 = _context["catch"](0);
             console.error("Error fetching places:", _context.t0);
-          case 20:
+            _reactNative.Alert.alert('Search Error', 'Unable to search for addresses at this time. Please try again later.', [{
+              text: 'OK'
+            }]);
+          case 25:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[0, 17]]);
+      }, _callee, null, [[0, 21]]);
     }));
     return function searchAddressPlaces(_x) {
       return _ref2.apply(this, arguments);
@@ -408,45 +443,6 @@ var PlumbingForm = function PlumbingForm(_ref) {
 
   // Add this function to your component
   var handleSubmit = function handleSubmit() {
-    // Validate data
-    // if (!formData.title.trim()) {
-    //   Alert.alert('Error', 'Please enter a title for your offering');
-    //   return;
-    // }
-
-    // if (!formData.description.trim()) {
-    //   Alert.alert('Error', 'Please enter a description for your offering');
-    //   return;
-    // }
-    // if (formData.entity == "unselected") {
-    //     Alert.alert('Error', 'Please select an entity type for your offering');
-    //     return;
-    // }
-    // if (!formData.businessCommencementDate) {
-    //     Alert.alert('Error', 'Please select a business commencement date for your offering');
-    //     return;
-    // }
-    // if (formData.warrantyParts === null) {
-    //     Alert.alert('Error', 'Please select a parts warranty period for your offering');
-    //     return;
-    // }
-    // if (formData.warrantyLabor === null) {
-    //     Alert.alert('Error', 'Please select a labor warranty period for your offering');
-    //     return;
-    // }
-    // if (formData.contact.phone && !isValidPhoneNumber(formData.contact.phone)) {
-    //     Alert.alert('Error', 'Please enter a valid phone number with country code (e.g. +1 for US)');
-    //     return;
-    // }
-    // if (formData.contact.email && !isValidEmail(formData.contact.email)) {
-    //     Alert.alert('Error', 'Please enter a valid email address');
-    //     return;
-    // }
-    // if (!formData.contact.address.trim()) {
-    //     Alert.alert('Error', 'Please enter an address for your offering');
-    //     return;
-    // }
-
     // Format the data according to the required JSON structure
     var formattedData = {
       offering: {
@@ -492,15 +488,22 @@ var PlumbingForm = function PlumbingForm(_ref) {
     console.log('Submitting offering:', formattedData);
 
     // Navigate to success screen or back to home
-    navigation.navigate('CreateHave', {
-      selectedOption: selectedOption,
-      topics: [],
-      topicTexts: [],
-      breadcrumb: breadcrumb,
-      address: formData.contact.address,
-      offeringTitle: formData.title,
-      meta: meta
-    });
+    if (navigation) {
+      navigation.navigate('CreateHave', {
+        selectedOption: selectedOption,
+        topics: [],
+        topicTexts: [],
+        breadcrumb: breadcrumb,
+        address: formData.contact.address,
+        offeringTitle: formData.title,
+        meta: meta
+      });
+    } else {
+      console.warn('Navigation is not available. Unable to navigate after form submission.');
+      _reactNative.Alert.alert('Success', 'Form submitted successfully, but navigation is not available.', [{
+        text: 'OK'
+      }]);
+    }
   };
   var updateContact = function updateContact(field, value) {
     var updatedContact = _objectSpread(_objectSpread({}, formData.contact), {}, _defineProperty({}, field, value));
