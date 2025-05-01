@@ -7,7 +7,6 @@ import { View, Text, TextInput, StyleSheet, Switch, TouchableOpacity, Dimensions
 import DropDownPicker from 'react-native-dropdown-picker';
 import { parsePhoneNumberFromString, isValidPhoneNumber } from 'libphonenumber-js';
 import { IconButton } from 'react-native-paper';
-import Constants from 'expo-constants';
 import DateTimePicker from '@react-native-community/datetimepicker';
 // import {
 //   CustomDropdown,
