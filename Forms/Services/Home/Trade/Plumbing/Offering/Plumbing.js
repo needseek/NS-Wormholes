@@ -933,11 +933,11 @@ var PlumbingForm = function PlumbingForm() {
     style: styles.mainSectionHeader
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.mainSectionHeaderText
-  }, "Service Information"))), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+  }, "Service Information")), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
     style: styles.formGroup
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.label
-  }, "Title force updated ", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+  }, "Title ", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.requiredStar
   }, "*")), /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
     style: styles.input,
@@ -949,45 +949,56 @@ var PlumbingForm = function PlumbingForm() {
     },
     placeholder: "e.g. Garry's Plumbing",
     placeholderTextColor: "#999"
-  })));
-
-  //       <View style={styles.formGroup}>
-  //         <Text style={styles.label}>Description <Text style={styles.requiredStar}>*</Text></Text>
-  //         <TextInput
-  //           style={[styles.input, styles.textArea]}
-  //           value={formData.description}
-  //           onChangeText={(text) => setFormData({ ...formData, description: text })}
-  //             placeholder="Describe your plumbing service and specialties"
-  //           placeholderTextColor="#999"
-  //           multiline
-  //           numberOfLines={4}
-  //           textAlignVertical="top"
-  //         />
-  //       </View>
-
-  //         {/* Entity Type */}
-  //         <View style={[styles.formGroup, {zIndex: getZIndex(openEntity)}]}>
-  //           <Text style={styles.label}>Entity Type <Text style={styles.requiredStar}>*</Text></Text>
-  //           <DropDownPicker
-  //             open={openEntity}
-  //             value={formData.entity}
-  //             items={getEntityItems()}
-  //             setOpen={(value) => handleOpenDropdown(setOpenEntity, openEntity)}
-  //             setValue={(callback) => {
-  //               const value = callback(formData.entity);
-  //               setFormData({...formData, entity: value});
-  //             }}
-  //             placeholder="Select"
-  //             style={styles.dropdownStyle}
-  //             textStyle={styles.dropdownTextStyle}
-  //             dropDownContainerStyle={styles.dropdownContainerStyle}
-  //             listItemContainerStyle={styles.dropdownItemStyle}
-  //             listMode="SCROLLVIEW"
-  //             scrollViewProps={{
-  //               nestedScrollEnabled: true,
-  //             }}
-  //           />
-  //         </View>
+  })), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.formGroup
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.label
+  }, "Description ", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.requiredStar
+  }, "*")), /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
+    style: [styles.input, styles.textArea],
+    value: formData.description,
+    onChangeText: function onChangeText(text) {
+      return setFormData(_objectSpread(_objectSpread({}, formData), {}, {
+        description: text
+      }));
+    },
+    placeholder: "Describe your plumbing service and specialties",
+    placeholderTextColor: "#999",
+    multiline: true,
+    numberOfLines: 4,
+    textAlignVertical: "top"
+  })), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: [styles.formGroup, {
+      zIndex: getZIndex(openEntity)
+    }]
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.label
+  }, "Entity Type ", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.requiredStar
+  }, "*")), /*#__PURE__*/_react["default"].createElement(_reactNativeDropdownPicker["default"], {
+    open: openEntity,
+    value: formData.entity,
+    items: getEntityItems(),
+    setOpen: function setOpen(value) {
+      return handleOpenDropdown(setOpenEntity, openEntity);
+    },
+    setValue: function setValue(callback) {
+      var value = callback(formData.entity);
+      setFormData(_objectSpread(_objectSpread({}, formData), {}, {
+        entity: value
+      }));
+    },
+    placeholder: "Select",
+    style: styles.dropdownStyle,
+    textStyle: styles.dropdownTextStyle,
+    dropDownContainerStyle: styles.dropdownContainerStyle,
+    listItemContainerStyle: styles.dropdownItemStyle,
+    listMode: "SCROLLVIEW",
+    scrollViewProps: {
+      nestedScrollEnabled: true
+    }
+  }))));
 
   //         {/* Business Commencement Date - replaced Years In Business */}
   //         <View style={styles.formGroup}>

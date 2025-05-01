@@ -714,9 +714,9 @@ useEffect(() => {
         <View style={styles.mainSectionHeader}>
           <Text style={styles.mainSectionHeaderText}>Service Information</Text>
         </View>
-      </View>
+        
       <View style={styles.formGroup}>
-        <Text style={styles.label}>Title force updated <Text style={styles.requiredStar}>*</Text></Text>
+        <Text style={styles.label}>Title <Text style={styles.requiredStar}>*</Text></Text>
         <TextInput
           style={styles.input}
           value={formData.title}
@@ -725,48 +725,47 @@ useEffect(() => {
           placeholderTextColor="#999"
         />
       </View>
+      <View style={styles.formGroup}>
+        <Text style={styles.label}>Description <Text style={styles.requiredStar}>*</Text></Text>
+        <TextInput
+          style={[styles.input, styles.textArea]}
+          value={formData.description}
+          onChangeText={(text) => setFormData({ ...formData, description: text })}
+            placeholder="Describe your plumbing service and specialties"
+          placeholderTextColor="#999"
+          multiline
+          numberOfLines={4}
+          textAlignVertical="top"
+        />
+      </View>
+
+        {/* Entity Type */}
+        <View style={[styles.formGroup, {zIndex: getZIndex(openEntity)}]}>
+          <Text style={styles.label}>Entity Type <Text style={styles.requiredStar}>*</Text></Text>
+          <DropDownPicker
+            open={openEntity}
+            value={formData.entity}
+            items={getEntityItems()}
+            setOpen={(value) => handleOpenDropdown(setOpenEntity, openEntity)}
+            setValue={(callback) => {
+              const value = callback(formData.entity);
+              setFormData({...formData, entity: value});
+            }}
+            placeholder="Select"
+            style={styles.dropdownStyle}
+            textStyle={styles.dropdownTextStyle}
+            dropDownContainerStyle={styles.dropdownContainerStyle}
+            listItemContainerStyle={styles.dropdownItemStyle}
+            listMode="SCROLLVIEW"
+            scrollViewProps={{
+              nestedScrollEnabled: true,
+            }}
+          />
+        </View>
+      </View>
     </View>
-  
   );
-      
-//       <View style={styles.formGroup}>
-//         <Text style={styles.label}>Description <Text style={styles.requiredStar}>*</Text></Text>
-//         <TextInput
-//           style={[styles.input, styles.textArea]}
-//           value={formData.description}
-//           onChangeText={(text) => setFormData({ ...formData, description: text })}
-//             placeholder="Describe your plumbing service and specialties"
-//           placeholderTextColor="#999"
-//           multiline
-//           numberOfLines={4}
-//           textAlignVertical="top"
-//         />
-//       </View>
-      
-//         {/* Entity Type */}
-//         <View style={[styles.formGroup, {zIndex: getZIndex(openEntity)}]}>
-//           <Text style={styles.label}>Entity Type <Text style={styles.requiredStar}>*</Text></Text>
-//           <DropDownPicker
-//             open={openEntity}
-//             value={formData.entity}
-//             items={getEntityItems()}
-//             setOpen={(value) => handleOpenDropdown(setOpenEntity, openEntity)}
-//             setValue={(callback) => {
-//               const value = callback(formData.entity);
-//               setFormData({...formData, entity: value});
-//             }}
-//             placeholder="Select"
-//             style={styles.dropdownStyle}
-//             textStyle={styles.dropdownTextStyle}
-//             dropDownContainerStyle={styles.dropdownContainerStyle}
-//             listItemContainerStyle={styles.dropdownItemStyle}
-//             listMode="SCROLLVIEW"
-//             scrollViewProps={{
-//               nestedScrollEnabled: true,
-//             }}
-//           />
-//         </View>
-        
+
 //         {/* Business Commencement Date - replaced Years In Business */}
 //         <View style={styles.formGroup}>
 //           <Text style={styles.label}>Business Commencement Date <Text style={styles.requiredStar}>*</Text></Text>
