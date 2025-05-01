@@ -691,8 +691,17 @@ const PlumbingForm = ({
     }
     setShowCustomCoverageModal(false);
   };
+useEffect(() => {
+  console.log('formData', formData);
+  console.log('GOOGLE_API', GOOGLE_API);
+  console.log('navigation', navigation);
+  console.log('offering', offering);
+  console.log('selectedOption', selectedOption);
+  console.log('breadcrumb', breadcrumb);
+  console.log('meta', meta);
+}, [formData]);
 return (
-  <View>
+  <View style={styles.label}>
     <Text>I'm not totally FUCKED!</Text>
   </View>
 );

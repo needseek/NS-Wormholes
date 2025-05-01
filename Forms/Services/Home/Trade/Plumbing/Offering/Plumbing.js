@@ -909,7 +909,18 @@ var PlumbingForm = function PlumbingForm() {
     }
     setShowCustomCoverageModal(false);
   };
-  return /*#__PURE__*/_react["default"].createElement(_reactNative.View, null, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, null, "I'm not totally FUCKED!"));
+  (0, _react.useEffect)(function () {
+    console.log('formData', formData);
+    console.log('GOOGLE_API', GOOGLE_API);
+    console.log('navigation', navigation);
+    console.log('offering', offering);
+    console.log('selectedOption', selectedOption);
+    console.log('breadcrumb', breadcrumb);
+    console.log('meta', meta);
+  }, [formData]);
+  return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.label
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, null, "I'm not totally FUCKED!"));
 
   // Return the form directly without FlatList
   //   return (
