@@ -974,7 +974,7 @@ var PlumbingForm = function PlumbingForm() {
     }]
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.label
-  }, "Entity Type", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+  }, "forced Entity Type", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.requiredStar
   }, "*")), /*#__PURE__*/_react["default"].createElement(_reactNativeDropdownPicker["default"], null))));
 
