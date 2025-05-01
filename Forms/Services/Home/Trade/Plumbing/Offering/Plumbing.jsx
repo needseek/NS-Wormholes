@@ -41,7 +41,7 @@ const PlumbingForm = ({
 
   // Initialize form data with defaults and any existing data
   const [formData, setFormData] = useState(() => {
-    const defaultData = {
+    const initialData = {
       // Default values
       title: '',
       description: '',
@@ -78,29 +78,19 @@ const PlumbingForm = ({
         type: '',
         scope: '',
         licensee: ''
-      }
-    };
-
-    // Merge with initial data if provided
-    const mergedData = {
-      ...defaultData,
-      ...(initialFormData || {}),
+      },
+      // Override with initial data if provided
+      ...initialFormData,
       // If there's an offering, use its data
       ...(offering ? {
-        title: offering.title || defaultData.title,
-        description: offering.description || defaultData.description,
-        price: offering.price || defaultData.price,
+        title: offering.title || '',
+        description: offering.description || '',
+        price: offering.price || '',
         ...(offering.extraData || {})
       } : {})
     };
-
-    // Ensure contact object is properly structured
-    mergedData.contact = {
-      ...defaultData.contact,
-      ...(mergedData.contact || {})
-    };
     
-    return mergedData;
+    return initialData;
   });
 
   const [showLicenseForm, setShowLicenseForm] = useState(false);
@@ -531,7 +521,6 @@ const PlumbingForm = ({
 
   // Get dropdown items for each field
   const getEntityItems = () => [
-    { label: 'Select Entity Type', value: 'unselected', disabled: true },
     { label: 'Individual', value: 'individual' },
     { label: 'Business', value: 'business' },
     { label: 'Non-Profit', value: 'non-profit' }
@@ -757,17 +746,16 @@ useEffect(() => {
 
         {/* Entity Type */}
         <View style={[styles.formGroup, {zIndex: getZIndex(openEntity)}]}>
-          <Text style={styles.label}>Entity Type force<Text style={styles.requiredStar}>*</Text></Text>
-          <DropDownPicker
-            open={openEntity || false}
-            value={formData?.entity || 'unselected'}
+          <Text style={styles.label}>Entity Type<Text style={styles.requiredStar}>*</Text></Text>
+          <DropDownPicker/>
+          {/* <DropDownPicker
+            open={openEntity}
+            value={formData.entity}
             items={getEntityItems()}
             setOpen={(value) => handleOpenDropdown(setOpenEntity, openEntity)}
             setValue={(callback) => {
-              if (typeof callback === 'function') {
-                const value = callback(formData?.entity || 'unselected');
-                setFormData(prev => ({...prev, entity: value}));
-              }
+              const value = callback(formData.entity);
+              setFormData({...formData, entity: value});
             }}
             placeholder="Select"
             style={styles.dropdownStyle}
@@ -778,9 +766,7 @@ useEffect(() => {
             scrollViewProps={{
               nestedScrollEnabled: true,
             }}
-            zIndex={3000}
-            zIndexInverse={1000}
-          />
+          /> */}
         </View>
       </View>
     </View>

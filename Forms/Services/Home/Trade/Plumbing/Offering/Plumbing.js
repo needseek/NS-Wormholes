@@ -75,7 +75,7 @@ var PlumbingForm = function PlumbingForm() {
 
   // Initialize form data with defaults and any existing data
   var _useState = (0, _react.useState)(function () {
-      var defaultData = {
+      var initialData = _objectSpread(_objectSpread({
         // Default values
         title: '',
         description: '',
@@ -113,18 +113,12 @@ var PlumbingForm = function PlumbingForm() {
           scope: '',
           licensee: ''
         }
-      };
-
-      // Merge with initial data if provided
-      var mergedData = _objectSpread(_objectSpread(_objectSpread({}, defaultData), initialFormData || {}), offering ? _objectSpread({
-        title: offering.title || defaultData.title,
-        description: offering.description || defaultData.description,
-        price: offering.price || defaultData.price
+      }, initialFormData), offering ? _objectSpread({
+        title: offering.title || '',
+        description: offering.description || '',
+        price: offering.price || ''
       }, offering.extraData || {}) : {});
-
-      // Ensure contact object is properly structured
-      mergedData.contact = _objectSpread(_objectSpread({}, defaultData.contact), mergedData.contact || {});
-      return mergedData;
+      return initialData;
     }),
     _useState2 = _slicedToArray(_useState, 2),
     formData = _useState2[0],
@@ -657,10 +651,6 @@ var PlumbingForm = function PlumbingForm() {
   // Get dropdown items for each field
   var getEntityItems = function getEntityItems() {
     return [{
-      label: 'Select Entity Type',
-      value: 'unselected',
-      disabled: true
-    }, {
       label: 'Individual',
       value: 'individual'
     }, {
@@ -984,37 +974,9 @@ var PlumbingForm = function PlumbingForm() {
     }]
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.label
-  }, "Entity Type force", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+  }, "Entity Type", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.requiredStar
-  }, "*")), /*#__PURE__*/_react["default"].createElement(_reactNativeDropdownPicker["default"], {
-    open: openEntity || false,
-    value: (formData === null || formData === void 0 ? void 0 : formData.entity) || 'unselected',
-    items: getEntityItems(),
-    setOpen: function setOpen(value) {
-      return handleOpenDropdown(setOpenEntity, openEntity);
-    },
-    setValue: function setValue(callback) {
-      if (typeof callback === 'function') {
-        var value = callback((formData === null || formData === void 0 ? void 0 : formData.entity) || 'unselected');
-        setFormData(function (prev) {
-          return _objectSpread(_objectSpread({}, prev), {}, {
-            entity: value
-          });
-        });
-      }
-    },
-    placeholder: "Select",
-    style: styles.dropdownStyle,
-    textStyle: styles.dropdownTextStyle,
-    dropDownContainerStyle: styles.dropdownContainerStyle,
-    listItemContainerStyle: styles.dropdownItemStyle,
-    listMode: "SCROLLVIEW",
-    scrollViewProps: {
-      nestedScrollEnabled: true
-    },
-    zIndex: 3000,
-    zIndexInverse: 1000
-  }))));
+  }, "*")), /*#__PURE__*/_react["default"].createElement(_reactNativeDropdownPicker["default"], null))));
 
   //         {/* Business Commencement Date - replaced Years In Business */}
   //         <View style={styles.formGroup}>
