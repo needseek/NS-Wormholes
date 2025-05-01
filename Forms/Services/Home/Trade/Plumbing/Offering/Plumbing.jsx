@@ -746,7 +746,7 @@ useEffect(() => {
 
         {/* Entity Type */}
         <View style={[styles.formGroup, {zIndex: getZIndex(openEntity)}]}>
-          <Text style={styles.label}>fed Entity Type<Text style={styles.requiredStar}>*</Text></Text>
+          <Text style={styles.label}>fed force Entity Type<Text style={styles.requiredStar}>*</Text></Text>
           <DropDownPicker
             open={false}
             value={null}
