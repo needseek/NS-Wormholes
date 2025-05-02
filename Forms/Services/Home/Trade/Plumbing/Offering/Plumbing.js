@@ -1293,7 +1293,7 @@ var PlumbingForm = function PlumbingForm() {
     style: styles.formGroup
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.label
-  }, "Address Forced ", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+  }, "Address", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.requiredStar
   }, "*")), formData.contact.address ?
   /*#__PURE__*/
