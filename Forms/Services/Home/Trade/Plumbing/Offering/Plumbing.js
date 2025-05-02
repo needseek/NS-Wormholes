@@ -1,19 +1,23 @@
 "use strict";
 
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("react"));
 var _reactNative = require("react-native");
-var _TestImport = _interopRequireDefault(require("./TestImport"));
-function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
 function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function _interopRequireWildcard(e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, "default": e }; if (null === e || "object" != _typeof(e) && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (var _t in e) "default" !== _t && {}.hasOwnProperty.call(e, _t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, _t)) && (i.get || i.set) ? o(f, _t, i) : f[_t] = e[_t]); return f; })(e, t); }
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return r; }; var t, r = {}, e = Object.prototype, n = e.hasOwnProperty, o = "function" == typeof Symbol ? Symbol : {}, i = o.iterator || "@@iterator", a = o.asyncIterator || "@@asyncIterator", u = o.toStringTag || "@@toStringTag"; function c(t, r, e, n) { return Object.defineProperty(t, r, { value: e, enumerable: !n, configurable: !n, writable: !n }); } try { c({}, ""); } catch (t) { c = function c(t, r, e) { return t[r] = e; }; } function h(r, e, n, o) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype); return c(a, "_invoke", function (r, e, n) { var o = 1; return function (i, a) { if (3 === o) throw Error("Generator is already running"); if (4 === o) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var u = n.delegate; if (u) { var c = d(u, n); if (c) { if (c === f) continue; return c; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (1 === o) throw o = 4, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = 3; var h = s(r, e, n); if ("normal" === h.type) { if (o = n.done ? 4 : 2, h.arg === f) continue; return { value: h.arg, done: n.done }; } "throw" === h.type && (o = 4, n.method = "throw", n.arg = h.arg); } }; }(r, n, new Context(o || [])), !0), a; } function s(t, r, e) { try { return { type: "normal", arg: t.call(r, e) }; } catch (t) { return { type: "throw", arg: t }; } } r.wrap = h; var f = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var l = {}; c(l, i, function () { return this; }); var p = Object.getPrototypeOf, y = p && p(p(x([]))); y && y !== e && n.call(y, i) && (l = y); var v = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(l); function g(t) { ["next", "throw", "return"].forEach(function (r) { c(t, r, function (t) { return this._invoke(r, t); }); }); } function AsyncIterator(t, r) { function e(o, i, a, u) { var c = s(t[o], t, i); if ("throw" !== c.type) { var h = c.arg, f = h.value; return f && "object" == _typeof(f) && n.call(f, "__await") ? r.resolve(f.__await).then(function (t) { e("next", t, a, u); }, function (t) { e("throw", t, a, u); }) : r.resolve(f).then(function (t) { h.value = t, a(h); }, function (t) { return e("throw", t, a, u); }); } u(c.arg); } var o; c(this, "_invoke", function (t, n) { function i() { return new r(function (r, o) { e(t, n, r, o); }); } return o = o ? o.then(i, i) : i(); }, !0); } function d(r, e) { var n = e.method, o = r.i[n]; if (o === t) return e.delegate = null, "throw" === n && r.i["return"] && (e.method = "return", e.arg = t, d(r, e), "throw" === e.method) || "return" !== n && (e.method = "throw", e.arg = new TypeError("The iterator does not provide a '" + n + "' method")), f; var i = s(o, r.i, e.arg); if ("throw" === i.type) return e.method = "throw", e.arg = i.arg, e.delegate = null, f; var a = i.arg; return a ? a.done ? (e[r.r] = a.value, e.next = r.n, "return" !== e.method && (e.method = "next", e.arg = t), e.delegate = null, f) : a : (e.method = "throw", e.arg = new TypeError("iterator result is not an object"), e.delegate = null, f); } function w(t) { this.tryEntries.push(t); } function m(r) { var e = r[4] || {}; e.type = "normal", e.arg = t, r[4] = e; } function Context(t) { this.tryEntries = [[-1]], t.forEach(w, this), this.reset(!0); } function x(r) { if (null != r) { var e = r[i]; if (e) return e.call(r); if ("function" == typeof r.next) return r; if (!isNaN(r.length)) { var o = -1, a = function e() { for (; ++o < r.length;) if (n.call(r, o)) return e.value = r[o], e.done = !1, e; return e.value = t, e.done = !0, e; }; return a.next = a; } } throw new TypeError(_typeof(r) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, c(v, "constructor", GeneratorFunctionPrototype), c(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = c(GeneratorFunctionPrototype, u, "GeneratorFunction"), r.isGeneratorFunction = function (t) { var r = "function" == typeof t && t.constructor; return !!r && (r === GeneratorFunction || "GeneratorFunction" === (r.displayName || r.name)); }, r.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, c(t, u, "GeneratorFunction")), t.prototype = Object.create(v), t; }, r.awrap = function (t) { return { __await: t }; }, g(AsyncIterator.prototype), c(AsyncIterator.prototype, a, function () { return this; }), r.AsyncIterator = AsyncIterator, r.async = function (t, e, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(h(t, e, n, o), i); return r.isGeneratorFunction(e) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, g(v), c(v, u, "Generator"), c(v, i, function () { return this; }), c(v, "toString", function () { return "[object Generator]"; }), r.keys = function (t) { var r = Object(t), e = []; for (var n in r) e.unshift(n); return function t() { for (; e.length;) if ((n = e.pop()) in r) return t.value = n, t.done = !1, t; return t.done = !0, t; }; }, r.values = x, Context.prototype = { constructor: Context, reset: function reset(r) { if (this.prev = this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(m), !r) for (var e in this) "t" === e.charAt(0) && n.call(this, e) && !isNaN(+e.slice(1)) && (this[e] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0][4]; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(r) { if (this.done) throw r; var e = this; function n(t) { a.type = "throw", a.arg = r, e.next = t; } for (var o = e.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i[4], u = this.prev, c = i[1], h = i[2]; if (-1 === i[0]) return n("end"), !1; if (!c && !h) throw Error("try statement without catch or finally"); if (null != i[0] && i[0] <= u) { if (u < c) return this.method = "next", this.arg = t, n(c), !0; if (u < h) return n(h), !1; } } }, abrupt: function abrupt(t, r) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var n = this.tryEntries[e]; if (n[0] > -1 && n[0] <= this.prev && this.prev < n[2]) { var o = n; break; } } o && ("break" === t || "continue" === t) && o[0] <= r && r <= o[2] && (o = null); var i = o ? o[4] : {}; return i.type = t, i.arg = r, o ? (this.method = "next", this.next = o[2], f) : this.complete(i); }, complete: function complete(t, r) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && r && (this.next = r), f; }, finish: function finish(t) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var e = this.tryEntries[r]; if (e[2] === t) return this.complete(e[4], e[3]), m(e), f; } }, "catch": function _catch(t) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var e = this.tryEntries[r]; if (e[0] === t) { var n = e[4]; if ("throw" === n.type) { var o = n.arg; m(e); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(r, e, n) { return this.delegate = { i: x(r), r: e, n: n }, "next" === this.method && (this.arg = t), f; } }, r; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
@@ -22,49 +26,285 @@ function _nonIterableRest() { throw new TypeError("Invalid attempt to destructur
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); } //  <-- MUST DO ON UPDATE!! --> 
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; } //  <-- MUST DO ON UPDATE!! --> 
 // 1. transpile command: npx babel --presets=@babel/preset-env,@babel/preset-react Plumbing.jsx -o Plumbing.js
 // 2. add, commit, push to main
 // Force Force Force Force
-// import {
-//   CustomDropdown,
-//   LicenseForm,
-//   InsuranceForm,
-//   CustomWarrantySelector,
-//   PhotoAlbum
-// } from '../../components';
-var PlumbingForm = function PlumbingForm() {
-  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-    _ref$formData = _ref.formData,
-    initialFormData = _ref$formData === void 0 ? {} : _ref$formData,
-    _ref$setFormData = _ref.setFormData,
-    setParentFormData = _ref$setFormData === void 0 ? function () {} : _ref$setFormData,
-    _ref$styles = _ref.styles,
-    parentStyles = _ref$styles === void 0 ? {} : _ref$styles,
-    _ref$offering = _ref.offering,
-    offering = _ref$offering === void 0 ? null : _ref$offering,
-    _ref$selectedOption = _ref.selectedOption,
-    selectedOption = _ref$selectedOption === void 0 ? '' : _ref$selectedOption,
-    _ref$breadcrumb = _ref.breadcrumb,
-    breadcrumb = _ref$breadcrumb === void 0 ? '' : _ref$breadcrumb,
-    _ref$meta = _ref.meta,
-    meta = _ref$meta === void 0 ? {} : _ref$meta,
-    _ref$navigation = _ref.navigation,
-    navigation = _ref$navigation === void 0 ? null : _ref$navigation,
-    _ref$GOOGLE_API = _ref.GOOGLE_API,
-    GOOGLE_API = _ref$GOOGLE_API === void 0 ? '' : _ref$GOOGLE_API,
+// ---------------------- BASE FORM COMPONENTS ----------------------
+var FormSection = function FormSection(_ref) {
+  var title = _ref.title,
+    children = _ref.children,
     registry = _ref.registry;
+  return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: localStyles.sectionContainer
+  }, title && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: localStyles.sectionTitle
+  }, title), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: localStyles.sectionContent
+  }, children));
+};
+var FormInput = function FormInput(_ref2) {
+  var label = _ref2.label,
+    value = _ref2.value,
+    setValue = _ref2.setValue,
+    placeholder = _ref2.placeholder,
+    required = _ref2.required,
+    keyboardType = _ref2.keyboardType,
+    multiline = _ref2.multiline,
+    registry = _ref2.registry;
+  return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: localStyles.inputContainer
+  }, label && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: localStyles.label
+  }, label, required && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: localStyles.requiredStar
+  }, " *")), /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
+    style: [localStyles.input, multiline && localStyles.multilineInput],
+    value: value,
+    onChangeText: setValue,
+    placeholder: placeholder,
+    placeholderTextColor: "#999",
+    keyboardType: keyboardType,
+    multiline: multiline
+  }));
+};
+var FormDropdown = function FormDropdown(_ref3) {
+  var label = _ref3.label,
+    items = _ref3.items,
+    value = _ref3.value,
+    setValue = _ref3.setValue,
+    placeholder = _ref3.placeholder,
+    zIndex = _ref3.zIndex,
+    registry = _ref3.registry;
+  var DropDownPicker = registry.DropDownPicker;
+  var _useState = (0, _react.useState)(false),
+    _useState2 = _slicedToArray(_useState, 2),
+    open = _useState2[0],
+    setOpen = _useState2[1];
+  return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: [localStyles.dropdownContainer, {
+      zIndex: zIndex
+    }]
+  }, label && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: localStyles.label
+  }, label), /*#__PURE__*/_react["default"].createElement(DropDownPicker, {
+    open: open,
+    value: value,
+    items: items,
+    setOpen: setOpen,
+    setValue: setValue,
+    placeholder: placeholder,
+    style: localStyles.dropdown,
+    textStyle: localStyles.dropdownText,
+    dropDownContainerStyle: localStyles.dropdownList
+  }));
+};
+var AddressSearch = function AddressSearch(_ref4) {
+  var value = _ref4.value,
+    _setValue = _ref4.setValue,
+    googleApiKey = _ref4.googleApiKey,
+    registry = _ref4.registry;
+  var _useState3 = (0, _react.useState)([]),
+    _useState4 = _slicedToArray(_useState3, 2),
+    results = _useState4[0],
+    setResults = _useState4[1];
+  var searchAddress = /*#__PURE__*/function () {
+    var _ref5 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(query) {
+      var response, data;
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) switch (_context.prev = _context.next) {
+          case 0:
+            if (!(!query || !googleApiKey)) {
+              _context.next = 2;
+              break;
+            }
+            return _context.abrupt("return");
+          case 2:
+            _context.prev = 2;
+            _context.next = 5;
+            return fetch("https://maps.googleapis.com/maps/api/place/autocomplete/json?input=".concat(encodeURIComponent(query), "&key=").concat(googleApiKey));
+          case 5:
+            response = _context.sent;
+            _context.next = 8;
+            return response.json();
+          case 8:
+            data = _context.sent;
+            setResults(data.predictions || []);
+            _context.next = 15;
+            break;
+          case 12:
+            _context.prev = 12;
+            _context.t0 = _context["catch"](2);
+            console.error("Address search error:", _context.t0);
+          case 15:
+          case "end":
+            return _context.stop();
+        }
+      }, _callee, null, [[2, 12]]);
+    }));
+    return function searchAddress(_x) {
+      return _ref5.apply(this, arguments);
+    };
+  }();
+  return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: localStyles.addressContainer
+  }, /*#__PURE__*/_react["default"].createElement(FormInput, {
+    label: "Service Address",
+    value: value,
+    setValue: function setValue(text) {
+      _setValue(text);
+      searchAddress(text);
+    },
+    placeholder: "Search address...",
+    registry: registry
+  }), results.length > 0 && /*#__PURE__*/_react["default"].createElement(_reactNative.FlatList, {
+    data: results,
+    keyExtractor: function keyExtractor(item) {
+      return item.place_id;
+    },
+    renderItem: function renderItem(_ref6) {
+      var item = _ref6.item;
+      return /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+        style: localStyles.addressItem,
+        onPress: function onPress() {
+          return _setValue(item.description);
+        }
+      }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+        style: localStyles.addressText
+      }, item.description));
+    },
+    style: localStyles.addressList
+  }));
+};
+var DatePicker = function DatePicker(_ref7) {
+  var date = _ref7.date,
+    setDate = _ref7.setDate,
+    registry = _ref7.registry;
+  var DateTimePicker = registry.DateTimePicker,
+    IconButton = registry.IconButton;
+  var _useState5 = (0, _react.useState)(false),
+    _useState6 = _slicedToArray(_useState5, 2),
+    showPicker = _useState6[0],
+    setShowPicker = _useState6[1];
+  return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: localStyles.dateContainer
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+    style: localStyles.dateButton,
+    onPress: function onPress() {
+      return setShowPicker(true);
+    }
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: localStyles.dateText
+  }, date ? "".concat(date.getDate(), "/").concat(date.getMonth() + 1, "/").concat(date.getFullYear()) : 'Select date'), /*#__PURE__*/_react["default"].createElement(IconButton, {
+    icon: "calendar",
+    size: 20,
+    color: "#007AFF"
+  })), showPicker && /*#__PURE__*/_react["default"].createElement(DateTimePicker, {
+    value: date || new Date(),
+    mode: "date",
+    display: "default",
+    onChange: function onChange(event, selectedDate) {
+      setShowPicker(false);
+      selectedDate && setDate(selectedDate);
+    }
+  }));
+};
+var SwitchInput = function SwitchInput(_ref8) {
+  var label = _ref8.label,
+    value = _ref8.value,
+    setValue = _ref8.setValue,
+    registry = _ref8.registry;
+  return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: localStyles.switchContainer
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: localStyles.switchLabel
+  }, label), /*#__PURE__*/_react["default"].createElement(_reactNative.Switch, {
+    value: value,
+    onValueChange: setValue,
+    trackColor: {
+      "false": "#767577",
+      "true": "#81b0ff"
+    },
+    thumbColor: value ? "#007AFF" : "#f4f3f4"
+  }));
+};
+
+// ---------------------- SERVICE SPECIFIC FORM COMPONENTS ----------------------
+var WarrantySelector = function WarrantySelector(_ref9) {
+  var parts = _ref9.parts,
+    setParts = _ref9.setParts,
+    labor = _ref9.labor,
+    setLabor = _ref9.setLabor,
+    registry = _ref9.registry;
+  var warrantyOptions = [{
+    label: 'None',
+    value: '0'
+  }, {
+    label: '1 month',
+    value: '1 month'
+  }, {
+    label: '3 months',
+    value: '3 months'
+  }, {
+    label: '6 months',
+    value: '6 months'
+  }, {
+    label: '1 year',
+    value: '1 year'
+  }, {
+    label: '2 years',
+    value: '2 years'
+  }, {
+    label: 'Custom...',
+    value: 'custom'
+  }];
+  return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: localStyles.warrantyContainer
+  }, /*#__PURE__*/_react["default"].createElement(FormDropdown, {
+    label: "Parts Warranty",
+    items: warrantyOptions,
+    value: parts,
+    setValue: setParts,
+    registry: registry,
+    zIndex: 1000
+  }), /*#__PURE__*/_react["default"].createElement(FormDropdown, {
+    label: "Labor Warranty",
+    items: warrantyOptions,
+    value: labor,
+    setValue: setLabor,
+    registry: registry,
+    zIndex: 999
+  }));
+};
+var PlumbingForm = function PlumbingForm() {
+  var _ref0 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+    _ref0$formData = _ref0.formData,
+    initialFormData = _ref0$formData === void 0 ? {} : _ref0$formData,
+    _ref0$setFormData = _ref0.setFormData,
+    setParentFormData = _ref0$setFormData === void 0 ? function () {} : _ref0$setFormData,
+    _ref0$styles = _ref0.styles,
+    parentStyles = _ref0$styles === void 0 ? {} : _ref0$styles,
+    _ref0$offering = _ref0.offering,
+    offering = _ref0$offering === void 0 ? null : _ref0$offering,
+    _ref0$selectedOption = _ref0.selectedOption,
+    selectedOption = _ref0$selectedOption === void 0 ? '' : _ref0$selectedOption,
+    _ref0$breadcrumb = _ref0.breadcrumb,
+    breadcrumb = _ref0$breadcrumb === void 0 ? '' : _ref0$breadcrumb,
+    _ref0$meta = _ref0.meta,
+    meta = _ref0$meta === void 0 ? {} : _ref0$meta,
+    _ref0$navigation = _ref0.navigation,
+    navigation = _ref0$navigation === void 0 ? null : _ref0$navigation,
+    _ref0$GOOGLE_API = _ref0.GOOGLE_API,
+    GOOGLE_API = _ref0$GOOGLE_API === void 0 ? '' : _ref0$GOOGLE_API,
+    registry = _ref0.registry;
   // Get styles by merging parent styles with component-specific styles
   var styles = _objectSpread(_objectSpread({}, parentStyles), localStyles);
   var DropDownPicker = registry.DropDownPicker,
     DateTimePicker = registry.DateTimePicker,
     IconButton = registry.IconButton,
-    isValidPhoneNumber = registry.isValidPhoneNumber;
+    isValidPhoneNumber = registry.isValidPhoneNumber,
+    Ionicons = registry.Ionicons,
+    ImagePicker = registry.ImagePicker;
 
   // Add console warnings for missing critical props
   (0, _react.useEffect)(function () {
@@ -77,7 +317,7 @@ var PlumbingForm = function PlumbingForm() {
   }, [navigation, GOOGLE_API]);
 
   // Initialize form data with defaults and any existing data
-  var _useState = (0, _react.useState)(function () {
+  var _useState7 = (0, _react.useState)(function () {
       var initialData = _objectSpread(_objectSpread({
         // Default values
         title: '',
@@ -123,124 +363,124 @@ var PlumbingForm = function PlumbingForm() {
       }, offering.extraData || {}) : {});
       return initialData;
     }),
-    _useState2 = _slicedToArray(_useState, 2),
-    formData = _useState2[0],
-    setFormData = _useState2[1];
-  var _useState3 = (0, _react.useState)(false),
-    _useState4 = _slicedToArray(_useState3, 2),
-    showLicenseForm = _useState4[0],
-    setShowLicenseForm = _useState4[1];
-  var _useState5 = (0, _react.useState)(false),
-    _useState6 = _slicedToArray(_useState5, 2),
-    showInsuranceForm = _useState6[0],
-    setShowInsuranceForm = _useState6[1];
-  var _useState7 = (0, _react.useState)(false),
     _useState8 = _slicedToArray(_useState7, 2),
-    showCertificationForm = _useState8[0],
-    setShowCertificationForm = _useState8[1];
-
-  // States for dropdown components
+    formData = _useState8[0],
+    setFormData = _useState8[1];
   var _useState9 = (0, _react.useState)(false),
     _useState0 = _slicedToArray(_useState9, 2),
-    openEntity = _useState0[0],
-    setOpenEntity = _useState0[1];
+    showLicenseForm = _useState0[0],
+    setShowLicenseForm = _useState0[1];
   var _useState1 = (0, _react.useState)(false),
     _useState10 = _slicedToArray(_useState1, 2),
-    openLicenseType = _useState10[0],
-    setOpenLicenseType = _useState10[1];
+    showInsuranceForm = _useState10[0],
+    setShowInsuranceForm = _useState10[1];
   var _useState11 = (0, _react.useState)(false),
     _useState12 = _slicedToArray(_useState11, 2),
-    openInsuranceType = _useState12[0],
-    setOpenInsuranceType = _useState12[1];
+    showCertificationForm = _useState12[0],
+    setShowCertificationForm = _useState12[1];
+
+  // States for dropdown components
   var _useState13 = (0, _react.useState)(false),
     _useState14 = _slicedToArray(_useState13, 2),
-    openInsuranceCoverage = _useState14[0],
-    setOpenInsuranceCoverage = _useState14[1];
+    openEntity = _useState14[0],
+    setOpenEntity = _useState14[1];
   var _useState15 = (0, _react.useState)(false),
     _useState16 = _slicedToArray(_useState15, 2),
-    openWarrantyParts = _useState16[0],
-    setOpenWarrantyParts = _useState16[1];
+    openLicenseType = _useState16[0],
+    setOpenLicenseType = _useState16[1];
   var _useState17 = (0, _react.useState)(false),
     _useState18 = _slicedToArray(_useState17, 2),
-    openWarrantyLabor = _useState18[0],
-    setOpenWarrantyLabor = _useState18[1];
+    openInsuranceType = _useState18[0],
+    setOpenInsuranceType = _useState18[1];
   var _useState19 = (0, _react.useState)(false),
     _useState20 = _slicedToArray(_useState19, 2),
-    openCertificationType = _useState20[0],
-    setOpenCertificationType = _useState20[1];
-
-  // Custom warranty modal states
+    openInsuranceCoverage = _useState20[0],
+    setOpenInsuranceCoverage = _useState20[1];
   var _useState21 = (0, _react.useState)(false),
     _useState22 = _slicedToArray(_useState21, 2),
-    showCustomWarrantyModal = _useState22[0],
-    setShowCustomWarrantyModal = _useState22[1];
-  var _useState23 = (0, _react.useState)(''),
+    openWarrantyParts = _useState22[0],
+    setOpenWarrantyParts = _useState22[1];
+  var _useState23 = (0, _react.useState)(false),
     _useState24 = _slicedToArray(_useState23, 2),
-    customWarrantyType = _useState24[0],
-    setCustomWarrantyType = _useState24[1]; // 'parts' or 'labor'
-  var _useState25 = (0, _react.useState)(''),
+    openWarrantyLabor = _useState24[0],
+    setOpenWarrantyLabor = _useState24[1];
+  var _useState25 = (0, _react.useState)(false),
     _useState26 = _slicedToArray(_useState25, 2),
-    customWarrantyValue = _useState26[0],
-    setCustomWarrantyValue = _useState26[1];
-  var _useState27 = (0, _react.useState)('months'),
+    openCertificationType = _useState26[0],
+    setOpenCertificationType = _useState26[1];
+
+  // Custom warranty modal states
+  var _useState27 = (0, _react.useState)(false),
     _useState28 = _slicedToArray(_useState27, 2),
-    customWarrantyUnit = _useState28[0],
-    setCustomWarrantyUnit = _useState28[1];
-  var _useState29 = (0, _react.useState)(false),
+    showCustomWarrantyModal = _useState28[0],
+    setShowCustomWarrantyModal = _useState28[1];
+  var _useState29 = (0, _react.useState)(''),
     _useState30 = _slicedToArray(_useState29, 2),
-    openCustomWarrantyUnit = _useState30[0],
-    setOpenCustomWarrantyUnit = _useState30[1];
+    customWarrantyType = _useState30[0],
+    setCustomWarrantyType = _useState30[1]; // 'parts' or 'labor'
+  var _useState31 = (0, _react.useState)(''),
+    _useState32 = _slicedToArray(_useState31, 2),
+    customWarrantyValue = _useState32[0],
+    setCustomWarrantyValue = _useState32[1];
+  var _useState33 = (0, _react.useState)('months'),
+    _useState34 = _slicedToArray(_useState33, 2),
+    customWarrantyUnit = _useState34[0],
+    setCustomWarrantyUnit = _useState34[1];
+  var _useState35 = (0, _react.useState)(false),
+    _useState36 = _slicedToArray(_useState35, 2),
+    openCustomWarrantyUnit = _useState36[0],
+    setOpenCustomWarrantyUnit = _useState36[1];
 
   // Custom coverage modal states
-  var _useState31 = (0, _react.useState)(false),
-    _useState32 = _slicedToArray(_useState31, 2),
-    showCustomCoverageModal = _useState32[0],
-    setShowCustomCoverageModal = _useState32[1];
-  var _useState33 = (0, _react.useState)(''),
-    _useState34 = _slicedToArray(_useState33, 2),
-    customCoverageAmount = _useState34[0],
-    setCustomCoverageAmount = _useState34[1];
-  var _useState35 = (0, _react.useState)('dollars'),
-    _useState36 = _slicedToArray(_useState35, 2),
-    customCoverageUnit = _useState36[0],
-    setCustomCoverageUnit = _useState36[1];
   var _useState37 = (0, _react.useState)(false),
     _useState38 = _slicedToArray(_useState37, 2),
-    openCustomCoverageUnit = _useState38[0],
-    setOpenCustomCoverageUnit = _useState38[1];
-
-  // State for certification input
+    showCustomCoverageModal = _useState38[0],
+    setShowCustomCoverageModal = _useState38[1];
   var _useState39 = (0, _react.useState)(''),
     _useState40 = _slicedToArray(_useState39, 2),
-    certificationInput = _useState40[0],
-    setCertificationInput = _useState40[1];
-  var _useState41 = (0, _react.useState)({
+    customCoverageAmount = _useState40[0],
+    setCustomCoverageAmount = _useState40[1];
+  var _useState41 = (0, _react.useState)('dollars'),
+    _useState42 = _slicedToArray(_useState41, 2),
+    customCoverageUnit = _useState42[0],
+    setCustomCoverageUnit = _useState42[1];
+  var _useState43 = (0, _react.useState)(false),
+    _useState44 = _slicedToArray(_useState43, 2),
+    openCustomCoverageUnit = _useState44[0],
+    setOpenCustomCoverageUnit = _useState44[1];
+
+  // State for certification input
+  var _useState45 = (0, _react.useState)(''),
+    _useState46 = _slicedToArray(_useState45, 2),
+    certificationInput = _useState46[0],
+    setCertificationInput = _useState46[1];
+  var _useState47 = (0, _react.useState)({
       title: "",
       issuer: "",
       type: "Business License",
       scope: "",
       licensee: ""
     }),
-    _useState42 = _slicedToArray(_useState41, 2),
-    newLicense = _useState42[0],
-    setNewLicense = _useState42[1];
-  var _useState43 = (0, _react.useState)({
+    _useState48 = _slicedToArray(_useState47, 2),
+    newLicense = _useState48[0],
+    setNewLicense = _useState48[1];
+  var _useState49 = (0, _react.useState)({
       type: "commercial liability",
       coverage: "1MM",
       issuer: ""
     }),
-    _useState44 = _slicedToArray(_useState43, 2),
-    newInsurance = _useState44[0],
-    setNewInsurance = _useState44[1];
-  var _useState45 = (0, _react.useState)({
+    _useState50 = _slicedToArray(_useState49, 2),
+    newInsurance = _useState50[0],
+    setNewInsurance = _useState50[1];
+  var _useState51 = (0, _react.useState)({
       title: "",
       issuer: "",
       type: "Professional Certification",
       date: ""
     }),
-    _useState46 = _slicedToArray(_useState45, 2),
-    newCertification = _useState46[0],
-    setNewCertification = _useState46[1];
+    _useState52 = _slicedToArray(_useState51, 2),
+    newCertification = _useState52[0],
+    setNewCertification = _useState52[1];
 
   // Add useEffect to update parent formData when local formData changes
   (0, _react.useEffect)(function () {
@@ -250,10 +490,10 @@ var PlumbingForm = function PlumbingForm() {
   }, [formData, setParentFormData]);
 
   // Add photoUrls state to the component state
-  var _useState47 = (0, _react.useState)(formData.photos || []),
-    _useState48 = _slicedToArray(_useState47, 2),
-    photos = _useState48[0],
-    setPhotos = _useState48[1];
+  var _useState53 = (0, _react.useState)(formData.photos || []),
+    _useState54 = _slicedToArray(_useState53, 2),
+    photos = _useState54[0],
+    setPhotos = _useState54[1];
 
   // Update formData when photos change
   (0, _react.useEffect)(function () {
@@ -273,60 +513,60 @@ var PlumbingForm = function PlumbingForm() {
   };
 
   // State for address search
-  var _useState49 = (0, _react.useState)(''),
-    _useState50 = _slicedToArray(_useState49, 2),
-    addressSearchQuery = _useState50[0],
-    setAddressSearchQuery = _useState50[1];
-  var _useState51 = (0, _react.useState)([]),
-    _useState52 = _slicedToArray(_useState51, 2),
-    addressSearchResults = _useState52[0],
-    setAddressSearchResults = _useState52[1];
-  var _useState53 = (0, _react.useState)(false),
-    _useState54 = _slicedToArray(_useState53, 2),
-    showAddressResults = _useState54[0],
-    setShowAddressResults = _useState54[1];
+  var _useState55 = (0, _react.useState)(''),
+    _useState56 = _slicedToArray(_useState55, 2),
+    addressSearchQuery = _useState56[0],
+    setAddressSearchQuery = _useState56[1];
+  var _useState57 = (0, _react.useState)([]),
+    _useState58 = _slicedToArray(_useState57, 2),
+    addressSearchResults = _useState58[0],
+    setAddressSearchResults = _useState58[1];
+  var _useState59 = (0, _react.useState)(false),
+    _useState60 = _slicedToArray(_useState59, 2),
+    showAddressResults = _useState60[0],
+    setShowAddressResults = _useState60[1];
 
   // Search places using Google Places API
   var searchAddressPlaces = /*#__PURE__*/function () {
-    var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(text) {
+    var _ref1 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(text) {
       var response, data;
-      return _regeneratorRuntime().wrap(function _callee$(_context) {
-        while (1) switch (_context.prev = _context.next) {
+      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        while (1) switch (_context2.prev = _context2.next) {
           case 0:
-            _context.prev = 0;
+            _context2.prev = 0;
             if (text) {
-              _context.next = 4;
+              _context2.next = 4;
               break;
             }
             setAddressSearchResults([]);
-            return _context.abrupt("return");
+            return _context2.abrupt("return");
           case 4:
             if (GOOGLE_API) {
-              _context.next = 7;
+              _context2.next = 7;
               break;
             }
             _reactNative.Alert.alert('Configuration Error', 'Google Places API key is not configured. Address search is not available.', [{
               text: 'OK'
             }]);
-            return _context.abrupt("return");
+            return _context2.abrupt("return");
           case 7:
-            _context.next = 9;
+            _context2.next = 9;
             return fetch("https://maps.googleapis.com/maps/api/place/autocomplete/json?input=".concat(encodeURIComponent(text), "&types=geocode&key=").concat(GOOGLE_API));
           case 9:
-            response = _context.sent;
-            _context.next = 12;
+            response = _context2.sent;
+            _context2.next = 12;
             return response.json();
           case 12:
-            data = _context.sent;
+            data = _context2.sent;
             if (!(data.status !== "OK")) {
-              _context.next = 17;
+              _context2.next = 17;
               break;
             }
             console.error("Google Places API Error:", data.status, data.error_message);
             _reactNative.Alert.alert('Search Error', 'Unable to search for addresses at this time. Please try again later.', [{
               text: 'OK'
             }]);
-            return _context.abrupt("return");
+            return _context2.abrupt("return");
           case 17:
             setAddressSearchResults(data.predictions.map(function (place) {
               return {
@@ -335,23 +575,23 @@ var PlumbingForm = function PlumbingForm() {
               };
             }));
             setShowAddressResults(true);
-            _context.next = 25;
+            _context2.next = 25;
             break;
           case 21:
-            _context.prev = 21;
-            _context.t0 = _context["catch"](0);
-            console.error("Error fetching places:", _context.t0);
+            _context2.prev = 21;
+            _context2.t0 = _context2["catch"](0);
+            console.error("Error fetching places:", _context2.t0);
             _reactNative.Alert.alert('Search Error', 'Unable to search for addresses at this time. Please try again later.', [{
               text: 'OK'
             }]);
           case 25:
           case "end":
-            return _context.stop();
+            return _context2.stop();
         }
-      }, _callee, null, [[0, 21]]);
+      }, _callee2, null, [[0, 21]]);
     }));
-    return function searchAddressPlaces(_x) {
-      return _ref2.apply(this, arguments);
+    return function searchAddressPlaces(_x2) {
+      return _ref1.apply(this, arguments);
     };
   }();
 
@@ -370,15 +610,15 @@ var PlumbingForm = function PlumbingForm() {
   };
 
   // State for date picker
-  var _useState55 = (0, _react.useState)(false),
-    _useState56 = _slicedToArray(_useState55, 2),
-    showDatePicker = _useState56[0],
-    setShowDatePicker = _useState56[1];
+  var _useState61 = (0, _react.useState)(false),
+    _useState62 = _slicedToArray(_useState61, 2),
+    showDatePicker = _useState62[0],
+    setShowDatePicker = _useState62[1];
   // Temporary state for date selection
-  var _useState57 = (0, _react.useState)(null),
-    _useState58 = _slicedToArray(_useState57, 2),
-    tempDate = _useState58[0],
-    setTempDate = _useState58[1];
+  var _useState63 = (0, _react.useState)(null),
+    _useState64 = _slicedToArray(_useState63, 2),
+    tempDate = _useState64[0],
+    setTempDate = _useState64[1];
 
   // Get formatted date string
   var getFormattedDate = function getFormattedDate(date) {
@@ -1339,8 +1579,8 @@ var PlumbingForm = function PlumbingForm() {
     },
     keyboardShouldPersistTaps: "handled",
     style: styles.suggestionsList,
-    renderItem: function renderItem(_ref3) {
-      var item = _ref3.item;
+    renderItem: function renderItem(_ref10) {
+      var item = _ref10.item;
       return /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
         style: styles.suggestionItem,
         onPress: function onPress() {
@@ -1733,7 +1973,177 @@ var PlumbingForm = function PlumbingForm() {
     style: styles.mainSectionHeader
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.mainSectionHeaderText
-  }, "Photos")), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+  }, "Photos")), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.photoAlbumContainer
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.photoAlbumHeader
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.photoAlbumTitle
+  }, "Photos"), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.photoCount
+  }, formData.photos.length, " photos")), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+    style: [styles.addPhotoButton, formData.photos.length >= 8 && styles.addPhotoButtonDisabled],
+    onPress: /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+      var permissionResult, _yield$ImagePicker$re, status, pickerOptions, result, existingPhotoMap, selectedUris, photosToRemove, newPhotosArray, _iterator, _step, asset;
+      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+        while (1) switch (_context3.prev = _context3.next) {
+          case 0:
+            _context3.prev = 0;
+            if (!(formData.photos.length >= 8)) {
+              _context3.next = 4;
+              break;
+            }
+            _reactNative.Alert.alert("Limit Reached", "You can only add up to 8 photos.", [{
+              text: "OK"
+            }]);
+            return _context3.abrupt("return");
+          case 4:
+            _context3.next = 6;
+            return ImagePicker.getMediaLibraryPermissionsAsync();
+          case 6:
+            permissionResult = _context3.sent;
+            if (permissionResult.granted) {
+              _context3.next = 20;
+              break;
+            }
+            if (!permissionResult.canAskAgain) {
+              _context3.next = 18;
+              break;
+            }
+            _context3.next = 11;
+            return ImagePicker.requestMediaLibraryPermissionsAsync();
+          case 11:
+            _yield$ImagePicker$re = _context3.sent;
+            status = _yield$ImagePicker$re.status;
+            if (!(status !== 'granted')) {
+              _context3.next = 16;
+              break;
+            }
+            _reactNative.Alert.alert("Permission Required", "This app needs access to your photos to continue. Please enable it in your device settings.", [{
+              text: "OK"
+            }]);
+            return _context3.abrupt("return");
+          case 16:
+            _context3.next = 20;
+            break;
+          case 18:
+            _reactNative.Alert.alert("Permission Required", "This app needs access to your photos to continue. Please enable it in your device settings.", [{
+              text: "OK"
+            }]);
+            return _context3.abrupt("return");
+          case 20:
+            pickerOptions = {
+              mediaTypes: ImagePicker.MediaTypeOptions.Images,
+              allowsEditing: false,
+              quality: 0.8,
+              allowsMultipleSelection: _reactNative.Platform.OS !== 'web',
+              selectionLimit: _reactNative.Platform.OS !== 'web' ? 8 : undefined
+            };
+            _context3.next = 23;
+            return ImagePicker.launchImageLibraryAsync(pickerOptions);
+          case 23:
+            result = _context3.sent;
+            if (!result.canceled && result.assets && result.assets.length > 0) {
+              existingPhotoMap = new Map();
+              formData.photos.forEach(function (photo) {
+                existingPhotoMap.set(photo.uri, photo);
+              });
+              selectedUris = new Set(result.assets.map(function (asset) {
+                return asset.uri;
+              }));
+              photosToRemove = formData.photos.filter(function (photo) {
+                return !selectedUris.has(photo.uri);
+              });
+              newPhotosArray = [];
+              _iterator = _createForOfIteratorHelper(result.assets);
+              try {
+                for (_iterator.s(); !(_step = _iterator.n()).done;) {
+                  asset = _step.value;
+                  if (existingPhotoMap.has(asset.uri)) {
+                    newPhotosArray.push(existingPhotoMap.get(asset.uri));
+                  } else {
+                    newPhotosArray.push({
+                      id: "photo-".concat(Date.now(), "-").concat(Math.random().toString(36).substring(2, 9)),
+                      uri: asset.uri,
+                      width: asset.width,
+                      height: asset.height,
+                      type: asset.type || 'image',
+                      fileName: asset.fileName || "photo-".concat(Date.now(), ".jpg")
+                    });
+                  }
+                }
+              } catch (err) {
+                _iterator.e(err);
+              } finally {
+                _iterator.f();
+              }
+              setFormData(function (prevData) {
+                return _objectSpread(_objectSpread({}, prevData), {}, {
+                  photos: newPhotosArray
+                });
+              });
+            }
+            _context3.next = 31;
+            break;
+          case 27:
+            _context3.prev = 27;
+            _context3.t0 = _context3["catch"](0);
+            console.warn('Error selecting images:', _context3.t0);
+            _reactNative.Alert.alert("Error", "There was a problem selecting photos. Please try again.", [{
+              text: "OK"
+            }]);
+          case 31:
+          case "end":
+            return _context3.stop();
+        }
+      }, _callee3, null, [[0, 27]]);
+    })),
+    disabled: formData.photos.length >= 8
+  }, /*#__PURE__*/_react["default"].createElement(Ionicons, {
+    name: "image-outline",
+    size: 20,
+    color: "#007AFF"
+  }), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.addPhotoButtonText
+  }, "Add Photos")), formData.photos.length > 0 ? /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.photoGrid
+  }, formData.photos.map(function (item) {
+    return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+      key: item.id,
+      style: styles.photoContainer
+    }, /*#__PURE__*/_react["default"].createElement(_reactNative.Image, {
+      source: {
+        uri: item.uri
+      },
+      style: styles.photo
+    }), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+      style: styles.removePhotoButton,
+      onPress: function onPress() {
+        var updatedPhotos = formData.photos.filter(function (photo) {
+          return photo.id !== item.id;
+        });
+        setFormData(function (prevData) {
+          return _objectSpread(_objectSpread({}, prevData), {}, {
+            photos: updatedPhotos
+          });
+        });
+      }
+    }, /*#__PURE__*/_react["default"].createElement(Ionicons, {
+      name: "close-circle",
+      size: 22,
+      color: "#FF3B30"
+    })));
+  })) : /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.emptyState
+  }, /*#__PURE__*/_react["default"].createElement(Ionicons, {
+    name: "images-outline",
+    size: 40,
+    color: "#CCCCCC"
+  }), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.emptyStateText
+  }, "No photos added yet"), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.emptyStateSubtext
+  }, "Tap \"Add Photos\" to select from your gallery"))), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
     style: styles.submitButton,
     onPress: handleSubmit
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
@@ -2224,6 +2634,99 @@ var localStyles = _reactNative.StyleSheet.create({
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
     justifyContent: 'flex-end'
+  },
+  photoAlbumContainer: {
+    marginVertical: 15,
+    paddingHorizontal: 16
+  },
+  photoAlbumHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12
+  },
+  photoAlbumTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333'
+  },
+  photoCount: {
+    fontSize: 14,
+    color: '#777'
+  },
+  addPhotoButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#007AFF',
+    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    marginBottom: 15,
+    backgroundColor: 'white'
+  },
+  addPhotoButtonDisabled: {
+    opacity: 0.5
+  },
+  addPhotoButtonText: {
+    color: '#007AFF',
+    fontWeight: '500',
+    marginLeft: 6
+  },
+  photoGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginTop: 10,
+    marginHorizontal: -2
+  },
+  photoContainer: {
+    width: '33.333%',
+    aspectRatio: 1,
+    padding: 2,
+    position: 'relative'
+  },
+  photo: {
+    flex: 1,
+    borderRadius: 4,
+    backgroundColor: '#f0f0f0'
+  },
+  removePhotoButton: {
+    position: 'absolute',
+    top: -8,
+    right: -8,
+    backgroundColor: 'white',
+    borderRadius: 12,
+    padding: 0,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+    elevation: 2,
+    zIndex: 1
+  },
+  emptyState: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#f9f9f9',
+    borderRadius: 6,
+    padding: 30,
+    marginTop: 10
+  },
+  emptyStateText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#888',
+    marginTop: 12
+  },
+  emptyStateSubtext: {
+    fontSize: 14,
+    color: '#999',
+    marginTop: 5,
+    textAlign: 'center'
   }
 });
 var _default = exports["default"] = PlumbingForm;

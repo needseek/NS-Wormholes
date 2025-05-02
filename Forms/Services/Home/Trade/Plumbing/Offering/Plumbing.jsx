@@ -4,15 +4,189 @@
 // Force Force Force Force
 
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, Switch, TouchableOpacity, Dimensions, Modal, Alert, FlatList, Platform } from 'react-native';
-import TestImport from './TestImport';
-// import {
-//   CustomDropdown,
-//   LicenseForm,
-//   InsuranceForm,
-//   CustomWarrantySelector,
-//   PhotoAlbum
-// } from '../../components';
+import { View, Text, TextInput, StyleSheet, Switch, TouchableOpacity, Dimensions, Modal, Alert, FlatList, Platform, Image } from 'react-native';
+
+
+// ---------------------- BASE FORM COMPONENTS ----------------------
+const FormSection = ({ title, children, registry }) => {
+  return (
+    <View style={localStyles.sectionContainer}>
+      {title && <Text style={localStyles.sectionTitle}>{title}</Text>}
+      <View style={localStyles.sectionContent}>{children}</View>
+    </View>
+  );
+};
+
+const FormInput = ({ label, value, setValue, placeholder, required, keyboardType, multiline, registry }) => {
+  return (
+    <View style={localStyles.inputContainer}>
+      {label && (
+        <Text style={localStyles.label}>
+          {label}
+          {required && <Text style={localStyles.requiredStar}> *</Text>}
+        </Text>
+      )}
+      <TextInput
+        style={[localStyles.input, multiline && localStyles.multilineInput]}
+        value={value}
+        onChangeText={setValue}
+        placeholder={placeholder}
+        placeholderTextColor="#999"
+        keyboardType={keyboardType}
+        multiline={multiline}
+      />
+    </View>
+  );
+};
+
+const FormDropdown = ({ label, items, value, setValue, placeholder, zIndex, registry }) => {
+  const { DropDownPicker } = registry;
+  const [open, setOpen] = useState(false);
+
+  return (
+    <View style={[localStyles.dropdownContainer, { zIndex }]}>
+      {label && <Text style={localStyles.label}>{label}</Text>}
+      <DropDownPicker
+        open={open}
+        value={value}
+        items={items}
+        setOpen={setOpen}
+        setValue={setValue}
+        placeholder={placeholder}
+        style={localStyles.dropdown}
+        textStyle={localStyles.dropdownText}
+        dropDownContainerStyle={localStyles.dropdownList}
+      />
+    </View>
+  );
+};
+
+const AddressSearch = ({ value, setValue, googleApiKey, registry }) => {
+  const [results, setResults] = useState([]);
+  
+  const searchAddress = async (query) => {
+    if (!query || !googleApiKey) return;
+    try {
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(query)}&key=${googleApiKey}`
+      );
+      const data = await response.json();
+      setResults(data.predictions || []);
+    } catch (error) {
+      console.error("Address search error:", error);
+    }
+  };
+
+  return (
+    <View style={localStyles.addressContainer}>
+      <FormInput
+        label="Service Address"
+        value={value}
+        setValue={(text) => {
+          setValue(text);
+          searchAddress(text);
+        }}
+        placeholder="Search address..."
+        registry={registry}
+      />
+      
+      {results.length > 0 && (
+        <FlatList
+          data={results}
+          keyExtractor={(item) => item.place_id}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={localStyles.addressItem}
+              onPress={() => setValue(item.description)}
+            >
+              <Text style={localStyles.addressText}>{item.description}</Text>
+            </TouchableOpacity>
+          )}
+          style={localStyles.addressList}
+        />
+      )}
+    </View>
+  );
+};
+
+const DatePicker = ({ date, setDate, registry }) => {
+  const { DateTimePicker, IconButton } = registry;
+  const [showPicker, setShowPicker] = useState(false);
+
+  return (
+    <View style={localStyles.dateContainer}>
+      <TouchableOpacity style={localStyles.dateButton} onPress={() => setShowPicker(true)}>
+        <Text style={localStyles.dateText}>
+          {date ? `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}` : 'Select date'}
+        </Text>
+        <IconButton icon="calendar" size={20} color="#007AFF" />
+      </TouchableOpacity>
+      
+      {showPicker && (
+        <DateTimePicker
+          value={date || new Date()}
+          mode="date"
+          display="default"
+          onChange={(event, selectedDate) => {
+            setShowPicker(false);
+            selectedDate && setDate(selectedDate);
+          }}
+        />
+      )}
+    </View>
+  );
+};
+
+const SwitchInput = ({ label, value, setValue, registry }) => {
+  return (
+    <View style={localStyles.switchContainer}>
+      <Text style={localStyles.switchLabel}>{label}</Text>
+      <Switch
+        value={value}
+        onValueChange={setValue}
+        trackColor={{ false: "#767577", true: "#81b0ff" }}
+        thumbColor={value ? "#007AFF" : "#f4f3f4"}
+      />
+    </View>
+  );
+};
+
+// ---------------------- SERVICE SPECIFIC FORM COMPONENTS ----------------------
+const WarrantySelector = ({ parts, setParts, labor, setLabor, registry }) => {
+  const warrantyOptions = [
+    { label: 'None', value: '0' },
+    { label: '1 month', value: '1 month' },
+    { label: '3 months', value: '3 months' },
+    { label: '6 months', value: '6 months' },
+    { label: '1 year', value: '1 year' },
+    { label: '2 years', value: '2 years' },
+    { label: 'Custom...', value: 'custom' }
+  ];
+
+  return (
+    <View style={localStyles.warrantyContainer}>
+      <FormDropdown
+        label="Parts Warranty"
+        items={warrantyOptions}
+        value={parts}
+        setValue={setParts}
+        registry={registry}
+        zIndex={1000}
+      />
+      <FormDropdown
+        label="Labor Warranty"
+        items={warrantyOptions}
+        value={labor}
+        setValue={setLabor}
+        registry={registry}
+        zIndex={999}
+      />
+    </View>
+  );
+};
+
+
+
 const PlumbingForm = ({ 
   formData: initialFormData = {},
   setFormData: setParentFormData = () => {},
@@ -27,7 +201,8 @@ const PlumbingForm = ({
 } = {}) => {
   // Get styles by merging parent styles with component-specific styles
   const styles = { ...parentStyles, ...localStyles };
-  const { DropDownPicker, DateTimePicker, IconButton, isValidPhoneNumber } = registry;
+  const { DropDownPicker, DateTimePicker, IconButton, isValidPhoneNumber, Ionicons, ImagePicker } = registry;
+
  
   // Add console warnings for missing critical props
   useEffect(() => {
@@ -1445,12 +1620,136 @@ useEffect(() => {
           <Text style={styles.mainSectionHeaderText}>Photos</Text>
         </View>
         
-        {/* <PhotoAlbum
-          photos={photos}
-          onPhotoChange={setPhotos}
-          maxPhotos={8}
-          containerStyle={{ paddingHorizontal: 16 }}
-        /> */}
+        <View style={styles.photoAlbumContainer}>
+          <View style={styles.photoAlbumHeader}>
+            <Text style={styles.photoAlbumTitle}>Photos</Text>
+            <Text style={styles.photoCount}>
+              {formData.photos.length} photos
+            </Text>
+          </View>
+          
+          <TouchableOpacity 
+            style={[styles.addPhotoButton, formData.photos.length >= 8 && styles.addPhotoButtonDisabled]}
+            onPress={async () => {
+              try {
+                if (formData.photos.length >= 8) {
+                  Alert.alert(
+                    "Limit Reached",
+                    "You can only add up to 8 photos.",
+                    [{ text: "OK" }]
+                  );
+                  return;
+                }
+
+                const permissionResult = await ImagePicker.getMediaLibraryPermissionsAsync();
+                
+                if (!permissionResult.granted) {
+                  if (permissionResult.canAskAgain) {
+                    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+                    if (status !== 'granted') {
+                      Alert.alert(
+                        "Permission Required",
+                        "This app needs access to your photos to continue. Please enable it in your device settings.",
+                        [{ text: "OK" }]
+                      );
+                      return;
+                    }
+                  } else {
+                    Alert.alert(
+                      "Permission Required",
+                      "This app needs access to your photos to continue. Please enable it in your device settings.",
+                      [{ text: "OK" }]
+                    );
+                    return;
+                  }
+                }
+
+                const pickerOptions = {
+                  mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                  allowsEditing: false,
+                  quality: 0.8,
+                  allowsMultipleSelection: Platform.OS !== 'web',
+                  selectionLimit: Platform.OS !== 'web' ? 8 : undefined,
+                };
+                
+                let result = await ImagePicker.launchImageLibraryAsync(pickerOptions);
+
+                if (!result.canceled && result.assets && result.assets.length > 0) {
+                  const existingPhotoMap = new Map();
+                  formData.photos.forEach(photo => {
+                    existingPhotoMap.set(photo.uri, photo);
+                  });
+                  
+                  const selectedUris = new Set(result.assets.map(asset => asset.uri));
+                  const photosToRemove = formData.photos.filter(photo => !selectedUris.has(photo.uri));
+                  
+                  const newPhotosArray = [];
+                  
+                  for (const asset of result.assets) {
+                    if (existingPhotoMap.has(asset.uri)) {
+                      newPhotosArray.push(existingPhotoMap.get(asset.uri));
+                    } else {
+                      newPhotosArray.push({
+                        id: `photo-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+                        uri: asset.uri,
+                        width: asset.width,
+                        height: asset.height,
+                        type: asset.type || 'image',
+                        fileName: asset.fileName || `photo-${Date.now()}.jpg`,
+                      });
+                    }
+                  }
+                  
+                  setFormData(prevData => ({
+                    ...prevData,
+                    photos: newPhotosArray
+                  }));
+                }
+              } catch (error) {
+                console.warn('Error selecting images:', error);
+                Alert.alert(
+                  "Error",
+                  "There was a problem selecting photos. Please try again.",
+                  [{ text: "OK" }]
+                );
+              }
+            }}
+            disabled={formData.photos.length >= 8}
+          >
+            <Ionicons name="image-outline" size={20} color="#007AFF" />
+            <Text style={styles.addPhotoButtonText}>Add Photos</Text>
+          </TouchableOpacity>
+          
+          {formData.photos.length > 0 ? (
+            <View style={styles.photoGrid}>
+              {formData.photos.map(item => (
+                <View key={item.id} style={styles.photoContainer}>
+                  <Image source={{ uri: item.uri }} style={styles.photo} />
+                  
+                  <TouchableOpacity 
+                    style={styles.removePhotoButton} 
+                    onPress={() => {
+                      const updatedPhotos = formData.photos.filter(photo => photo.id !== item.id);
+                      setFormData(prevData => ({
+                        ...prevData,
+                        photos: updatedPhotos
+                      }));
+                    }}
+                  >
+                    <Ionicons name="close-circle" size={22} color="#FF3B30" />
+                  </TouchableOpacity>
+                </View>
+              ))}
+            </View>
+          ) : (
+            <View style={styles.emptyState}>
+              <Ionicons name="images-outline" size={40} color="#CCCCCC" />
+              <Text style={styles.emptyStateText}>No photos added yet</Text>
+              <Text style={styles.emptyStateSubtext}>Tap "Add Photos" to select from your gallery</Text>
+            </View>
+          )}
+        </View>
+
         <TouchableOpacity 
           style={styles.submitButton}
           onPress={handleSubmit}
@@ -1955,6 +2254,96 @@ const localStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
     justifyContent: 'flex-end',
+  },
+  photoAlbumContainer: {
+    marginVertical: 15,
+    paddingHorizontal: 16,
+  },
+  photoAlbumHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  photoAlbumTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333',
+  },
+  photoCount: {
+    fontSize: 14,
+    color: '#777',
+  },
+  addPhotoButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#007AFF',
+    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    marginBottom: 15,
+    backgroundColor: 'white',
+  },
+  addPhotoButtonDisabled: {
+    opacity: 0.5,
+  },
+  addPhotoButtonText: {
+    color: '#007AFF',
+    fontWeight: '500',
+    marginLeft: 6,
+  },
+  photoGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginTop: 10,
+    marginHorizontal: -2,
+  },
+  photoContainer: {
+    width: '33.333%',
+    aspectRatio: 1,
+    padding: 2,
+    position: 'relative',
+  },
+  photo: {
+    flex: 1,
+    borderRadius: 4,
+    backgroundColor: '#f0f0f0',
+  },
+  removePhotoButton: {
+    position: 'absolute',
+    top: -8,
+    right: -8,
+    backgroundColor: 'white',
+    borderRadius: 12,
+    padding: 0,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+    elevation: 2,
+    zIndex: 1,
+  },
+  emptyState: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#f9f9f9',
+    borderRadius: 6,
+    padding: 30,
+    marginTop: 10,
+  },
+  emptyStateText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#888',
+    marginTop: 12,
+  },
+  emptyStateSubtext: {
+    fontSize: 14,
+    color: '#999',
+    marginTop: 5,
+    textAlign: 'center',
   },
 });
 
