@@ -28,7 +28,7 @@ const PlumbingForm = ({
   const styles = { ...parentStyles, ...localStyles };
   const { DropDownPicker, DateTimePicker, IconButton } = registry;
   if (!IconButton) {
-    console.error('IconButton component missing!');
+    console.error('IconButton component missing force!');
     return null;
   }
   // Add console warnings for missing critical props

@@ -63,7 +63,7 @@ var PlumbingForm = function PlumbingForm() {
     DateTimePicker = registry.DateTimePicker,
     IconButton = registry.IconButton;
   if (!IconButton) {
-    console.error('IconButton component missing!');
+    console.error('IconButton component missing force!');
     return null;
   }
   // Add console warnings for missing critical props
