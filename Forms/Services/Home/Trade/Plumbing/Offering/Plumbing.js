@@ -1298,7 +1298,7 @@ var PlumbingForm = function PlumbingForm() {
   }, "Create Offering"))));
 };
 
-// Local styles for the PlumbingForm component
+// Local styles for the PlumbingForm component - force
 var localStyles = _reactNative.StyleSheet.create({
   container: {
     flex: 1
