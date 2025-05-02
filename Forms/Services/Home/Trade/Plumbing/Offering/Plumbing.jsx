@@ -1060,7 +1060,7 @@ const PlumbingForm = ({
 };
 
 // Local styles for the PlumbingForm component
-const styles = StyleSheet.create({
+const localStyles = StyleSheet.create({
   container: {
     flex: 1,
   },

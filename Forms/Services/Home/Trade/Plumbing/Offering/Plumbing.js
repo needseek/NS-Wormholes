@@ -1319,7 +1319,7 @@ var PlumbingForm = function PlumbingForm() {
 };
 
 // Local styles for the PlumbingForm component
-var styles = _reactNative.StyleSheet.create({
+var localStyles = _reactNative.StyleSheet.create({
   container: {
     flex: 1
   },
