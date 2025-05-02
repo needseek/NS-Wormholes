@@ -26,7 +26,11 @@ const PlumbingForm = ({
 } = {}) => {
   // Get styles by merging parent styles with component-specific styles
   const styles = { ...parentStyles, ...localStyles };
-  const { DropDownPicker, DateTimePicker, IconButton } = registry
+  const { DropDownPicker, DateTimePicker, IconButton } = registry;
+  if (!IconButton) {
+    console.error('IconButton component missing!');
+    return null;
+  }
   // Add console warnings for missing critical props
   useEffect(() => {
     if (!navigation) {

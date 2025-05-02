@@ -1,0 +1,44 @@
+Plumbing Offering
+Offering Header title (topic wheel meta data): Service Profile
+{
+ # Basic Information Section
+  title*: string
+  description*: string #multiline: true
+  entity*: string # type: select, options: ["individual", "business", "non-profit"]
+
+  # Service Details Section
+  businessCommencementDate*: date
+  warranty: {
+    parts*: string # type: select, options: ["0", "1 month", "3 months", "6 months", "1 year", "2 years", "custom"]
+    labor*: string # type: select, options: ["0", "1 month", "3 months", "6 months", "1 year", "2 years", "custom"]
+  }
+  emergencyServicesProvided: boolean
+  permittingIncluded: boolean
+
+  # Contact Information Section
+  contact: {
+    phone*: string # validation: phone
+    email*: string # validation: email
+    website: string
+    address*: string # feature: Google Places autocomplete
+  }
+
+  # Credentials Section
+  licenses: [{
+    title: string
+    issuer: string
+    type: string # type: select, options: ["Business License", "Professional License", "Trade License"]
+    scope: string
+    licensee: string
+  }]
+
+  certifications: [string]
+
+  insurances: [{
+    type: string # type: select, options: ["commercial liability", "professional liability", "public liability", "workers compensation"]
+    coverage: string # type: select, options: ["1MM", "2MM", "5MM", "custom"]
+    issuer: string
+  }]
+  # Media Section
+  photos: [string]
+}

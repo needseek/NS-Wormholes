@@ -62,6 +62,10 @@ var PlumbingForm = function PlumbingForm() {
   var DropDownPicker = registry.DropDownPicker,
     DateTimePicker = registry.DateTimePicker,
     IconButton = registry.IconButton;
+  if (!IconButton) {
+    console.error('IconButton component missing!');
+    return null;
+  }
   // Add console warnings for missing critical props
   (0, _react.useEffect)(function () {
     if (!navigation) {
