@@ -450,75 +450,62 @@ const InsuranceForm = ({ onSave, onCancel, onCustomCoverage, registry, styles })
 const PersonalDetails = ({ 
   formData, 
   updateContact,
+  isValidPhoneNumber,
   isValidEmail,
   GOOGLE_API,
   registry,
   styles
 }) => {
-  const { isValidPhoneNumber } = registry;
   return (
     <FormSection title="Personal Details" registry={registry} styles={styles}>
-      <View style={styles.mainSectionHeader}>
-        <Text style={styles.mainSectionHeaderText}>Personal Details</Text>
-      </View>
-
       {/* Phone Input */}
-      <View style={styles.formGroup}>
-        <Text style={styles.label}>Phone <Text style={styles.requiredStar}>*</Text></Text>
-        <TextInput
-          style={styles.input}
-          value={formData.contact.phone}
-          onChangeText={(text) => updateContact('phone', text.replace(/[^\d\s+]/g, ''))}
-          placeholder="e.g. +1 650 288 7596"
-          placeholderTextColor="#999"
-          keyboardType="phone-pad"
-          autoCapitalize="none"
-        />
-        {formData.contact.phone && !isValidPhoneNumber(formData.contact.phone) && (
-          <Text style={styles.errorText}>Please enter a valid phone number with country code</Text>
-        )}
-      </View>
+      <FormInput
+        label="Phone"
+        value={formData.contact.phone}
+        setValue={(text) => updateContact('phone', text.replace(/[^\d\s+]/g, ''))}
+        placeholder="e.g. +1 650 288 7596"
+        required
+        keyboardType="phone-pad"
+        registry={registry}
+        styles={styles}
+      />
+      {formData.contact.phone && !isValidPhoneNumber(formData.contact.phone) && (
+        <Text style={localStyles.errorText}>Please enter a valid phone number with country code</Text>
+      )}
 
       {/* Email Input */}
-      <View style={styles.formGroup}>
-        <Text style={styles.label}>Email <Text style={styles.requiredStar}>*</Text></Text>
-        <TextInput
-          style={styles.input}
-          value={formData.contact.email}
-          onChangeText={(text) => updateContact('email', text)}
-          placeholder="e.g. example@domain.com"
-          placeholderTextColor="#999"
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-        {formData.contact.email && !isValidEmail(formData.contact.email) && (
-          <Text style={styles.errorText}>Please enter a valid email address</Text>
-        )}
-      </View>
+      <FormInput
+        label="Email"
+        value={formData.contact.email}
+        setValue={(text) => updateContact('email', text)}
+        placeholder="e.g. example@domain.com"
+        required
+        keyboardType="email-address"
+        registry={registry}
+        styles={styles}
+      />
+      {formData.contact.email && !isValidEmail(formData.contact.email) && (
+        <Text style={localStyles.errorText}>Please enter a valid email address</Text>
+      )}
 
       {/* Website Input */}
-      <View style={styles.formGroup}>
-        <Text style={styles.label}>Website</Text>
-        <TextInput
-          style={styles.input}
-          value={formData.contact.website}
-          onChangeText={(text) => updateContact('website', text)}
-          placeholder="e.g. https://yourwebsite.com"
-          placeholderTextColor="#999"
-          autoCapitalize="none"
-        />
-      </View>
+      <FormInput
+        label="Website"
+        value={formData.contact.website}
+        setValue={(text) => updateContact('website', text)}
+        placeholder="e.g. https://yourwebsite.com"
+        registry={registry}
+        styles={styles}
+      />
 
       {/* Address Search */}
-      <View style={styles.formGroup}>
-        <AddressSearch
-          value={formData.contact.address}
-          setValue={(text) => updateContact('address', text)}
-          googleApiKey={GOOGLE_API}
-          registry={registry}
-          styles={styles}
-        />
-      </View>
+      <AddressSearch
+        value={formData.contact.address}
+        setValue={(text) => updateContact('address', text)}
+        googleApiKey={GOOGLE_API}
+        registry={registry}
+        styles={styles}
+      />
     </FormSection>
   );
 };

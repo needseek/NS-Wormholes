@@ -594,71 +594,51 @@ var InsuranceForm = function InsuranceForm(_ref10) {
 var PersonalDetails = function PersonalDetails(_ref11) {
   var formData = _ref11.formData,
     updateContact = _ref11.updateContact,
+    isValidPhoneNumber = _ref11.isValidPhoneNumber,
     isValidEmail = _ref11.isValidEmail,
     GOOGLE_API = _ref11.GOOGLE_API,
     registry = _ref11.registry,
     styles = _ref11.styles;
-  var isValidPhoneNumber = registry.isValidPhoneNumber;
   return /*#__PURE__*/_react["default"].createElement(FormSection, {
     title: "Personal Details",
     registry: registry,
     styles: styles
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.mainSectionHeader
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.mainSectionHeaderText
-  }, "Personal Details")), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.formGroup
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.label
-  }, "Phone ", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.requiredStar
-  }, "*")), /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
-    style: styles.input,
+  }, /*#__PURE__*/_react["default"].createElement(FormInput, {
+    label: "Phone",
     value: formData.contact.phone,
-    onChangeText: function onChangeText(text) {
+    setValue: function setValue(text) {
       return updateContact('phone', text.replace(/[^\d\s+]/g, ''));
     },
     placeholder: "e.g. +1 650 288 7596",
-    placeholderTextColor: "#999",
+    required: true,
     keyboardType: "phone-pad",
-    autoCapitalize: "none"
+    registry: registry,
+    styles: styles
   }), formData.contact.phone && !isValidPhoneNumber(formData.contact.phone) && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.errorText
-  }, "Please enter a valid phone number with country code")), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.formGroup
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.label
-  }, "Email ", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.requiredStar
-  }, "*")), /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
-    style: styles.input,
+    style: localStyles.errorText
+  }, "Please enter a valid phone number with country code"), /*#__PURE__*/_react["default"].createElement(FormInput, {
+    label: "Email",
     value: formData.contact.email,
-    onChangeText: function onChangeText(text) {
+    setValue: function setValue(text) {
       return updateContact('email', text);
     },
     placeholder: "e.g. example@domain.com",
-    placeholderTextColor: "#999",
+    required: true,
     keyboardType: "email-address",
-    autoCapitalize: "none"
+    registry: registry,
+    styles: styles
   }), formData.contact.email && !isValidEmail(formData.contact.email) && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.errorText
-  }, "Please enter a valid email address")), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.formGroup
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.label
-  }, "Website"), /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
-    style: styles.input,
+    style: localStyles.errorText
+  }, "Please enter a valid email address"), /*#__PURE__*/_react["default"].createElement(FormInput, {
+    label: "Website",
     value: formData.contact.website,
-    onChangeText: function onChangeText(text) {
+    setValue: function setValue(text) {
       return updateContact('website', text);
     },
     placeholder: "e.g. https://yourwebsite.com",
-    placeholderTextColor: "#999",
-    autoCapitalize: "none"
-  })), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.formGroup
-  }, /*#__PURE__*/_react["default"].createElement(AddressSearch, {
+    registry: registry,
+    styles: styles
+  }), /*#__PURE__*/_react["default"].createElement(AddressSearch, {
     value: formData.contact.address,
     setValue: function setValue(text) {
       return updateContact('address', text);
@@ -666,7 +646,7 @@ var PersonalDetails = function PersonalDetails(_ref11) {
     googleApiKey: GOOGLE_API,
     registry: registry,
     styles: styles
-  })));
+  }));
 };
 
 // ---------------------- SERVICE INFORMATION COMPONENT ----------------------
