@@ -14,27 +14,27 @@ import { View, Text, TextInput, StyleSheet, Switch, TouchableOpacity, Dimensions
 // ------------------------------------------------------------------------
 
 // ------------------------ FORM SECTION ----------------------------------
-const FormSection = ({ title, children, registry }) => {
+const FormSection = ({ title, children, styles }) => {
   return (
-    <View style={localStyles.sectionContainer}>
-      {title && <Text style={localStyles.sectionTitle}>{title}</Text>}
-      <View style={localStyles.sectionContent}>{children}</View>
+    <View style={styles.sectionContainer}>
+      {title && <Text style={styles.sectionTitle}>{title}</Text>}
+      <View style={styles.sectionContent}>{children}</View>
     </View>
   );
 };
 
 // ------------------------ FORM INPUT ------------------------------------
-const FormInput = ({ label, value, setValue, placeholder, required, keyboardType, multiline, registry }) => {
+const FormInput = ({ label, value, setValue, placeholder, required, keyboardType, multiline, styles })=> {
   return (
-    <View style={localStyles.inputContainer}>
+    <View style={styles.inputContainer}>
       {label && (
-        <Text style={localStyles.label}>
+        <Text style={styles.label}>
           {label}
-          {required && <Text style={localStyles.requiredStar}> *</Text>}
+          {required && <Text style={styles.requiredStar}> *</Text>}
         </Text>
       )}
       <TextInput
-        style={[localStyles.input, multiline && localStyles.multilineInput]}
+        style={[styles.input, multiline && styles.multilineInput]}
         value={value}
         onChangeText={setValue}
         placeholder={placeholder}
@@ -47,13 +47,13 @@ const FormInput = ({ label, value, setValue, placeholder, required, keyboardType
 };
 
 // ------------------------ FORM DROPDOWN ---------------------------------
-const FormDropdown = ({ label, items, value, setValue, placeholder, zIndex, registry }) => {
+const FormDropdown = ({ label, items, value, setValue, placeholder, zIndex, registry, styles }) => {
   const { DropDownPicker } = registry;
   const [open, setOpen] = useState(false);
 
   return (
-    <View style={[localStyles.dropdownContainer, { zIndex }]}>
-      {label && <Text style={localStyles.label}>{label}</Text>}
+    <View style={[styles.dropdownContainer, { zIndex }]}>
+      {label && <Text style={styles.label}>{label}</Text>}
       <DropDownPicker
         open={open}
         value={value}
@@ -61,16 +61,16 @@ const FormDropdown = ({ label, items, value, setValue, placeholder, zIndex, regi
         setOpen={setOpen}
         setValue={setValue}
         placeholder={placeholder}
-        style={localStyles.dropdown}
-        textStyle={localStyles.dropdownText}
-        dropDownContainerStyle={localStyles.dropdownList}
+        style={styles.dropdown}
+        textStyle={styles.dropdownText}
+        dropDownContainerStyle={styles.dropdownList}
       />
     </View>
   );
 };
 
 // ------------------------ ADDRESS SEARCH ---------------------------------
-const AddressSearch = ({ value, setValue, googleApiKey, registry }) => {
+const AddressSearch = ({ value, setValue, googleApiKey, registry, styles }) => {
   const [results, setResults] = useState([]);
   
   const searchAddress = async (query) => {
@@ -87,7 +87,7 @@ const AddressSearch = ({ value, setValue, googleApiKey, registry }) => {
   };
 
   return (
-    <View style={localStyles.addressContainer}>
+    <View style={styles.addressContainer}>
       <FormInput
         label="Service Address"
         value={value}
@@ -97,6 +97,7 @@ const AddressSearch = ({ value, setValue, googleApiKey, registry }) => {
         }}
         placeholder="Search address..."
         registry={registry}
+        styles={styles}
       />
       
       {results.length > 0 && (
@@ -105,13 +106,13 @@ const AddressSearch = ({ value, setValue, googleApiKey, registry }) => {
           keyExtractor={(item) => item.place_id}
           renderItem={({ item }) => (
             <TouchableOpacity
-              style={localStyles.addressItem}
+              style={styles.addressItem}
               onPress={() => setValue(item.description)}
             >
-              <Text style={localStyles.addressText}>{item.description}</Text>
+              <Text style={styles.addressText}>{item.description}</Text>
             </TouchableOpacity>
           )}
-          style={localStyles.addressList}
+          style={styles.addressList}
         />
       )}
     </View>
@@ -119,14 +120,14 @@ const AddressSearch = ({ value, setValue, googleApiKey, registry }) => {
 };
 
 // ------------------------ DATE PICKER -------------------------------------
-const DatePicker = ({ date, setDate, registry }) => {
+const DatePicker = ({ date, setDate, registry, styles }) => {
   const { DateTimePicker, IconButton } = registry;
   const [showPicker, setShowPicker] = useState(false);
 
   return (
-    <View style={localStyles.dateContainer}>
-      <TouchableOpacity style={localStyles.dateButton} onPress={() => setShowPicker(true)}>
-        <Text style={localStyles.dateText}>
+    <View style={styles.dateContainer}>
+      <TouchableOpacity style={styles.dateButton} onPress={() => setShowPicker(true)}>
+        <Text style={styles.dateText}>
           {date ? `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}` : 'Select date'}
         </Text>
         <IconButton icon="calendar" size={20} color="#007AFF" />
@@ -148,10 +149,10 @@ const DatePicker = ({ date, setDate, registry }) => {
 };
 
 // ------------------------ SWITCH INPUT -----------------------------------
-const SwitchInput = ({ label, value, setValue, registry }) => {
+const SwitchInput = ({ label, value, setValue, styles }) => {
   return (
-    <View style={localStyles.switchContainer}>
-      <Text style={localStyles.switchLabel}>{label}</Text>
+    <View style={styles.switchContainer}>
+      <Text style={styles.switchLabel}>{label}</Text>
       <Switch
         value={value}
         onValueChange={setValue}
@@ -168,7 +169,7 @@ const SwitchInput = ({ label, value, setValue, registry }) => {
 // ------------------------------------------------------------------------
 
 // ------------------------ WARRANTY SELECTOR -----------------------------
-const WarrantySelector = ({ parts, setParts, labor, setLabor, registry }) => {
+const WarrantySelector = ({ parts, setParts, labor, setLabor, registry, styles }) => {
   const warrantyOptions = [
     { label: 'None', value: '0' },
     { label: '1 month', value: '1 month' },
@@ -180,7 +181,7 @@ const WarrantySelector = ({ parts, setParts, labor, setLabor, registry }) => {
   ];
 
   return (
-    <View style={localStyles.warrantyContainer}>
+    <View style={styles.warrantyContainer}>
       <FormDropdown
         label="Parts Warranty"
         items={warrantyOptions}
@@ -188,6 +189,7 @@ const WarrantySelector = ({ parts, setParts, labor, setLabor, registry }) => {
         setValue={setParts}
         registry={registry}
         zIndex={1000}
+        styles={styles}
       />
       <FormDropdown
         label="Labor Warranty"
@@ -196,6 +198,7 @@ const WarrantySelector = ({ parts, setParts, labor, setLabor, registry }) => {
         setValue={setLabor}
         registry={registry}
         zIndex={999}
+        styles={styles}
       />
     </View>
   );
@@ -211,7 +214,8 @@ const CustomSelectorModal = ({
   unitItems,
   onSave,
   onClose,
-  registry
+  registry,
+  styles
 }) => {
   const [inputValue, setInputValue] = useState(initialValue);
   const [selectedUnit, setSelectedUnit] = useState(initialUnit);
@@ -240,16 +244,16 @@ const CustomSelectorModal = ({
       animationType="fade"
       onRequestClose={onClose}
     >
-      <View style={localStyles.modalOverlay}>
-        <View style={localStyles.modalContent}>
-          <Text style={localStyles.modalTitle}>{title}</Text>
+      <View style={styles.modalOverlay}>
+        <View style={styles.modalContent}>
+          <Text style={styles.modalTitle}>{title}</Text>
           
-          <View style={localStyles.modalForm}>
-            <Text style={localStyles.modalInputLabel}>{inputLabel}</Text>
+          <View style={styles.modalForm}>
+            <Text style={styles.modalInputLabel}>{inputLabel}</Text>
             
-            <View style={localStyles.modalInputRow}>
+            <View style={styles.modalInputRow}>
               <TextInput
-                style={localStyles.modalInput}
+                style={styles.modalInput}
                 value={inputValue}
                 onChangeText={setInputValue}
                 placeholder="Enter value"
@@ -257,7 +261,7 @@ const CustomSelectorModal = ({
                 keyboardType="numeric"
               />
               
-              <View style={[localStyles.modalDropdown, { zIndex: openUnitDropdown ? 1000 : 1 }]}>
+              <View style={[styles.modalDropdown, { zIndex: openUnitDropdown ? 1000 : 1 }]}>
                 <DropDownPicker
                   open={openUnitDropdown}
                   value={selectedUnit}
@@ -265,31 +269,31 @@ const CustomSelectorModal = ({
                   setOpen={setOpenUnitDropdown}
                   setValue={setSelectedUnit}
                   placeholder="Select unit"
-                  style={localStyles.dropdownStyle}
-                  textStyle={localStyles.dropdownTextStyle}
-                  dropDownContainerStyle={localStyles.dropdownContainerStyle}
-                  listItemContainerStyle={localStyles.dropdownItemStyle}
+                  style={styles.dropdownStyle}
+                  textStyle={styles.dropdownTextStyle}
+                  dropDownContainerStyle={styles.dropdownContainerStyle}
+                  listItemContainerStyle={styles.dropdownItemStyle}
                 />
               </View>
             </View>
 
-            <View style={localStyles.modalButtons}>
+            <View style={styles.modalButtons}>
               <TouchableOpacity
-                style={localStyles.modalCancelButton}
+                style={styles.modalCancelButton}
                 onPress={onClose}
               >
-                <Text style={localStyles.modalCancelButtonText}>Cancel</Text>
+                <Text style={styles.modalCancelButtonText}>Cancel</Text>
               </TouchableOpacity>
               
               <TouchableOpacity
                 style={[
-                  localStyles.modalSaveButton,
-                  (!inputValue || inputValue === '0') && localStyles.modalButtonDisabled
+                  styles.modalSaveButton,
+                  (!inputValue || inputValue === '0') && styles.modalButtonDisabled
                 ]}
                 onPress={handleSave}
                 disabled={!inputValue || inputValue === '0'}
               >
-                <Text style={localStyles.modalSaveButtonText}>Save</Text>
+                <Text style={styles.modalSaveButtonText}>Save</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -300,7 +304,7 @@ const CustomSelectorModal = ({
 };
 
 // ---------------------- COVERAGE & INSURANCES SUB-COMPONENTS ----------------
-const LicenseForm = ({ onSave, onCancel, registry }) => {
+const LicenseForm = ({ onSave, onCancel, registry, styles }) => {
   const [license, setLicense] = useState({
     title: '',
     issuer: '',
@@ -309,7 +313,7 @@ const LicenseForm = ({ onSave, onCancel, registry }) => {
   });
 
   return (
-    <View style={localStyles.subForm}>
+    <View style={styles.subForm}>
       <FormInput
         label="License Title"
         value={license.title}
@@ -317,6 +321,7 @@ const LicenseForm = ({ onSave, onCancel, registry }) => {
         placeholder="State Plumbing License"
         required
         registry={registry}
+        styles={styles}
       />
 
       <FormInput
@@ -326,6 +331,7 @@ const LicenseForm = ({ onSave, onCancel, registry }) => {
         placeholder="State Licensing Board"
         required
         registry={registry}
+        styles={styles}
       />
 
       <FormDropdown
@@ -339,28 +345,29 @@ const LicenseForm = ({ onSave, onCancel, registry }) => {
         setValue={(value) => setLicense(prev => ({ ...prev, type: value }))}
         registry={registry}
         zIndex={2000}
+        styles={styles}
       />
 
-      <View style={localStyles.formActions}>
+      <View style={styles.formActions}>
         <TouchableOpacity
-          style={[localStyles.button, localStyles.cancelButton]}
+          style={[styles.button, styles.cancelButton]}
           onPress={onCancel}
         >
-          <Text style={localStyles.buttonText}>Cancel</Text>
+          <Text style={styles.buttonText}>Cancel</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[localStyles.button, localStyles.saveButton]}
+          style={[styles.button, styles.saveButton]}
           onPress={() => onSave(license)}
           disabled={!license.title || !license.issuer}
         >
-          <Text style={localStyles.buttonText}>Save License</Text>
+          <Text style={styles.buttonText}>Save License</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
 
-const InsuranceForm = ({ onSave, onCancel, onCustomCoverage, registry }) => {
+const InsuranceForm = ({ onSave, onCancel, onCustomCoverage, registry, styles }) => {
   const [insurance, setInsurance] = useState({
     type: 'commercial liability',
     coverage: '1MM',
@@ -368,7 +375,7 @@ const InsuranceForm = ({ onSave, onCancel, onCustomCoverage, registry }) => {
   });
 
   return (
-    <View style={localStyles.subForm}>
+    <View style={styles.subForm}>
       <FormDropdown
         label="Insurance Type"
         items={[
@@ -380,6 +387,7 @@ const InsuranceForm = ({ onSave, onCancel, onCustomCoverage, registry }) => {
         setValue={(value) => setInsurance(prev => ({ ...prev, type: value }))}
         registry={registry}
         zIndex={2000}
+        styles={styles}
       />
 
       <FormDropdown
@@ -400,6 +408,7 @@ const InsuranceForm = ({ onSave, onCancel, onCustomCoverage, registry }) => {
         }}
         registry={registry}
         zIndex={1900}
+        styles={styles}
       />
 
       <FormInput
@@ -409,21 +418,22 @@ const InsuranceForm = ({ onSave, onCancel, onCustomCoverage, registry }) => {
         placeholder="Insurance Company Name"
         required
         registry={registry}
+        styles={styles}
       />
 
-      <View style={localStyles.formActions}>
+      <View style={styles.formActions}>
         <TouchableOpacity
-          style={[localStyles.button, localStyles.cancelButton]}
+          style={[styles.button, styles.cancelButton]}
           onPress={onCancel}
         >
-          <Text style={localStyles.buttonText}>Cancel</Text>
+          <Text style={styles.buttonText}>Cancel</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[localStyles.button, localStyles.saveButton]}
+          style={[styles.button, styles.saveButton]}
           onPress={() => onSave(insurance)}
           disabled={!insurance.issuer}
         >
-          <Text style={localStyles.buttonText}>Save Insurance</Text>
+          <Text style={styles.buttonText}>Save Insurance</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -442,20 +452,21 @@ const PersonalDetails = ({
   updateContact,
   isValidEmail,
   GOOGLE_API,
-  registry 
+  registry,
+  styles
 }) => {
   const { isValidPhoneNumber } = registry;
   return (
-    <>
-      <View style={localStyles.mainSectionHeader}>
-        <Text style={localStyles.mainSectionHeaderText}>Personal Details</Text>
+    <FormSection title="Personal Details" registry={registry} styles={styles}>
+      <View style={styles.mainSectionHeader}>
+        <Text style={styles.mainSectionHeaderText}>Personal Details</Text>
       </View>
 
       {/* Phone Input */}
-      <View style={localStyles.formGroup}>
-        <Text style={localStyles.label}>Phone <Text style={localStyles.requiredStar}>*</Text></Text>
+      <View style={styles.formGroup}>
+        <Text style={styles.label}>Phone <Text style={styles.requiredStar}>*</Text></Text>
         <TextInput
-          style={localStyles.input}
+          style={styles.input}
           value={formData.contact.phone}
           onChangeText={(text) => updateContact('phone', text.replace(/[^\d\s+]/g, ''))}
           placeholder="e.g. +1 650 288 7596"
@@ -464,15 +475,15 @@ const PersonalDetails = ({
           autoCapitalize="none"
         />
         {formData.contact.phone && !isValidPhoneNumber(formData.contact.phone) && (
-          <Text style={localStyles.errorText}>Please enter a valid phone number with country code</Text>
+          <Text style={styles.errorText}>Please enter a valid phone number with country code</Text>
         )}
       </View>
 
       {/* Email Input */}
-      <View style={localStyles.formGroup}>
-        <Text style={localStyles.label}>Email <Text style={localStyles.requiredStar}>*</Text></Text>
+      <View style={styles.formGroup}>
+        <Text style={styles.label}>Email <Text style={styles.requiredStar}>*</Text></Text>
         <TextInput
-          style={localStyles.input}
+          style={styles.input}
           value={formData.contact.email}
           onChangeText={(text) => updateContact('email', text)}
           placeholder="e.g. example@domain.com"
@@ -481,15 +492,15 @@ const PersonalDetails = ({
           autoCapitalize="none"
         />
         {formData.contact.email && !isValidEmail(formData.contact.email) && (
-          <Text style={localStyles.errorText}>Please enter a valid email address</Text>
+          <Text style={styles.errorText}>Please enter a valid email address</Text>
         )}
       </View>
 
       {/* Website Input */}
-      <View style={localStyles.formGroup}>
-        <Text style={localStyles.label}>Website</Text>
+      <View style={styles.formGroup}>
+        <Text style={styles.label}>Website</Text>
         <TextInput
-          style={localStyles.input}
+          style={styles.input}
           value={formData.contact.website}
           onChangeText={(text) => updateContact('website', text)}
           placeholder="e.g. https://yourwebsite.com"
@@ -499,20 +510,21 @@ const PersonalDetails = ({
       </View>
 
       {/* Address Search */}
-      <View style={localStyles.formGroup}>
+      <View style={styles.formGroup}>
         <AddressSearch
           value={formData.contact.address}
           setValue={(text) => updateContact('address', text)}
           googleApiKey={GOOGLE_API}
           registry={registry}
+          styles={styles}
         />
       </View>
-    </>
+    </FormSection>
   );
 };
 
 // ---------------------- SERVICE INFORMATION COMPONENT ----------------------
-const ServiceInfo = ({ formData, setFormData, registry }) => {
+const ServiceInfo = ({ formData, setFormData, registry, styles }) => {
   // Custom warranty modal state
   const [showCustomWarrantyModal, setShowCustomWarrantyModal] = useState(false);
   const [customWarrantyType, setCustomWarrantyType] = useState('');
@@ -528,7 +540,7 @@ const ServiceInfo = ({ formData, setFormData, registry }) => {
   };
 
   return (
-    <FormSection title="Service Information" registry={registry}>
+    <FormSection title="Service Information" registry={registry} styles={styles}>
       {/* Title */}
       <FormInput
         label="Service Title"
@@ -537,6 +549,7 @@ const ServiceInfo = ({ formData, setFormData, registry }) => {
         placeholder="Professional Plumbing Services"
         required
         registry={registry}
+        styles={styles}
       />
 
       {/* Description */}
@@ -548,6 +561,7 @@ const ServiceInfo = ({ formData, setFormData, registry }) => {
         multiline
         required
         registry={registry}
+        styles={styles}
       />
 
       {/* Entity Type */}
@@ -564,6 +578,7 @@ const ServiceInfo = ({ formData, setFormData, registry }) => {
         required
         registry={registry}
         zIndex={3000}
+        styles={styles}
       />
 
       {/* Business Date */}
@@ -571,6 +586,7 @@ const ServiceInfo = ({ formData, setFormData, registry }) => {
         date={formData.businessCommencementDate}
         setDate={(date) => setFormData({...formData, businessCommencementDate: date})}
         registry={registry}
+        styles={styles}
       />
 
       {/* Warranty Selection */}
@@ -580,28 +596,31 @@ const ServiceInfo = ({ formData, setFormData, registry }) => {
         labor={formData.warrantyLabor}
         setLabor={handleWarrantyChange('warrantyLabor')}
         registry={registry}
+        styles={styles}
       />
 
       {/* Service Options */}
-      <View style={localStyles.optionsContainer}>
+      <View style={styles.optionsContainer}>
         <SwitchInput
           label="Emergency Services Available"
           value={formData.emergencyServicesProvided}
           setValue={(value) => setFormData({...formData, emergencyServicesProvided: value})}
           registry={registry}
+          styles={styles}
         />
         <SwitchInput
           label="Permitting Included"
           value={formData.permittingIncluded === "yes"}
           setValue={(value) => setFormData({...formData, permittingIncluded: value ? "yes" : "no"})}
           registry={registry}
+          styles={styles}
         />
       </View>
 
       {/* Custom Warranty Modal */}
       <CustomSelectorModal
         visible={showCustomWarrantyModal}
-        title={`Custom ${customWarrantyType} Warranty`}
+        title={`Custom ${capitalize(customWarrantyType)} Warranty`}
         inputLabel="Warranty Duration"
         initialValue={formData[`customWarranty${capitalize(customWarrantyType)}Value`]}
         initialUnit={formData[`customWarranty${capitalize(customWarrantyType)}Unit`]}
@@ -621,6 +640,7 @@ const ServiceInfo = ({ formData, setFormData, registry }) => {
         }}
         onClose={() => setShowCustomWarrantyModal(false)}
         registry={registry}
+        styles={styles}
       />
     </FormSection>
   );
@@ -628,7 +648,7 @@ const ServiceInfo = ({ formData, setFormData, registry }) => {
 
 
 // ---------------------- COVERAGE & INSURANCES COMPONENT ----------------------
-const CoverageInsurances = ({ formData, setFormData, registry }) => {
+const CoverageInsurances = ({ formData, setFormData, registry, styles }) => {
   const [showLicenseForm, setShowLicenseForm] = useState(false);
   const [showInsuranceForm, setShowInsuranceForm] = useState(false);
   const [showCoverageModal, setShowCoverageModal] = useState(false);
@@ -666,30 +686,30 @@ const CoverageInsurances = ({ formData, setFormData, registry }) => {
   };
 
   return (
-    <FormSection title="Credentials & Coverage" registry={registry}>
+    <FormSection title="Credentials & Coverage" registry={registry} styles={styles}>
       {/* Licenses Section */}
-      <View style={localStyles.sectionHeader}>
-        <Text style={localStyles.subSectionTitle}>Licenses</Text>
+      <View style={styles.sectionHeader}>
+        <Text style={styles.subSectionTitle}>Licenses</Text>
         <TouchableOpacity
-          style={localStyles.addButton}
+          style={styles.addButton}
           onPress={() => setShowLicenseForm(true)}
         >
-          <Text style={localStyles.addButtonText}>+ Add License</Text>
+          <Text style={styles.addButtonText}>+ Add License</Text>
         </TouchableOpacity>
       </View>
 
       {formData.licenses.map((license, index) => (
-        <View key={index} style={localStyles.listItem}>
-          <View style={localStyles.itemContent}>
-            <Text style={localStyles.itemTitle}>{license.title}</Text>
-            <Text style={localStyles.itemDetail}>Issuer: {license.issuer}</Text>
-            <Text style={localStyles.itemDetail}>Type: {license.type}</Text>
+        <View key={index} style={styles.listItem}>
+          <View style={styles.itemContent}>
+            <Text style={styles.itemTitle}>{license.title}</Text>
+            <Text style={styles.itemDetail}>Issuer: {license.issuer}</Text>
+            <Text style={styles.itemDetail}>Type: {license.type}</Text>
           </View>
           <TouchableOpacity 
-            style={localStyles.removeButton}
+            style={styles.removeButton}
             onPress={() => removeLicense(index)}
           >
-            <Text style={localStyles.removeButtonText}>✕</Text>
+            <Text style={styles.removeButtonText}>✕</Text>
           </TouchableOpacity>
         </View>
       ))}
@@ -699,32 +719,33 @@ const CoverageInsurances = ({ formData, setFormData, registry }) => {
           onSave={addLicense}
           onCancel={() => setShowLicenseForm(false)}
           registry={registry}
+          styles={styles}
         />
       )}
 
       {/* Insurances Section */}
-      <View style={localStyles.sectionHeader}>
-        <Text style={localStyles.subSectionTitle}>Insurances</Text>
+      <View style={styles.sectionHeader}>
+        <Text style={styles.subSectionTitle}>Insurances</Text>
         <TouchableOpacity
-          style={localStyles.addButton}
+          style={styles.addButton}
           onPress={() => setShowInsuranceForm(true)}
         >
-          <Text style={localStyles.addButtonText}>+ Add Insurance</Text>
+          <Text style={styles.addButtonText}>+ Add Insurance</Text>
         </TouchableOpacity>
       </View>
 
       {formData.insurances.map((insurance, index) => (
-        <View key={index} style={localStyles.listItem}>
-          <View style={localStyles.itemContent}>
-            <Text style={localStyles.itemTitle}>{insurance.type}</Text>
-            <Text style={localStyles.itemDetail}>Coverage: {insurance.coverage}</Text>
-            <Text style={localStyles.itemDetail}>Issuer: {insurance.issuer}</Text>
+        <View key={index} style={styles.listItem}>
+          <View style={styles.itemContent}>
+            <Text style={styles.itemTitle}>{insurance.type}</Text>
+            <Text style={styles.itemDetail}>Coverage: {insurance.coverage}</Text>
+            <Text style={styles.itemDetail}>Issuer: {insurance.issuer}</Text>
           </View>
           <TouchableOpacity 
-            style={localStyles.removeButton}
+            style={styles.removeButton}
             onPress={() => removeInsurance(index)}
           >
-            <Text style={localStyles.removeButtonText}>✕</Text>
+            <Text style={styles.removeButtonText}>✕</Text>
           </TouchableOpacity>
         </View>
       ))}
@@ -735,6 +756,7 @@ const CoverageInsurances = ({ formData, setFormData, registry }) => {
           onCancel={() => setShowInsuranceForm(false)}
           onCustomCoverage={() => setShowCoverageModal(true)}
           registry={registry}
+          styles={styles}
         />
       )}
 
@@ -763,13 +785,14 @@ const CoverageInsurances = ({ formData, setFormData, registry }) => {
         }}
         onClose={() => setShowCoverageModal(false)}
         registry={registry}
+        styles={styles}
       />
     </FormSection>
   );
 };
 
 // ---------------------- PHOTO ALBUM COMPONENT ----------------------
-const PhotoAlbum = ({ photos, setPhotos, registry }) => {
+const PhotoAlbum = ({ photos, setPhotos, registry, styles }) => {
   const { ImagePicker, Ionicons } = registry;
   const MAX_PHOTOS = 8;
 
@@ -820,18 +843,18 @@ const PhotoAlbum = ({ photos, setPhotos, registry }) => {
   };
 
   return (
-    <FormSection title="Photo Album" registry={registry}>
-      <View style={localStyles.photoHeader}>
-        <Text style={localStyles.photoCount}>
+    <FormSection title="Photo Album" registry={registry} styles={styles}>
+      <View style={styles.photoHeader}>
+        <Text style={styles.photoCount}>
           {photos.length}/{MAX_PHOTOS} photos
         </Text>
         <TouchableOpacity
           onPress={handleAddPhotos}
           disabled={photos.length >= MAX_PHOTOS}
-          style={[localStyles.addButton, photos.length >= MAX_PHOTOS && localStyles.disabledButton]}
+          style={[styles.addButton, photos.length >= MAX_PHOTOS && styles.disabledButton]}
         >
           <Ionicons name="add" size={20} color="#007AFF" />
-          <Text style={localStyles.addButtonText}>Add Photos</Text>
+          <Text style={styles.addButtonText}>Add Photos</Text>
         </TouchableOpacity>
       </View>
 
@@ -840,12 +863,12 @@ const PhotoAlbum = ({ photos, setPhotos, registry }) => {
           data={photos}
           keyExtractor={(item) => item.id}
           numColumns={3}
-          contentContainerStyle={localStyles.photoGrid}
+          contentContainerStyle={styles.photoGrid}
           renderItem={({ item }) => (
-            <View style={localStyles.photoContainer}>
-              <Image source={{ uri: item.uri }} style={localStyles.photo} />
+            <View style={styles.photoContainer}>
+              <Image source={{ uri: item.uri }} style={styles.photo} />
               <TouchableOpacity 
-                style={localStyles.removePhotoButton}
+                style={styles.removePhotoButton}
                 onPress={() => removePhoto(item.id)}
               >
                 <Ionicons name="close-circle" size={24} color="#FF3B30" />
@@ -854,9 +877,9 @@ const PhotoAlbum = ({ photos, setPhotos, registry }) => {
           )}
         />
       ) : (
-        <View style={localStyles.emptyState}>
+        <View style={styles.emptyState}>
           <Ionicons name="images-outline" size={48} color="#CCCCCC" />
-          <Text style={localStyles.emptyText}>No photos added yet</Text>
+          <Text style={styles.emptyText}>No photos added yet</Text>
         </View>
       )}
     </FormSection>
@@ -871,46 +894,46 @@ const isValidEmail = (email) => {
 };
 
 // Validate data
-// const validateData = (formData, registry) => {
-  // const { isValidPhoneNumber } = registry;
-    // if (!formData.title.trim()) {
-    //   Alert.alert('Error', 'Please enter a title for your offering');
-    //   return;
-    // }
-    
-    // if (!formData.description.trim()) {
-    //   Alert.alert('Error', 'Please enter a description for your offering');
-    //   return;
-    // }
-    // if (formData.entity == "unselected") {
-    //     Alert.alert('Error', 'Please select an entity type for your offering');
-    //     return;
-    // }
-    // if (!formData.businessCommencementDate) {
-    //     Alert.alert('Error', 'Please select a business commencement date for your offering');
-    //     return;
-    // }
-    // if (formData.warrantyParts === null) {
-    //     Alert.alert('Error', 'Please select a parts warranty period for your offering');
-    //     return;
-    // }
-    // if (formData.warrantyLabor === null) {
-    //     Alert.alert('Error', 'Please select a labor warranty period for your offering');
-    //     return;
-    // }
-    // if (formData.contact.phone && !isValidPhoneNumber(formData.contact.phone)) {
-    //     Alert.alert('Error', 'Please enter a valid phone number with country code (e.g. +1 for US)');
-    //     return;
-    // }
-    // if (formData.contact.email && !isValidEmail(formData.contact.email)) {
-    //     Alert.alert('Error', 'Please enter a valid email address');
-    //     return;
-    // }
-    // if (!formData.contact.address.trim()) {
-    //     Alert.alert('Error', 'Please enter an address for your offering');
-    //     return;
-    // }
-
+const validateData = (formData, registry) => {
+  const { isValidPhoneNumber } = registry;
+  if (!formData.title.trim()) {
+    Alert.alert('Error', 'Please enter a title for your offering');
+    return;
+  }
+  
+  if (!formData.description.trim()) {
+    Alert.alert('Error', 'Please enter a description for your offering');
+    return;
+  }
+  if (formData.entity == "unselected") {
+      Alert.alert('Error', 'Please select an entity type for your offering');
+      return;
+  }
+  if (!formData.businessCommencementDate) {
+      Alert.alert('Error', 'Please select a business commencement date for your offering');
+      return;
+  }
+  if (formData.warrantyParts === null) {
+      Alert.alert('Error', 'Please select a parts warranty period for your offering');
+      return;
+  }
+  if (formData.warrantyLabor === null) {
+      Alert.alert('Error', 'Please select a labor warranty period for your offering');
+      return;
+  }
+  if (formData.contact.phone && !isValidPhoneNumber(formData.contact.phone)) {
+      Alert.alert('Error', 'Please enter a valid phone number with country code (e.g. +1 for US)');
+      return;
+  }
+  if (formData.contact.email && !isValidEmail(formData.contact.email)) {
+      Alert.alert('Error', 'Please enter a valid email address');
+      return;
+  }
+  if (!formData.contact.address.trim()) {
+      Alert.alert('Error', 'Please enter an address for your offering');
+      return;
+  }
+}
 
 // ------------------------------------------------------------------------
 // ------------------------------------------------------------------------
@@ -930,7 +953,8 @@ const PlumbingForm = ({
   GOOGLE_API = '',
   registry
 } = {}) => {
-  const styles = { ...parentStyles, ...localStyles };
+
+  const styles = { ...localStyles, ...parentStyles };
   const [formData, setFormData] = useState(() => ({
     title: '',
     description: '',
@@ -998,6 +1022,7 @@ const PlumbingForm = ({
           formData={formData}
           setFormData={setFormData}
           registry={registry}
+          styles={styles}
         />
 
         <PersonalDetails
@@ -1006,18 +1031,21 @@ const PlumbingForm = ({
           isValidEmail={isValidEmail}
           GOOGLE_API={GOOGLE_API}
           registry={registry}
+          styles={styles}
         />
 
         <CoverageInsurances
           formData={formData}
           setFormData={setFormData}
           registry={registry}
+          styles={styles}
         />
 
         <PhotoAlbum
           photos={formData.photos}
           setPhotos={(newPhotos) => setFormData(prev => ({...prev, photos: newPhotos}))}
           registry={registry}
+          styles={styles}
         />
 
         <TouchableOpacity 
@@ -1032,7 +1060,7 @@ const PlumbingForm = ({
 };
 
 // Local styles for the PlumbingForm component
-const localStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
