@@ -6,7 +6,8 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("react"));
 var _reactNative = require("react-native");
-var _libphonenumberJs = require("libphonenumber-js");
+var _TestImport = _interopRequireDefault(require("./TestImport"));
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
 function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function _interopRequireWildcard(e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, "default": e }; if (null === e || "object" != _typeof(e) && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (var _t in e) "default" !== _t && {}.hasOwnProperty.call(e, _t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, _t)) && (i.get || i.set) ? o(f, _t, i) : f[_t] = e[_t]); return f; })(e, t); }
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
@@ -61,11 +62,9 @@ var PlumbingForm = function PlumbingForm() {
   var styles = _objectSpread(_objectSpread({}, parentStyles), localStyles);
   var DropDownPicker = registry.DropDownPicker,
     DateTimePicker = registry.DateTimePicker,
-    IconButton = registry.IconButton;
-  if (!IconButton) {
-    console.error('IconButton component missing force!');
-    return null;
-  }
+    IconButton = registry.IconButton,
+    isValidPhoneNumber = registry.isValidPhoneNumber;
+
   // Add console warnings for missing critical props
   (0, _react.useEffect)(function () {
     if (!navigation) {
@@ -1257,7 +1256,7 @@ var PlumbingForm = function PlumbingForm() {
     keyboardType: "phone-pad",
     autoCapitalize: "none",
     autoCorrect: false
-  }), formData.contact.phone && !(0, _libphonenumberJs.isValidPhoneNumber)(formData.contact.phone) && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+  }), formData.contact.phone && !isValidPhoneNumber(formData.contact.phone) && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.errorText
   }, "Please enter a valid phone number with country code (e.g. +1 for US)")), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
     style: styles.formGroup

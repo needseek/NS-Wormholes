@@ -4,7 +4,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, Switch, TouchableOpacity, Dimensions, Modal, Alert, FlatList, Platform } from 'react-native';
-import { parsePhoneNumberFromString, isValidPhoneNumber } from 'libphonenumber-js';
+import TestImport from './TestImport';
 // import {
 //   CustomDropdown,
 //   LicenseForm,
@@ -26,11 +26,8 @@ const PlumbingForm = ({
 } = {}) => {
   // Get styles by merging parent styles with component-specific styles
   const styles = { ...parentStyles, ...localStyles };
-  const { DropDownPicker, DateTimePicker, IconButton } = registry;
-  if (!IconButton) {
-    console.error('IconButton component missing force!');
-    return null;
-  }
+  const { DropDownPicker, DateTimePicker, IconButton, isValidPhoneNumber } = registry;
+ 
   // Add console warnings for missing critical props
   useEffect(() => {
     if (!navigation) {
