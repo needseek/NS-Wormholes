@@ -1,10 +1,6 @@
 "use strict";
 
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("react"));
 var _reactNative = require("react-native");
 function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function _interopRequireWildcard(e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, "default": e }; if (null === e || "object" != _typeof(e) && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (var _t in e) "default" !== _t && {}.hasOwnProperty.call(e, _t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, _t)) && (i.get || i.set) ? o(f, _t, i) : f[_t] = e[_t]); return f; })(e, t); }
@@ -41,12 +37,14 @@ var FormSection = function FormSection(_ref) {
     children = _ref.children,
     styles = _ref.styles;
   return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.formContentContainer
-  }, title && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: {
+      marginBottom: 28
+    }
+  }, title && /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
     style: styles.mainSectionHeader
-  }, title), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.formGroup
-  }, children));
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.mainSectionHeaderText
+  }, title)), /*#__PURE__*/_react["default"].createElement(_reactNative.View, null, children));
 };
 
 // ------------------------ FORM INPUT ------------------------------------
@@ -160,7 +158,7 @@ var AddressSearch = function AddressSearch(_ref4) {
     };
   }();
   return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.addressContainer
+    style: styles.formGroup
   }, /*#__PURE__*/_react["default"].createElement(FormInput, {
     label: "Service Address",
     value: value,
@@ -206,12 +204,12 @@ var DatePicker = function DatePicker(_ref7) {
   return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
     style: styles.dateContainer
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-    style: styles.dateButton,
+    style: styles.datePickerButton,
     onPress: function onPress() {
       return setShowPicker(true);
     }
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.dateText
+    style: styles.datePickerText
   }, date ? "".concat(date.getDate(), "/").concat(date.getMonth() + 1, "/").concat(date.getFullYear()) : 'Select date'), /*#__PURE__*/_react["default"].createElement(IconButton, {
     icon: "calendar",
     size: 20,
@@ -241,11 +239,13 @@ var SwitchInput = function SwitchInput(_ref8) {
     value: value,
     onValueChange: setValue,
     trackColor: {
-      "false": "#767577",
-      "true": "#81b0ff"
+      "false": '#E0E0E0',
+      "true": '#1877F2'
     },
-    thumbColor: value ? "#007AFF" : "#f4f3f4"
-  }));
+    thumbColor: value ? '#1877F2' : '#f4f3f4'
+  }), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.switchValue
+  }, value ? 'Yes' : 'No'));
 };
 // ------------------------------------------------------------------------
 // ------------------------------------------------------------------------
@@ -414,7 +414,7 @@ var LicenseForm = function LicenseForm(_ref1) {
     license = _useState12[0],
     setLicense = _useState12[1];
   return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.subForm
+    style: styles.formGroup
   }, /*#__PURE__*/_react["default"].createElement(FormInput, {
     label: "License Title",
     value: license.title,
@@ -1060,24 +1060,23 @@ var PhotoAlbum = function PhotoAlbum(_ref14) {
     }));
   };
   return /*#__PURE__*/_react["default"].createElement(FormSection, {
-    title: "Photo Album",
-    registry: registry,
+    title: "Photos",
     styles: styles
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
     style: styles.photoHeader
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.photoCount
-  }, photos.length, "/", MAX_PHOTOS, " photos"), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+  }, photos.length, "/", MAX_PHOTOS, " photos")), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
     onPress: handleAddPhotos,
     disabled: photos.length >= MAX_PHOTOS,
-    style: [styles.addButton, photos.length >= MAX_PHOTOS && styles.disabledButton]
+    style: styles.outlinedButton
   }, /*#__PURE__*/_react["default"].createElement(Ionicons, {
     name: "add",
     size: 20,
-    color: "#007AFF"
+    color: "#1877F2"
   }), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.addButtonText
-  }, "Add Photos"))), photos.length > 0 ? /*#__PURE__*/_react["default"].createElement(_reactNative.FlatList, {
+    style: styles.outlinedButtonText
+  }, "Add Photos")), photos.length > 0 ? /*#__PURE__*/_react["default"].createElement(_reactNative.FlatList, {
     data: photos,
     keyExtractor: function keyExtractor(item) {
       return item.id;
@@ -1301,343 +1300,120 @@ var PlumbingForm = function PlumbingForm() {
 // Local styles for the PlumbingForm component - force force
 var localStyles = _reactNative.StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#fff'
   },
-  dropdownStyle: {
-    backgroundColor: '#f5f5f5',
-    borderColor: '#ddd',
-    borderRadius: 5,
-    height: 44
+  formContentContainer: {
+    paddingHorizontal: 20,
+    paddingBottom: 40,
+    width: '100%'
   },
-  dropdownTextStyle: {
-    fontSize: 16,
-    color: '#333'
-  },
-  dropdownContainerStyle: {
-    backgroundColor: '#fff',
-    borderColor: '#ddd'
-  },
-  dropdownItemStyle: {
-    height: 44,
-    justifyContent: 'center'
-  },
-  // Main section headers
+  // Section header (blue, rounded, centered)
   mainSectionHeader: {
-    backgroundColor: '#007AFF',
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    marginTop: 24,
-    marginBottom: 16,
-    borderRadius: 8,
-    shadowColor: '#000',
+    backgroundColor: '#1877F2',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 14,
+    marginTop: 28,
+    marginBottom: 18,
+    shadowColor: '#1877F2',
     shadowOffset: {
       width: 0,
       height: 2
     },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 2,
-    alignItems: 'center'
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+    elevation: 2
   },
   mainSectionHeaderText: {
     color: '#fff',
     fontSize: 18,
-    fontWeight: 'bold'
+    fontWeight: '700',
+    letterSpacing: 0.2
   },
-  // Form content container for FlatList
-  formContentContainer: {
-    paddingHorizontal: 16,
-    paddingBottom: 40,
-    width: '100%'
-  },
-  // Subsection headers
-  sectionHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
-    paddingBottom: 8,
-    marginTop: 24,
-    marginBottom: 16
-  },
-  sectionHeaderText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#444'
-  },
-  // Form group styling
+  // Form group
   formGroup: {
     marginBottom: 20
   },
-  // Improved add buttons
-  addButton: {
-    backgroundColor: '#007AFF',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 16,
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  addButtonText: {
-    color: 'white',
-    fontWeight: '600',
-    fontSize: 14
-  },
-  addSmallButton: {
-    backgroundColor: '#007AFF',
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    borderRadius: 5,
-    marginLeft: 8,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  // Item styling
-  listItem: {
-    backgroundColor: '#f5f5f5',
-    padding: 12,
-    borderRadius: 8,
-    marginBottom: 10,
-    borderLeftWidth: 3,
-    borderLeftColor: '#007AFF',
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  itemContent: {
-    flex: 1
-  },
-  itemTitle: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    marginBottom: 4,
-    color: '#333'
-  },
-  itemDetail: {
-    fontSize: 14,
-    marginBottom: 2,
-    color: '#666'
-  },
-  removeItemButton: {
-    padding: 4,
-    alignSelf: 'flex-start'
-  },
-  removeItemButtonText: {
-    color: '#FF3B30',
-    fontSize: 18,
-    fontWeight: 'bold'
-  },
-  // Subform styling
-  subForm: {
-    backgroundColor: '#f9f9f9',
-    padding: 16,
-    borderRadius: 8,
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: '#e0e0e0'
-  },
-  // Button styling
-  buttonRow: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    marginTop: 16
-  },
-  saveButton: {
-    backgroundColor: '#007AFF',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    marginLeft: 10
-  },
-  cancelButton: {
-    backgroundColor: '#e0e0e0',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: '600',
-    fontSize: 14
-  },
-  // Tag item styling
-  tagsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginBottom: 20
-  },
-  tagItem: {
-    backgroundColor: '#e1f5fe',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 16,
-    marginRight: 8,
-    marginBottom: 8,
-    alignSelf: 'flex-start',
-    borderWidth: 1,
-    borderColor: '#81d4fa',
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  tagText: {
-    color: '#0277bd',
-    fontSize: 14,
-    marginRight: 6
-  },
-  removeTagButton: {
-    backgroundColor: '#81d4fa',
-    width: 18,
-    height: 18,
-    borderRadius: 9,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  removeTagButtonText: {
-    color: 'white',
-    fontSize: 12,
-    fontWeight: 'bold',
-    lineHeight: 18
-  },
-  // Clear button styling
-  clearButton: {
-    padding: 8,
-    marginLeft: 4
-  },
-  clearButtonText: {
-    color: '#007AFF',
-    fontSize: 16
-  },
-  // Add button disabled styling
-  addButtonDisabled: {
-    backgroundColor: '#e0e0e0'
-  },
-  // Outlined button styling (for Add Photos)
-  outlinedButton: {
-    borderWidth: 2,
-    borderColor: '#007AFF',
-    backgroundColor: 'white',
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'center'
-  },
-  outlinedButtonText: {
-    color: '#007AFF',
-    fontWeight: '600',
-    fontSize: 16
-  },
-  // Row container styling
-  rowContainer: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  // Warranty styling
-  warrantyContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 10
-  },
-  warrantyInput: {
-    width: '48%' // Give a little space between the two dropdowns
-  },
-  warrantyLabel: {
-    fontSize: 14,
+  // Input and dropdown
+  label: {
+    fontSize: 15,
     fontWeight: '500',
-    color: '#444',
-    marginBottom: 6
-  },
-  // Custom Warranty Modal styling
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  modalContent: {
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
-    width: '80%',
-    maxHeight: '80%'
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center'
-  },
-  modalForm: {
-    marginBottom: 20
-  },
-  modalInputRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20
-  },
-  modalInput: {
-    flex: 1,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 5
-  },
-  modalDropdown: {
-    width: 140,
-    marginLeft: 10
-  },
-  modalButtons: {
-    flexDirection: 'row',
-    justifyContent: 'center'
-  },
-  modalCancelButton: {
-    backgroundColor: '#e0e0e0',
-    padding: 10,
-    borderRadius: 5,
-    minWidth: 100,
-    alignItems: 'center'
-  },
-  modalCancelButtonText: {
-    color: '#333',
-    fontWeight: '600'
-  },
-  modalSaveButton: {
-    backgroundColor: '#007AFF',
-    padding: 10,
-    borderRadius: 5,
-    marginLeft: 10,
-    minWidth: 100,
-    alignItems: 'center'
-  },
-  modalSaveButtonText: {
-    color: 'white',
-    fontWeight: '600'
-  },
-  modalButtonDisabled: {
-    backgroundColor: '#e0e0e0'
-  },
-  errorText: {
-    color: '#FF3B30',
-    fontSize: 12,
-    marginTop: 4
+    marginBottom: 6,
+    color: '#222'
   },
   requiredStar: {
-    color: 'red',
+    color: '#FF3B30',
     fontWeight: 'bold'
   },
+  input: {
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    borderRadius: 8,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    fontSize: 15,
+    color: '#222',
+    marginBottom: 0
+  },
+  multilineInput: {
+    minHeight: 80,
+    textAlignVertical: 'top'
+  },
+  dropdownStyle: {
+    backgroundColor: '#fff',
+    borderColor: '#E0E0E0',
+    borderRadius: 8,
+    minHeight: 48
+  },
+  dropdownTextStyle: {
+    fontSize: 15,
+    color: '#222'
+  },
+  dropdownContainerStyle: {
+    backgroundColor: '#fff',
+    borderColor: '#E0E0E0',
+    borderRadius: 8
+  },
+  // Switches
   switchContainer: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 10
   },
   switchLabel: {
-    marginLeft: 8
+    fontSize: 15,
+    color: '#222',
+    flex: 1
+  },
+  switchValue: {
+    fontSize: 15,
+    color: '#1877F2',
+    marginLeft: 8,
+    fontWeight: '600'
+  },
+  // Buttons
+  addButton: {
+    backgroundColor: '#1877F2',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-end',
+    marginBottom: 8
+  },
+  addButtonText: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 15
   },
   submitButton: {
-    // backgroundColor: '#007AFF',
     backgroundColor: '#28a745',
     padding: 16,
-    borderRadius: 8,
+    borderRadius: 10,
     alignItems: 'center',
     marginTop: 20,
     marginBottom: 40
@@ -1645,219 +1421,43 @@ var localStyles = _reactNative.StyleSheet.create({
   submitButtonText: {
     color: '#fff',
     fontSize: 18,
-    fontWeight: '600'
+    fontWeight: '700',
+    letterSpacing: 0.2
   },
-  // Updated styles for address search
-  searchContainer: {
-    position: 'relative',
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '100%'
-  },
-  addressInput: {
-    backgroundColor: '#f5f5f5',
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
-    borderRadius: 8,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    fontSize: 16,
-    flex: 1,
-    height: 56
-  },
-  selectedAddressContainer: {
-    backgroundColor: '#e8eaf6',
-    borderRadius: 8,
-    padding: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    minHeight: 56
-  },
-  selectedAddressText: {
-    flex: 1,
-    fontSize: 16,
-    color: '#333',
-    flexWrap: 'wrap',
-    paddingRight: 8
-  },
-  removeAddressButton: {
-    padding: 4
-  },
-  removeAddressButtonText: {
-    color: '#FF3B30',
-    fontSize: 20,
-    fontWeight: 'bold'
-  },
-  suggestionsList: {
-    width: '100%',
-    backgroundColor: '#fff',
-    borderColor: '#ddd',
-    zIndex: 1000,
-    elevation: 4,
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    maxHeight: 200,
-    marginTop: 5,
-    borderRadius: 8
-  },
-  suggestionItem: {
-    padding: 13,
-    paddingLeft: 16,
-    backgroundColor: '#fff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0'
-  },
-  suggestionText: {
-    fontSize: 14,
-    color: '#333'
-  },
-  // Updated styles for date picker
-  datePickerButton: {
-    backgroundColor: '#f5f5f5',
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
-    borderRadius: 8,
-    padding: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    height: 56,
-    position: 'relative'
-  },
-  datePickerButtonText: {
-    fontSize: 16,
-    color: '#333'
-  },
-  calendarIcon: {
-    position: 'absolute',
-    right: 8,
-    backgroundColor: '#e8e3f8',
-    borderRadius: 20,
-    width: 40,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  // Modal styles for iOS date picker
-  datePickerContainer: {
-    backgroundColor: 'white',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    paddingBottom: 20
-  },
-  datePickerHeader: {
+  // Photo album
+  photoHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0'
-  },
-  datePickerTitle: {
-    fontSize: 18,
-    fontWeight: 'bold'
-  },
-  datePickerCancel: {
-    color: '#999',
-    fontSize: 16
-  },
-  datePickerDone: {
-    color: '#007AFF',
-    fontSize: 16,
-    fontWeight: '600'
-  },
-  datePickerIOS: {
-    height: 240
-  },
-  // Modal styles for iOS date picker
-  datePickerModalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
-    justifyContent: 'flex-end'
-  },
-  photoAlbumContainer: {
-    marginVertical: 15,
-    paddingHorizontal: 16
-  },
-  photoAlbumHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 12
-  },
-  photoAlbumTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#333'
+    marginBottom: 10
   },
   photoCount: {
     fontSize: 14,
-    color: '#777'
+    color: '#888'
   },
-  addPhotoButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: '#007AFF',
-    borderRadius: 5,
+  outlinedButton: {
+    borderWidth: 1.5,
+    borderColor: '#1877F2',
+    backgroundColor: '#fff',
     paddingVertical: 10,
-    paddingHorizontal: 15,
-    marginBottom: 15,
-    backgroundColor: 'white'
-  },
-  addPhotoButtonDisabled: {
-    opacity: 0.5
-  },
-  addPhotoButtonText: {
-    color: '#007AFF',
-    fontWeight: '500',
-    marginLeft: 6
-  },
-  photoGrid: {
+    paddingHorizontal: 18,
+    borderRadius: 8,
+    alignItems: 'center',
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginTop: 10,
-    marginHorizontal: -2
+    justifyContent: 'center',
+    marginBottom: 10
   },
-  photoContainer: {
-    width: '33.333%',
-    aspectRatio: 1,
-    padding: 2,
-    position: 'relative'
-  },
-  photo: {
-    flex: 1,
-    borderRadius: 4,
-    backgroundColor: '#f0f0f0'
-  },
-  removePhotoButton: {
-    position: 'absolute',
-    top: -8,
-    right: -8,
-    backgroundColor: 'white',
-    borderRadius: 12,
-    padding: 0,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1,
-    elevation: 2,
-    zIndex: 1
+  outlinedButtonText: {
+    color: '#1877F2',
+    fontWeight: '600',
+    fontSize: 16,
+    marginLeft: 6
   },
   emptyState: {
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#f9f9f9',
-    borderRadius: 6,
+    borderRadius: 8,
     padding: 30,
     marginTop: 10
   },
@@ -1865,13 +1465,14 @@ var localStyles = _reactNative.StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     color: '#888',
-    marginTop: 12
-  },
-  emptyStateSubtext: {
-    fontSize: 14,
-    color: '#999',
-    marginTop: 5,
+    marginTop: 12,
     textAlign: 'center'
+  },
+  // Misc
+  errorText: {
+    color: '#FF3B30',
+    fontSize: 13,
+    marginTop: 4
   }
+  // ... keep other styles as needed ...
 });
-var _default = exports["default"] = PlumbingForm;
