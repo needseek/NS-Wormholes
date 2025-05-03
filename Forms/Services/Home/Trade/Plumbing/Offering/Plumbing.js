@@ -41,11 +41,11 @@ var FormSection = function FormSection(_ref) {
     children = _ref.children,
     styles = _ref.styles;
   return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.sectionContainer
+    style: styles.formContentContainer
   }, title && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.sectionTitle
+    style: styles.mainSectionHeader
   }, title), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.sectionContent
+    style: styles.formGroup
   }, children));
 };
 
@@ -60,7 +60,7 @@ var FormInput = function FormInput(_ref2) {
     multiline = _ref2.multiline,
     styles = _ref2.styles;
   return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.inputContainer
+    style: styles.formGroup
   }, label && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.label
   }, label, required && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
@@ -92,7 +92,7 @@ var FormDropdown = function FormDropdown(_ref3) {
     open = _useState2[0],
     setOpen = _useState2[1];
   return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: [styles.dropdownContainer, {
+    style: [styles.formGroup, {
       zIndex: zIndex
     }]
   }, label && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
@@ -104,9 +104,9 @@ var FormDropdown = function FormDropdown(_ref3) {
     setOpen: setOpen,
     setValue: setValue,
     placeholder: placeholder,
-    style: styles.dropdown,
-    textStyle: styles.dropdownText,
-    dropDownContainerStyle: styles.dropdownList
+    style: styles.dropdownStyle,
+    textStyle: styles.dropdownTextStyle,
+    dropDownContainerStyle: styles.dropdownContainerStyle
   }));
 };
 

@@ -16,9 +16,9 @@ import { View, Text, TextInput, StyleSheet, Switch, TouchableOpacity, Dimensions
 // ------------------------ FORM SECTION ----------------------------------
 const FormSection = ({ title, children, styles }) => {
   return (
-    <View style={styles.sectionContainer}>
-      {title && <Text style={styles.sectionTitle}>{title}</Text>}
-      <View style={styles.sectionContent}>{children}</View>
+    <View style={styles.formContentContainer}>
+      {title && <Text style={styles.mainSectionHeader}>{title}</Text>}
+      <View style={styles.formGroup}>{children}</View>
     </View>
   );
 };
@@ -26,7 +26,7 @@ const FormSection = ({ title, children, styles }) => {
 // ------------------------ FORM INPUT ------------------------------------
 const FormInput = ({ label, value, setValue, placeholder, required, keyboardType, multiline, styles })=> {
   return (
-    <View style={styles.inputContainer}>
+    <View style={styles.formGroup}>
       {label && (
         <Text style={styles.label}>
           {label}
@@ -52,7 +52,7 @@ const FormDropdown = ({ label, items, value, setValue, placeholder, zIndex, regi
   const [open, setOpen] = useState(false);
 
   return (
-    <View style={[styles.dropdownContainer, { zIndex }]}>
+    <View style={[styles.formGroup, { zIndex }]}>
       {label && <Text style={styles.label}>{label}</Text>}
       <DropDownPicker
         open={open}
@@ -61,9 +61,9 @@ const FormDropdown = ({ label, items, value, setValue, placeholder, zIndex, regi
         setOpen={setOpen}
         setValue={setValue}
         placeholder={placeholder}
-        style={styles.dropdown}
-        textStyle={styles.dropdownText}
-        dropDownContainerStyle={styles.dropdownList}
+        style={styles.dropdownStyle}
+        textStyle={styles.dropdownTextStyle}
+        dropDownContainerStyle={styles.dropdownContainerStyle}
       />
     </View>
   );
