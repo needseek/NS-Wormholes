@@ -1476,6 +1476,7 @@ var localStyles = _reactNative.StyleSheet.create({
     fontSize: 13,
     marginTop: 4
   }
-  // ... keep other styles as needed ...
 });
+
+// force
 var _default = exports["default"] = PlumbingForm;
