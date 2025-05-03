@@ -151,18 +151,19 @@ const DatePicker = ({ date, setDate, registry, styles }) => {
 };
 
 // ------------------------ SWITCH INPUT -----------------------------------
-const SwitchInput = ({ label, value, setValue, styles }) => (
-  <View style={styles.switchContainer}>
-    <Text style={styles.switchLabel}>{label}</Text>
-    <Switch
-      value={value}
-      onValueChange={setValue}
-      trackColor={{ false: '#E0E0E0', true: '#1877F2' }}
-      thumbColor={value ? '#1877F2' : '#f4f3f4'}
-    />
-    <Text style={styles.switchValue}>{value ? 'Yes' : 'No'}</Text>
-  </View>
-);
+const SwitchInput = ({ label, value, setValue, styles }) => {
+  return (
+    <View style={styles.switchContainer}>
+      <Text style={styles.switchLabel}>{label}</Text>
+      <Switch
+        value={value}
+        onValueChange={setValue}
+        trackColor={{ false: "#767577", true: "#81b0ff" }}
+        thumbColor={value ? "#007AFF" : "#f4f3f4"}
+      />
+    </View>
+  );
+};
 // ------------------------------------------------------------------------
 // ------------------------------------------------------------------------
 // ------------------------ COMPLEX FORM COMPONENTS -----------------------
@@ -1220,3 +1221,5 @@ const localStyles = StyleSheet.create({
   },
   // ... keep other styles as needed ...
 }); 
+
+export default PlumbingForm;
