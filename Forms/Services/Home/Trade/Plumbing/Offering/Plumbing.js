@@ -8,6 +8,7 @@ exports["default"] = void 0;
 var _react = _interopRequireWildcard(require("react"));
 var _reactNative = require("react-native");
 function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function _interopRequireWildcard(e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, "default": e }; if (null === e || "object" != _typeof(e) && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (var _t in e) "default" !== _t && {}.hasOwnProperty.call(e, _t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, _t)) && (i.get || i.set) ? o(f, _t, i) : f[_t] = e[_t]); return f; })(e, t); }
+function _toArray(r) { return _arrayWithHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableRest(); }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
@@ -25,7 +26,8 @@ function _nonIterableRest() { throw new TypeError("Invalid attempt to destructur
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; } //  <-- MUST DO ON UPDATE!! --> 
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); } //  <-- MUST DO ON UPDATE!! --> 
 // 1. transpile command: npx babel --presets=@babel/preset-env,@babel/preset-react Plumbing.jsx -o Plumbing.js
 // 2. add, commit, push to main
 // Force Force Force Force
@@ -41,14 +43,14 @@ var FormSection = function FormSection(_ref) {
     children = _ref.children,
     styles = _ref.styles;
   return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: {
-      marginBottom: 28
-    }
+    style: styles.container
   }, title && /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
     style: styles.mainSectionHeader
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.mainSectionHeaderText
-  }, title)), /*#__PURE__*/_react["default"].createElement(_reactNative.View, null, children));
+  }, title)), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.formGroup
+  }, children));
 };
 
 // ------------------------ FORM INPUT ------------------------------------
@@ -60,7 +62,8 @@ var FormInput = function FormInput(_ref2) {
     required = _ref2.required,
     keyboardType = _ref2.keyboardType,
     multiline = _ref2.multiline,
-    styles = _ref2.styles;
+    styles = _ref2.styles,
+    autoCapitalize = _ref2.autoCapitalize;
   return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
     style: styles.formGroup
   }, label && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
@@ -68,13 +71,15 @@ var FormInput = function FormInput(_ref2) {
   }, label, required && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.requiredStar
   }, " *")), /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
-    style: [styles.input, multiline && styles.multilineInput],
+    style: [styles.input, multiline && styles.textArea],
     value: value,
     onChangeText: setValue,
     placeholder: placeholder,
     placeholderTextColor: "#999",
     keyboardType: keyboardType,
-    multiline: multiline
+    multiline: multiline,
+    textAlignVertical: multiline ? "top" : "center",
+    autoCapitalize: autoCapitalize
   }));
 };
 
@@ -83,113 +88,176 @@ var FormDropdown = function FormDropdown(_ref3) {
   var label = _ref3.label,
     items = _ref3.items,
     value = _ref3.value,
-    setValue = _ref3.setValue,
+    _setValue = _ref3.setValue,
     placeholder = _ref3.placeholder,
     zIndex = _ref3.zIndex,
     registry = _ref3.registry,
-    styles = _ref3.styles;
+    styles = _ref3.styles,
+    open = _ref3.open,
+    _setOpen = _ref3.setOpen,
+    required = _ref3.required,
+    dropDownLabel = _ref3.dropDownLabel;
   var DropDownPicker = registry.DropDownPicker;
-  var _useState = (0, _react.useState)(false),
-    _useState2 = _slicedToArray(_useState, 2),
-    open = _useState2[0],
-    setOpen = _useState2[1];
   return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
     style: [styles.formGroup, {
       zIndex: zIndex
     }]
   }, label && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.label
-  }, label), /*#__PURE__*/_react["default"].createElement(DropDownPicker, {
+  }, label, " ", required && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.requiredStar
+  }, " *")), /*#__PURE__*/_react["default"].createElement(DropDownPicker, _extends({
     open: open,
     value: value,
     items: items,
-    setOpen: setOpen,
-    setValue: setValue,
+    setOpen: function setOpen(isOpen) {
+      return _setOpen(isOpen ? label : null);
+    },
+    setValue: function setValue(val) {
+      return _setValue(val());
+    },
     placeholder: placeholder,
     style: styles.dropdownStyle,
     textStyle: styles.dropdownTextStyle,
-    dropDownContainerStyle: styles.dropdownContainerStyle
-  }));
+    dropDownContainerStyle: styles.dropdownContainerStyle,
+    listItemContainerStyle: styles.dropdownItemStyle,
+    listMode: "SCROLLVIEW",
+    scrollViewProps: {
+      nestedScrollEnabled: true
+    }
+  }, dropDownLabel ? {
+    label: dropDownLabel
+  } : {})));
 };
 
 // ------------------------ ADDRESS SEARCH ---------------------------------
 var AddressSearch = function AddressSearch(_ref4) {
   var value = _ref4.value,
-    _setValue = _ref4.setValue,
+    setValue = _ref4.setValue,
     googleApiKey = _ref4.googleApiKey,
     registry = _ref4.registry,
     styles = _ref4.styles;
-  var _useState3 = (0, _react.useState)([]),
+  var _useState = (0, _react.useState)([]),
+    _useState2 = _slicedToArray(_useState, 2),
+    results = _useState2[0],
+    setResults = _useState2[1];
+  var _useState3 = (0, _react.useState)(""),
     _useState4 = _slicedToArray(_useState3, 2),
-    results = _useState4[0],
-    setResults = _useState4[1];
-  var searchAddress = /*#__PURE__*/function () {
-    var _ref5 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(query) {
+    searchQuery = _useState4[0],
+    setSearchQuery = _useState4[1];
+  var _useState5 = (0, _react.useState)(false),
+    _useState6 = _slicedToArray(_useState5, 2),
+    showResults = _useState6[0],
+    setShowResults = _useState6[1];
+  var Ionicons = registry.Ionicons;
+  var handleSearch = /*#__PURE__*/function () {
+    var _ref5 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
       var response, data;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
-            if (!(!query || !googleApiKey)) {
-              _context.next = 2;
+            if (!(!searchQuery || !googleApiKey)) {
+              _context.next = 4;
               break;
             }
+            setResults([]);
+            setShowResults(false);
             return _context.abrupt("return");
-          case 2:
-            _context.prev = 2;
-            _context.next = 5;
-            return fetch("https://maps.googleapis.com/maps/api/place/autocomplete/json?input=".concat(encodeURIComponent(query), "&key=").concat(googleApiKey));
-          case 5:
+          case 4:
+            _context.prev = 4;
+            _context.next = 7;
+            return fetch("https://maps.googleapis.com/maps/api/place/autocomplete/json?input=".concat(encodeURIComponent(searchQuery), "&key=").concat(googleApiKey));
+          case 7:
             response = _context.sent;
-            _context.next = 8;
+            _context.next = 10;
             return response.json();
-          case 8:
+          case 10:
             data = _context.sent;
-            setResults(data.predictions || []);
-            _context.next = 15;
+            if (data.status === "OK") {
+              setResults(data.predictions.map(function (prediction) {
+                return {
+                  id: prediction.place_id,
+                  description: prediction.description
+                };
+              }));
+              setShowResults(true);
+            }
+            _context.next = 18;
             break;
-          case 12:
-            _context.prev = 12;
-            _context.t0 = _context["catch"](2);
+          case 14:
+            _context.prev = 14;
+            _context.t0 = _context["catch"](4);
             console.error("Address search error:", _context.t0);
-          case 15:
+            _reactNative.Alert.alert("Error", "Failed to search addresses");
+          case 18:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[2, 12]]);
+      }, _callee, null, [[4, 14]]);
     }));
-    return function searchAddress(_x) {
+    return function handleSearch() {
       return _ref5.apply(this, arguments);
     };
   }();
+  var selectAddress = function selectAddress(address) {
+    setValue(address);
+    setSearchQuery("");
+    setShowResults(false);
+  };
   return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
     style: styles.formGroup
-  }, /*#__PURE__*/_react["default"].createElement(FormInput, {
-    label: "Service Address",
-    value: value,
-    setValue: function setValue(text) {
-      _setValue(text);
-      searchAddress(text);
-    },
-    placeholder: "Search address...",
-    registry: registry,
-    styles: styles
-  }), results.length > 0 && /*#__PURE__*/_react["default"].createElement(_reactNative.FlatList, {
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.label
+  }, "Address", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.requiredStar
+  }, " *")), value ? /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.selectedAddressContainer
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.selectedAddressText
+  }, value), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+    style: styles.removeAddressButton,
+    onPress: function onPress() {
+      setValue("");
+      setSearchQuery("");
+    }
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.removeAddressButtonText
+  }, "\u2715"))) : /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.searchContainer
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
+    style: styles.addressInput,
+    value: searchQuery,
+    onChangeText: setSearchQuery,
+    placeholder: "Enter service address",
+    placeholderTextColor: "#999",
+    onSubmitEditing: handleSearch
+  }), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.iconContainer
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+    onPress: handleSearch,
+    style: styles.inputIcon
+  }, /*#__PURE__*/_react["default"].createElement(Ionicons, {
+    name: "search",
+    size: 20,
+    color: "#666"
+  })))), showResults && /*#__PURE__*/_react["default"].createElement(_reactNative.FlatList, {
     data: results,
     keyExtractor: function keyExtractor(item) {
-      return item.place_id;
+      return item.id;
     },
+    style: styles.suggestionsList,
+    keyboardShouldPersistTaps: "always",
     renderItem: function renderItem(_ref6) {
       var item = _ref6.item;
       return /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-        style: styles.addressItem,
+        style: styles.suggestionItem,
         onPress: function onPress() {
-          return _setValue(item.description);
+          return selectAddress(item.description);
         }
       }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-        style: styles.addressText
+        style: styles.suggestionText
       }, item.description));
-    },
-    style: styles.addressList
+    }
   }));
 };
 
@@ -200,33 +268,70 @@ var DatePicker = function DatePicker(_ref7) {
     registry = _ref7.registry,
     styles = _ref7.styles;
   var DateTimePicker = registry.DateTimePicker,
-    IconButton = registry.IconButton;
-  var _useState5 = (0, _react.useState)(false),
-    _useState6 = _slicedToArray(_useState5, 2),
-    showPicker = _useState6[0],
-    setShowPicker = _useState6[1];
+    Ionicons = registry.Ionicons;
+  var _useState7 = (0, _react.useState)(false),
+    _useState8 = _slicedToArray(_useState7, 2),
+    showPicker = _useState8[0],
+    setShowPicker = _useState8[1];
+  var _useState9 = (0, _react.useState)(null),
+    _useState0 = _slicedToArray(_useState9, 2),
+    tempDate = _useState0[0],
+    setTempDate = _useState0[1];
+  var handleConfirm = function handleConfirm() {
+    setDate(tempDate);
+    setShowPicker(false);
+  };
+  var handleCancel = function handleCancel() {
+    setTempDate(null);
+    setShowPicker(false);
+  };
   return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.dateContainer
+    style: styles.formGroup
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
     style: styles.datePickerButton,
     onPress: function onPress() {
-      return setShowPicker(true);
+      setTempDate(date || new Date());
+      setShowPicker(true);
     }
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.datePickerText
-  }, date ? "".concat(date.getDate(), "/").concat(date.getMonth() + 1, "/").concat(date.getFullYear()) : 'Select date'), /*#__PURE__*/_react["default"].createElement(IconButton, {
-    icon: "calendar",
-    size: 20,
-    color: "#007AFF"
-  })), showPicker && /*#__PURE__*/_react["default"].createElement(DateTimePicker, {
-    value: date || new Date(),
+    style: styles.datePickerButtonText
+  }, date ? "".concat(date.getDate(), "/").concat(date.getMonth() + 1, "/").concat(date.getFullYear()) : "Select date"), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.calendarIcon
+  }, /*#__PURE__*/_react["default"].createElement(Ionicons, {
+    name: "calendar",
+    size: 22,
+    color: "#444"
+  }))), showPicker && /*#__PURE__*/_react["default"].createElement(_reactNative.Modal, {
+    visible: showPicker,
+    transparent: true,
+    animationType: "fade",
+    onRequestClose: handleCancel
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.datePickerModalOverlay
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.datePickerModalContent
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.datePickerHeader
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+    onPress: handleCancel
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.datePickerCancelText
+  }, "Cancel")), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.datePickerTitle
+  }, "Select Date"), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+    onPress: handleConfirm
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.datePickerConfirmText
+  }, "Done"))), /*#__PURE__*/_react["default"].createElement(DateTimePicker, {
+    value: tempDate || new Date(),
     mode: "date",
-    display: "default",
-    onChange: function onChange(event, selectedDate) {
-      setShowPicker(false);
-      selectedDate && setDate(selectedDate);
-    }
-  }));
+    display: "spinner",
+    onChange: function onChange(e, selectedDate) {
+      return setTempDate(selectedDate);
+    },
+    maximumDate: new Date(),
+    style: styles.dateTimePicker
+  })))));
 };
 
 // ------------------------ SWITCH INPUT -----------------------------------
@@ -236,19 +341,24 @@ var SwitchInput = function SwitchInput(_ref8) {
     setValue = _ref8.setValue,
     styles = _ref8.styles;
   return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.switchContainer
+    style: styles.switchRow
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.switchLabel
-  }, label), /*#__PURE__*/_react["default"].createElement(_reactNative.Switch, {
+  }, label), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.switchControl
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Switch, {
     value: value,
     onValueChange: setValue,
     trackColor: {
-      "false": "#767577",
-      "true": "#81b0ff"
+      "false": "#b3d1ff",
+      "true": "#448aff"
     },
-    thumbColor: value ? "#007AFF" : "#f4f3f4"
-  }));
+    thumbColor: value ? "#1565c0" : "#f4f3f4"
+  }), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.switchValueText
+  }, value ? "Yes" : "No")));
 };
+
 // ------------------------------------------------------------------------
 // ------------------------------------------------------------------------
 // ------------------------ COMPLEX FORM COMPONENTS -----------------------
@@ -257,53 +367,46 @@ var SwitchInput = function SwitchInput(_ref8) {
 
 // ------------------------ WARRANTY SELECTOR -----------------------------
 var WarrantySelector = function WarrantySelector(_ref9) {
-  var parts = _ref9.parts,
+  var partsAmount = _ref9.partsAmount,
+    partsUnit = _ref9.partsUnit,
     setParts = _ref9.setParts,
-    labor = _ref9.labor,
+    laborAmount = _ref9.laborAmount,
+    laborUnit = _ref9.laborUnit,
     setLabor = _ref9.setLabor,
     registry = _ref9.registry,
-    styles = _ref9.styles;
-  var warrantyOptions = [{
-    label: 'None',
-    value: '0'
-  }, {
-    label: '1 month',
-    value: '1 month'
-  }, {
-    label: '3 months',
-    value: '3 months'
-  }, {
-    label: '6 months',
-    value: '6 months'
-  }, {
-    label: '1 year',
-    value: '1 year'
-  }, {
-    label: '2 years',
-    value: '2 years'
-  }, {
-    label: 'Custom...',
-    value: 'custom'
-  }];
+    styles = _ref9.styles,
+    openDropdown = _ref9.openDropdown,
+    setOpenDropdown = _ref9.setOpenDropdown,
+    getWarrantyItems = _ref9.getWarrantyItems;
   return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
     style: styles.warrantyContainer
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.warrantyInput
   }, /*#__PURE__*/_react["default"].createElement(FormDropdown, {
     label: "Parts Warranty",
-    items: warrantyOptions,
-    value: parts,
+    items: getWarrantyItems(partsAmount, partsUnit),
+    value: !partsAmount || partsAmount === "0" || partsUnit === "none" ? "none" : "".concat(partsAmount, " ").concat(partsUnit).trim(),
     setValue: setParts,
     registry: registry,
-    zIndex: 1000,
-    styles: styles
-  }), /*#__PURE__*/_react["default"].createElement(FormDropdown, {
+    zIndex: openDropdown === 'Parts Warranty' ? 2999 : 999,
+    styles: styles,
+    open: openDropdown === 'Parts Warranty',
+    setOpen: setOpenDropdown,
+    required: false
+  })), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.warrantyInput
+  }, /*#__PURE__*/_react["default"].createElement(FormDropdown, {
     label: "Labor Warranty",
-    items: warrantyOptions,
-    value: labor,
+    items: getWarrantyItems(laborAmount, laborUnit),
+    value: !laborAmount || laborAmount === "0" || laborUnit === "none" ? "none" : "".concat(laborAmount, " ").concat(laborUnit).trim(),
     setValue: setLabor,
     registry: registry,
-    zIndex: 999,
-    styles: styles
-  }));
+    zIndex: openDropdown === 'Labor Warranty' ? 2998 : 998,
+    styles: styles,
+    open: openDropdown === 'Labor Warranty',
+    setOpen: setOpenDropdown,
+    required: false
+  })));
 };
 
 // ------------------------ CUSTOM SELECTOR MODAL --------------------------
@@ -318,21 +421,19 @@ var CustomSelectorModal = function CustomSelectorModal(_ref0) {
     onClose = _ref0.onClose,
     registry = _ref0.registry,
     styles = _ref0.styles;
-  var _useState7 = (0, _react.useState)(initialValue),
-    _useState8 = _slicedToArray(_useState7, 2),
-    inputValue = _useState8[0],
-    setInputValue = _useState8[1];
-  var _useState9 = (0, _react.useState)(initialUnit),
-    _useState0 = _slicedToArray(_useState9, 2),
-    selectedUnit = _useState0[0],
-    setSelectedUnit = _useState0[1];
-  var _useState1 = (0, _react.useState)(false),
+  var _useState1 = (0, _react.useState)(initialValue),
     _useState10 = _slicedToArray(_useState1, 2),
-    openUnitDropdown = _useState10[0],
-    setOpenUnitDropdown = _useState10[1];
+    inputValue = _useState10[0],
+    setInputValue = _useState10[1];
+  var _useState11 = (0, _react.useState)(initialUnit),
+    _useState12 = _slicedToArray(_useState11, 2),
+    selectedUnit = _useState12[0],
+    setSelectedUnit = _useState12[1];
+  var _useState13 = (0, _react.useState)(false),
+    _useState14 = _slicedToArray(_useState13, 2),
+    openUnitDropdown = _useState14[0],
+    setOpenUnitDropdown = _useState14[1];
   var DropDownPicker = registry.DropDownPicker;
-
-  // Reset state when modal becomes visible
   (0, _react.useEffect)(function () {
     if (visible) {
       setInputValue(initialValue);
@@ -340,7 +441,7 @@ var CustomSelectorModal = function CustomSelectorModal(_ref0) {
     }
   }, [visible, initialValue, initialUnit]);
   var handleSave = function handleSave() {
-    if (inputValue && inputValue !== '0') {
+    if (inputValue && inputValue !== "0") {
       onSave(inputValue, selectedUnit);
     }
     onClose();
@@ -358,17 +459,20 @@ var CustomSelectorModal = function CustomSelectorModal(_ref0) {
     style: styles.modalTitle
   }, title), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
     style: styles.modalForm
-  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.modalInputLabel
-  }, inputLabel), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
     style: styles.modalInputRow
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
     style: styles.modalInput,
     value: inputValue,
-    onChangeText: setInputValue,
-    placeholder: "Enter value",
+    onChangeText: function onChangeText(text) {
+      return setInputValue(text.replace(/[^0-9]/g, ''));
+    },
+    placeholder: "Value",
     placeholderTextColor: "#999",
-    keyboardType: "numeric"
+    keyboardType: "numeric",
+    autoFocus: true,
+    inputMode: "numeric",
+    maxLength: 6
   }), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
     style: [styles.modalDropdown, {
       zIndex: openUnitDropdown ? 1000 : 1
@@ -379,7 +483,7 @@ var CustomSelectorModal = function CustomSelectorModal(_ref0) {
     items: unitItems,
     setOpen: setOpenUnitDropdown,
     setValue: setSelectedUnit,
-    placeholder: "Select unit",
+    placeholder: "Units",
     style: styles.dropdownStyle,
     textStyle: styles.dropdownTextStyle,
     dropDownContainerStyle: styles.dropdownContainerStyle,
@@ -392,9 +496,9 @@ var CustomSelectorModal = function CustomSelectorModal(_ref0) {
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.modalCancelButtonText
   }, "Cancel")), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-    style: [styles.modalSaveButton, (!inputValue || inputValue === '0') && styles.modalButtonDisabled],
+    style: [styles.modalSaveButton, (!inputValue || inputValue === "0") && styles.modalButtonDisabled],
     onPress: handleSave,
-    disabled: !inputValue || inputValue === '0'
+    disabled: !inputValue || inputValue === "0"
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.modalSaveButtonText
   }, "Save")))))));
@@ -405,18 +509,41 @@ var LicenseForm = function LicenseForm(_ref1) {
   var onSave = _ref1.onSave,
     onCancel = _ref1.onCancel,
     registry = _ref1.registry,
-    styles = _ref1.styles;
-  var _useState11 = (0, _react.useState)({
-      title: '',
-      issuer: '',
-      type: 'Business License',
-      scope: ''
+    styles = _ref1.styles,
+    openDropdown = _ref1.openDropdown,
+    setOpenDropdown = _ref1.setOpenDropdown,
+    hasItems = _ref1.hasItems,
+    initialValues = _ref1.initialValues;
+  var _useState15 = (0, _react.useState)({
+      title: (initialValues === null || initialValues === void 0 ? void 0 : initialValues.title) || "",
+      issuer: (initialValues === null || initialValues === void 0 ? void 0 : initialValues.issuer) || "",
+      type: (initialValues === null || initialValues === void 0 ? void 0 : initialValues.type) || "Business License",
+      description: (initialValues === null || initialValues === void 0 ? void 0 : initialValues.description) || ""
     }),
-    _useState12 = _slicedToArray(_useState11, 2),
-    license = _useState12[0],
-    setLicense = _useState12[1];
+    _useState16 = _slicedToArray(_useState15, 2),
+    license = _useState16[0],
+    setLicense = _useState16[1];
+  (0, _react.useEffect)(function () {
+    setLicense({
+      title: (initialValues === null || initialValues === void 0 ? void 0 : initialValues.title) || "",
+      issuer: (initialValues === null || initialValues === void 0 ? void 0 : initialValues.issuer) || "",
+      type: (initialValues === null || initialValues === void 0 ? void 0 : initialValues.type) || "Business License",
+      description: (initialValues === null || initialValues === void 0 ? void 0 : initialValues.description) || ""
+    });
+  }, [initialValues]);
+  var handleCancel = function handleCancel() {
+    if (!hasItems) {
+      setLicense({
+        title: "",
+        issuer: "",
+        type: "Business License",
+        description: ""
+      });
+    }
+    onCancel();
+  };
   return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.formGroup
+    style: styles.subForm
   }, /*#__PURE__*/_react["default"].createElement(FormInput, {
     label: "License Title",
     value: license.title,
@@ -429,7 +556,6 @@ var LicenseForm = function LicenseForm(_ref1) {
     },
     placeholder: "State Plumbing License",
     required: true,
-    registry: registry,
     styles: styles
   }), /*#__PURE__*/_react["default"].createElement(FormInput, {
     label: "Issuing Authority",
@@ -443,19 +569,18 @@ var LicenseForm = function LicenseForm(_ref1) {
     },
     placeholder: "State Licensing Board",
     required: true,
-    registry: registry,
     styles: styles
   }), /*#__PURE__*/_react["default"].createElement(FormDropdown, {
     label: "License Type",
     items: [{
-      label: 'Business License',
-      value: 'Business License'
+      label: "Business License",
+      value: "Business License"
     }, {
-      label: 'Professional License',
-      value: 'Professional License'
+      label: "Professional License",
+      value: "Professional License"
     }, {
-      label: 'Trade License',
-      value: 'Trade License'
+      label: "Trade License",
+      value: "Trade License"
     }],
     value: license.type,
     setValue: function setValue(value) {
@@ -467,51 +592,145 @@ var LicenseForm = function LicenseForm(_ref1) {
     },
     registry: registry,
     zIndex: 2000,
+    styles: styles,
+    open: openDropdown === 'License Type',
+    setOpen: setOpenDropdown
+  }), /*#__PURE__*/_react["default"].createElement(FormInput, {
+    label: "Description",
+    value: license.description,
+    setValue: function setValue(text) {
+      return setLicense(function (prev) {
+        return _objectSpread(_objectSpread({}, prev), {}, {
+          description: text
+        });
+      });
+    },
+    placeholder: "Enter description (optional)",
+    multiline: true,
     styles: styles
   }), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.formActions
+    style: styles.buttonRow
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
     style: [styles.button, styles.cancelButton],
-    onPress: onCancel
+    onPress: handleCancel
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.buttonText
   }, "Cancel")), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-    style: [styles.button, styles.saveButton],
+    style: [styles.button, styles.saveButton, (!license.title || !license.issuer) && styles.buttonDisabled],
     onPress: function onPress() {
-      return onSave(license);
+      onSave(license);
+      setOpenDropdown(null);
     },
     disabled: !license.title || !license.issuer
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.buttonText
-  }, "Save License"))));
+    style: [styles.buttonText, styles.saveButtonText]
+  }, "Save"))));
 };
 var InsuranceForm = function InsuranceForm(_ref10) {
   var onSave = _ref10.onSave,
     onCancel = _ref10.onCancel,
     onCustomCoverage = _ref10.onCustomCoverage,
     registry = _ref10.registry,
-    styles = _ref10.styles;
-  var _useState13 = (0, _react.useState)({
-      type: 'commercial liability',
-      coverage: '1MM',
-      issuer: ''
+    styles = _ref10.styles,
+    openDropdown = _ref10.openDropdown,
+    setOpenDropdown = _ref10.setOpenDropdown,
+    hasItems = _ref10.hasItems,
+    initialValues = _ref10.initialValues;
+  var _useState17 = (0, _react.useState)({
+      type: (initialValues === null || initialValues === void 0 ? void 0 : initialValues.type) || "Commercial Liability",
+      coverageAmount: (initialValues === null || initialValues === void 0 ? void 0 : initialValues.coverageAmount) || "",
+      coverageUnit: (initialValues === null || initialValues === void 0 ? void 0 : initialValues.coverageUnit) || "Million Dollars",
+      issuer: (initialValues === null || initialValues === void 0 ? void 0 : initialValues.issuer) || "",
+      description: (initialValues === null || initialValues === void 0 ? void 0 : initialValues.description) || ""
     }),
-    _useState14 = _slicedToArray(_useState13, 2),
-    insurance = _useState14[0],
-    setInsurance = _useState14[1];
+    _useState18 = _slicedToArray(_useState17, 2),
+    insurance = _useState18[0],
+    setInsurance = _useState18[1];
+  var getCoverageItems = function getCoverageItems() {
+    var baseItems = [{
+      label: "$1 Million",
+      value: "1 Million Dollars"
+    }, {
+      label: "$2 Million",
+      value: "2 Million Dollars"
+    }, {
+      label: "$5 Million",
+      value: "5 Million Dollars"
+    }, {
+      label: "Custom...",
+      value: "custom"
+    }];
+    if (insurance.coverageAmount && insurance.coverageUnit) {
+      var customLabel = "$".concat(insurance.coverageAmount);
+      if (insurance.coverageUnit === "Million Dollars") {
+        customLabel += " Million";
+      } else if (insurance.coverageUnit === "Thousand Dollars") {
+        customLabel += " Thousand";
+      }
+      var customValue = "".concat(insurance.coverageAmount, " ").concat(insurance.coverageUnit);
+      if (!baseItems.some(function (item) {
+        return item.value.trim().toLowerCase() === customValue.trim().toLowerCase();
+      })) {
+        // Insert after $5 Million (index 2), before Custom...
+        return [].concat(_toConsumableArray(baseItems.slice(0, 3)), [{
+          label: customLabel,
+          value: customValue
+        }], _toConsumableArray(baseItems.slice(3)));
+      }
+    }
+    return baseItems;
+  };
+  var handleCoverageChange = function handleCoverageChange(value) {
+    if (value === "custom") {
+      onCustomCoverage();
+    } else {
+      var _value$split = value.split(" "),
+        _value$split2 = _toArray(_value$split),
+        amount = _value$split2[0],
+        unitParts = _value$split2.slice(1);
+      var unit = unitParts.join(" ");
+      setInsurance(function (prev) {
+        return _objectSpread(_objectSpread({}, prev), {}, {
+          coverageAmount: amount,
+          coverageUnit: unit
+        });
+      });
+    }
+  };
+  (0, _react.useEffect)(function () {
+    setInsurance({
+      type: (initialValues === null || initialValues === void 0 ? void 0 : initialValues.type) || "Commercial Liability",
+      coverageAmount: (initialValues === null || initialValues === void 0 ? void 0 : initialValues.coverageAmount) || "1",
+      coverageUnit: (initialValues === null || initialValues === void 0 ? void 0 : initialValues.coverageUnit) || "Million Dollars",
+      issuer: (initialValues === null || initialValues === void 0 ? void 0 : initialValues.issuer) || "",
+      description: (initialValues === null || initialValues === void 0 ? void 0 : initialValues.description) || ""
+    });
+  }, [initialValues]);
+  var handleCancel = function handleCancel() {
+    if (!hasItems) {
+      setInsurance({
+        type: "Commercial Liability",
+        coverageAmount: "1",
+        coverageUnit: "Million Dollars",
+        issuer: "",
+        description: ""
+      });
+    }
+    onCancel();
+  };
   return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
     style: styles.subForm
   }, /*#__PURE__*/_react["default"].createElement(FormDropdown, {
     label: "Insurance Type",
     items: [{
-      label: 'Commercial Liability',
-      value: 'commercial liability'
+      label: "Commercial Liability",
+      value: "Commercial Liability"
     }, {
-      label: 'Professional Liability',
-      value: 'professional liability'
+      label: "Professional Liability",
+      value: "Professional Liability"
     }, {
-      label: 'Workers Compensation',
-      value: 'workers compensation'
+      label: "Workers Compensation",
+      value: "Workers Compensation"
     }],
     value: insurance.type,
     setValue: function setValue(value) {
@@ -522,38 +741,21 @@ var InsuranceForm = function InsuranceForm(_ref10) {
       });
     },
     registry: registry,
-    zIndex: 2000,
-    styles: styles
+    zIndex: openDropdown === 'Insurance Type' ? 3000 : 1,
+    styles: styles,
+    open: openDropdown === 'Insurance Type',
+    setOpen: setOpenDropdown
   }), /*#__PURE__*/_react["default"].createElement(FormDropdown, {
     label: "Coverage Amount",
-    items: [{
-      label: '$1 Million',
-      value: '1MM'
-    }, {
-      label: '$2 Million',
-      value: '2MM'
-    }, {
-      label: '$5 Million',
-      value: '5MM'
-    }, {
-      label: 'Custom...',
-      value: 'custom'
-    }],
-    value: insurance.coverage,
-    setValue: function setValue(value) {
-      if (value === 'custom') {
-        onCustomCoverage();
-      } else {
-        setInsurance(function (prev) {
-          return _objectSpread(_objectSpread({}, prev), {}, {
-            coverage: value
-          });
-        });
-      }
-    },
+    items: getCoverageItems(),
+    value: insurance.coverageAmount && insurance.coverageUnit ? "".concat(insurance.coverageAmount, " ").concat(insurance.coverageUnit) : "",
+    setValue: handleCoverageChange,
     registry: registry,
-    zIndex: 1900,
-    styles: styles
+    zIndex: openDropdown === 'Coverage Amount' ? 3000 : 1,
+    styles: styles,
+    open: openDropdown === 'Coverage Amount',
+    setOpen: setOpenDropdown,
+    zIndexInverse: openDropdown === 'Coverage Amount' ? 3000 : 1
   }), /*#__PURE__*/_react["default"].createElement(FormInput, {
     label: "Insurance Provider",
     value: insurance.issuer,
@@ -564,26 +766,449 @@ var InsuranceForm = function InsuranceForm(_ref10) {
         });
       });
     },
-    placeholder: "Insurance Company Name",
+    placeholder: "Enter insurance company name",
     required: true,
-    registry: registry,
+    styles: styles
+  }), /*#__PURE__*/_react["default"].createElement(FormInput, {
+    label: "Description",
+    value: insurance.description,
+    setValue: function setValue(text) {
+      return setInsurance(function (prev) {
+        return _objectSpread(_objectSpread({}, prev), {}, {
+          description: text
+        });
+      });
+    },
+    placeholder: "Enter description (optional)",
+    multiline: true,
     styles: styles
   }), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.formActions
+    style: styles.buttonRow
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
     style: [styles.button, styles.cancelButton],
-    onPress: onCancel
+    onPress: handleCancel
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.buttonText
   }, "Cancel")), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-    style: [styles.button, styles.saveButton],
+    style: [styles.button, styles.saveButton, !insurance.issuer && styles.buttonDisabled],
     onPress: function onPress() {
-      return onSave(insurance);
+      onSave(insurance);
+      setOpenDropdown(null);
     },
     disabled: !insurance.issuer
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: [styles.buttonText, styles.saveButtonText]
+  }, "Save"))));
+};
+var CustomCoverageModal = function CustomCoverageModal(_ref11) {
+  var visible = _ref11.visible,
+    coverageAmount = _ref11.coverageAmount,
+    coverageUnit = _ref11.coverageUnit,
+    onAmountChange = _ref11.onAmountChange,
+    onUnitChange = _ref11.onUnitChange,
+    onSave = _ref11.onSave,
+    onCancel = _ref11.onCancel,
+    unitItems = _ref11.unitItems,
+    styles = _ref11.styles,
+    registry = _ref11.registry,
+    setInsurancePrefill = _ref11.setInsurancePrefill;
+  var DropDownPicker = registry.DropDownPicker;
+  var _useState19 = (0, _react.useState)(false),
+    _useState20 = _slicedToArray(_useState19, 2),
+    open = _useState20[0],
+    setOpen = _useState20[1];
+  return /*#__PURE__*/_react["default"].createElement(_reactNative.Modal, {
+    visible: visible,
+    transparent: true,
+    animationType: "fade",
+    onRequestClose: onCancel
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.modalOverlay
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.modalContent
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.modalTitle
+  }, "Custom Coverage Amount"), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.modalInputRow
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
+    style: styles.modalInput,
+    value: coverageAmount,
+    onChangeText: onAmountChange,
+    placeholder: "Value",
+    placeholderTextColor: "#999",
+    keyboardType: "numeric",
+    inputMode: "numeric",
+    maxLength: 8
+  }), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.modalDropdown
+  }, /*#__PURE__*/_react["default"].createElement(DropDownPicker, {
+    open: open,
+    value: coverageUnit,
+    items: unitItems,
+    setOpen: setOpen,
+    setValue: onUnitChange,
+    placeholder: "Units",
+    style: styles.dropdownStyle,
+    textStyle: styles.dropdownTextStyle,
+    dropDownContainerStyle: styles.dropdownContainerStyle,
+    listItemContainerStyle: styles.dropdownItemStyle,
+    zIndex: open ? 3000 : 1,
+    zIndexInverse: open ? 3000 : 1
+  }))), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.modalButtons
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+    style: styles.modalCancelButton,
+    onPress: onCancel
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.modalCancelButtonText
+  }, "Cancel")), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+    style: [styles.modalSaveButton, (!coverageAmount || coverageAmount.trim() === "") && styles.modalButtonDisabled],
+    onPress: function onPress() {
+      onSave();
+      setInsurancePrefill(function (prev) {
+        return _objectSpread(_objectSpread({}, prev), {}, {
+          coverageAmount: coverageAmount,
+          coverageUnit: coverageUnit
+        });
+      });
+      setOpen(false);
+    },
+    disabled: !coverageAmount || coverageAmount.trim() === ""
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.modalSaveButtonText
+  }, "Save"))))));
+};
+
+// Add this new component above ServiceInfo:
+var CustomWarrantyModal = function CustomWarrantyModal(_ref12) {
+  var visible = _ref12.visible,
+    partsValue = _ref12.partsValue,
+    setPartsValue = _ref12.setPartsValue,
+    partsUnit = _ref12.partsUnit,
+    setPartsUnit = _ref12.setPartsUnit,
+    laborValue = _ref12.laborValue,
+    setLaborValue = _ref12.setLaborValue,
+    laborUnit = _ref12.laborUnit,
+    setLaborUnit = _ref12.setLaborUnit,
+    partsUnitItems = _ref12.partsUnitItems,
+    laborUnitItems = _ref12.laborUnitItems,
+    onSave = _ref12.onSave,
+    onClose = _ref12.onClose,
+    registry = _ref12.registry,
+    styles = _ref12.styles;
+  var _useState21 = (0, _react.useState)(null),
+    _useState22 = _slicedToArray(_useState21, 2),
+    openDropdown = _useState22[0],
+    setOpenDropdown = _useState22[1];
+  var DropDownPicker = registry.DropDownPicker;
+  (0, _react.useEffect)(function () {
+    if (!visible) {
+      setOpenDropdown(null);
+    }
+  }, [visible]);
+  (0, _react.useEffect)(function () {
+    var singularPluralMap = {
+      day: 'days',
+      month: 'months',
+      year: 'years'
+    };
+    var pluralSingularMap = {
+      days: 'day',
+      months: 'month',
+      years: 'year'
+    };
+    if (partsValue === "1" && ["days", "months", "years"].includes(partsUnit)) {
+      setPartsUnit(pluralSingularMap[partsUnit]);
+    } else if (partsValue !== "1" && partsValue !== "" && ["day", "month", "year"].includes(partsUnit)) {
+      setPartsUnit(singularPluralMap[partsUnit]);
+    }
+  }, [partsValue]);
+
+  // Auto-switch singular/plural for labor
+  (0, _react.useEffect)(function () {
+    var singularPluralMap = {
+      day: 'days',
+      month: 'months',
+      year: 'years'
+    };
+    var pluralSingularMap = {
+      days: 'day',
+      months: 'month',
+      years: 'year'
+    };
+    if (laborValue === "1" && ["days", "months", "years"].includes(laborUnit)) {
+      setLaborUnit(pluralSingularMap[laborUnit]);
+    } else if (laborValue !== "1" && laborValue !== "" && ["day", "month", "year"].includes(laborUnit)) {
+      setLaborUnit(singularPluralMap[laborUnit]);
+    }
+  }, [laborValue]);
+  return /*#__PURE__*/_react["default"].createElement(_reactNative.Modal, {
+    visible: visible,
+    transparent: true,
+    animationType: "fade",
+    onRequestClose: onClose
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.modalOverlay
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.modalContent
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.modalTitle
+  }, "Custom Warranty"), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.modalForm
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.modalInputLabel
+  }, "Parts Warranty"), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.modalInputRow
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
+    style: styles.modalInput,
+    value: partsValue,
+    onChangeText: function onChangeText(text) {
+      return setPartsValue(text.replace(/[^0-9]/g, ''));
+    },
+    placeholder: "Value",
+    placeholderTextColor: "#999",
+    keyboardType: "numeric",
+    inputMode: "numeric",
+    maxLength: 6
+  }), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: [styles.modalDropdown, {
+      zIndex: openDropdown === 'parts' ? 1000 : 1
+    }]
+  }, /*#__PURE__*/_react["default"].createElement(DropDownPicker, {
+    open: openDropdown === 'parts',
+    value: partsUnit,
+    items: partsUnitItems,
+    setOpen: function setOpen(isOpen) {
+      return setOpenDropdown(isOpen ? 'parts' : null);
+    },
+    setValue: setPartsUnit,
+    placeholder: "Units",
+    style: styles.dropdownStyle,
+    textStyle: styles.dropdownTextStyle,
+    dropDownContainerStyle: styles.dropdownContainerStyle,
+    listItemContainerStyle: styles.dropdownItemStyle
+  }))), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.modalInputLabel
+  }, "Labor Warranty"), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.modalInputRow
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.TextInput, {
+    style: styles.modalInput,
+    value: laborValue,
+    onChangeText: function onChangeText(text) {
+      return setLaborValue(text.replace(/[^0-9]/g, ''));
+    },
+    placeholder: "Value",
+    placeholderTextColor: "#999",
+    keyboardType: "numeric",
+    inputMode: "numeric",
+    maxLength: 6
+  }), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: [styles.modalDropdown, {
+      zIndex: openDropdown === 'labor' ? 1000 : 1
+    }]
+  }, /*#__PURE__*/_react["default"].createElement(DropDownPicker, {
+    open: openDropdown === 'labor',
+    value: laborUnit,
+    items: laborUnitItems,
+    setOpen: function setOpen(isOpen) {
+      return setOpenDropdown(isOpen ? 'labor' : null);
+    },
+    setValue: setLaborUnit,
+    placeholder: "Units",
+    style: styles.dropdownStyle,
+    textStyle: styles.dropdownTextStyle,
+    dropDownContainerStyle: styles.dropdownContainerStyle,
+    listItemContainerStyle: styles.dropdownItemStyle
+  }))), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.modalButtons
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+    style: styles.modalCancelButton,
+    onPress: onClose
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.modalCancelButtonText
+  }, "Cancel")), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+    style: [styles.modalSaveButton, !partsValue && !laborValue && styles.modalButtonDisabled],
+    onPress: function onPress() {
+      return onSave(partsValue, partsUnit, laborValue, laborUnit);
+    },
+    disabled: !partsValue && !laborValue
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.modalSaveButtonText
+  }, "Save")))))));
+};
+
+// ---------------------- CERTIFICATION FORM COMPONENT ----------------------
+var CertificationForm = function CertificationForm(_ref13) {
+  var onSave = _ref13.onSave,
+    onCancel = _ref13.onCancel,
+    registry = _ref13.registry,
+    styles = _ref13.styles,
+    hasItems = _ref13.hasItems,
+    initialValues = _ref13.initialValues,
+    setCertificationPrefill = _ref13.setCertificationPrefill;
+  var _useState23 = (0, _react.useState)({
+      name: (initialValues === null || initialValues === void 0 ? void 0 : initialValues.name) || "",
+      description: (initialValues === null || initialValues === void 0 ? void 0 : initialValues.description) || ""
+    }),
+    _useState24 = _slicedToArray(_useState23, 2),
+    certification = _useState24[0],
+    setCertification = _useState24[1];
+  (0, _react.useEffect)(function () {
+    setCertification({
+      name: (initialValues === null || initialValues === void 0 ? void 0 : initialValues.name) || "",
+      description: (initialValues === null || initialValues === void 0 ? void 0 : initialValues.description) || ""
+    });
+  }, [initialValues]);
+  var handleCancel = function handleCancel() {
+    if (!hasItems) {
+      setCertification({
+        name: "",
+        description: ""
+      });
+    }
+    onCancel();
+  };
+  return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.subForm
+  }, /*#__PURE__*/_react["default"].createElement(FormInput, {
+    label: "Certification Name",
+    value: certification.name,
+    setValue: function setValue(text) {
+      return setCertification(function (prev) {
+        return _objectSpread(_objectSpread({}, prev), {}, {
+          name: text
+        });
+      });
+    },
+    placeholder: "Enter certification name",
+    required: true,
+    styles: styles
+  }), /*#__PURE__*/_react["default"].createElement(FormInput, {
+    label: "Description",
+    value: certification.description,
+    setValue: function setValue(text) {
+      return setCertification(function (prev) {
+        return _objectSpread(_objectSpread({}, prev), {}, {
+          description: text
+        });
+      });
+    },
+    placeholder: "Enter description (optional)",
+    multiline: true,
+    styles: styles
+  }), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.buttonRow
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+    style: [styles.button, styles.cancelButton],
+    onPress: function onPress() {
+      setCertificationPrefill(null);
+      handleCancel();
+    }
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.buttonText
-  }, "Save Insurance"))));
+  }, "Cancel")), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+    style: [styles.button, styles.saveButton, !certification.name.trim() && styles.buttonDisabled],
+    onPress: function onPress() {
+      return onSave(certification);
+    },
+    disabled: !certification.name.trim()
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: [styles.buttonText, styles.saveButtonText]
+  }, "Save"))));
+};
+
+// ---------------------- CERTIFICATIONS SECTION COMPONENT ----------------------
+var CertificationsSection = function CertificationsSection(_ref14) {
+  var formData = _ref14.formData,
+    setFormData = _ref14.setFormData,
+    registry = _ref14.registry,
+    styles = _ref14.styles;
+  var _useState25 = (0, _react.useState)(formData.certifications.length === 0),
+    _useState26 = _slicedToArray(_useState25, 2),
+    showCertificationForm = _useState26[0],
+    setShowCertificationForm = _useState26[1];
+  var _useState27 = (0, _react.useState)(null),
+    _useState28 = _slicedToArray(_useState27, 2),
+    certificationPrefill = _useState28[0],
+    setCertificationPrefill = _useState28[1];
+  var Ionicons = registry.Ionicons;
+  var addCertification = function addCertification(newCertification) {
+    if (newCertification.name.trim()) {
+      setFormData(function (prev) {
+        return _objectSpread(_objectSpread({}, prev), {}, {
+          certifications: [].concat(_toConsumableArray(prev.certifications), [newCertification])
+        });
+      });
+      setShowCertificationForm(false);
+    }
+  };
+  var removeCertification = function removeCertification(index) {
+    setFormData(function (prev) {
+      return _objectSpread(_objectSpread({}, prev), {}, {
+        certifications: prev.certifications.filter(function (_, i) {
+          return i !== index;
+        })
+      });
+    });
+  };
+  return /*#__PURE__*/_react["default"].createElement(_react["default"].Fragment, null, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.sectionHeader
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.subSectionTitle
+  }, "Certifications"), formData.certifications.length > 0 && !showCertificationForm && /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+    style: styles.addButton,
+    onPress: function onPress() {
+      setCertificationPrefill(null);
+      setShowCertificationForm(true);
+    }
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.addButtonText
+  }, "+ Add"))), (showCertificationForm || formData.certifications.length === 0) && /*#__PURE__*/_react["default"].createElement(CertificationForm, {
+    onSave: addCertification,
+    onCancel: function onCancel() {
+      return setShowCertificationForm(false);
+    },
+    registry: registry,
+    styles: styles,
+    hasItems: formData.certifications.length > 0,
+    initialValues: certificationPrefill,
+    setCertificationPrefill: setCertificationPrefill
+  }), formData.certifications.map(function (certification, index) {
+    return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+      key: index,
+      style: styles.listItem
+    }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+      style: styles.itemContent
+    }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+      style: styles.itemTitle
+    }, certification.name), certification.description && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+      style: styles.itemDetail
+    }, certification.description)), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+      style: {
+        flexDirection: 'row'
+      }
+    }, /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+      style: [styles.editButton, {
+        marginTop: -3
+      }],
+      onPress: function onPress() {
+        setCertificationPrefill(certification);
+        setShowCertificationForm(true);
+        removeCertification(index);
+      }
+    }, /*#__PURE__*/_react["default"].createElement(Ionicons, {
+      name: "pencil",
+      size: 15,
+      color: "#007AFF"
+    })), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+      style: styles.removeButton,
+      onPress: function onPress() {
+        return removeCertification(index);
+      }
+    }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+      style: styles.removeButtonText
+    }, "\u2715"))));
+  }));
 };
 
 // ------------------------------------------------------------------------
@@ -593,57 +1218,55 @@ var InsuranceForm = function InsuranceForm(_ref10) {
 // ------------------------------------------------------------------------
 
 // ---------------------- PERSONAL DETAILS COMPONENT ----------------------
-var PersonalDetails = function PersonalDetails(_ref11) {
-  var formData = _ref11.formData,
-    updateContact = _ref11.updateContact,
-    isValidPhoneNumber = _ref11.isValidPhoneNumber,
-    isValidEmail = _ref11.isValidEmail,
-    GOOGLE_API = _ref11.GOOGLE_API,
-    registry = _ref11.registry,
-    styles = _ref11.styles;
+var PersonalDetails = function PersonalDetails(_ref15) {
+  var formData = _ref15.formData,
+    updateContact = _ref15.updateContact,
+    GOOGLE_API = _ref15.GOOGLE_API,
+    registry = _ref15.registry,
+    styles = _ref15.styles;
+  var isValidPhoneNumber = registry.isValidPhoneNumber;
   return /*#__PURE__*/_react["default"].createElement(FormSection, {
     title: "Personal Details",
-    registry: registry,
     styles: styles
   }, /*#__PURE__*/_react["default"].createElement(FormInput, {
     label: "Phone",
     value: formData.contact.phone,
     setValue: function setValue(text) {
-      return updateContact('phone', text.replace(/[^\d\s+]/g, ''));
+      return updateContact("phone", text.replace(/[^\d+]/g, ""));
     },
-    placeholder: "e.g. +1 650 288 7596",
+    placeholder: "+1234567890",
     required: true,
     keyboardType: "phone-pad",
-    registry: registry,
     styles: styles
   }), formData.contact.phone && !isValidPhoneNumber(formData.contact.phone) && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: localStyles.errorText
-  }, "Please enter a valid phone number with country code"), /*#__PURE__*/_react["default"].createElement(FormInput, {
+    style: styles.phoneErrorText
+  }, "Please enter a valid phone number with country code (e.g. +1 for US)"), /*#__PURE__*/_react["default"].createElement(FormInput, {
     label: "Email",
     value: formData.contact.email,
     setValue: function setValue(text) {
-      return updateContact('email', text);
+      return updateContact("email", text);
     },
-    placeholder: "e.g. example@domain.com",
+    placeholder: "email@example.com",
     required: true,
     keyboardType: "email-address",
-    registry: registry,
+    autoCapitalize: "none",
     styles: styles
   }), formData.contact.email && !isValidEmail(formData.contact.email) && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: localStyles.errorText
+    style: styles.emailErrorText
   }, "Please enter a valid email address"), /*#__PURE__*/_react["default"].createElement(FormInput, {
     label: "Website",
     value: formData.contact.website,
     setValue: function setValue(text) {
-      return updateContact('website', text);
+      return updateContact("website", text);
     },
-    placeholder: "e.g. https://yourwebsite.com",
-    registry: registry,
+    placeholder: "https://example.com",
+    keyboardType: "url",
+    autoCapitalize: "none",
     styles: styles
   }), /*#__PURE__*/_react["default"].createElement(AddressSearch, {
     value: formData.contact.address,
     setValue: function setValue(text) {
-      return updateContact('address', text);
+      return updateContact("address", text);
     },
     googleApiKey: GOOGLE_API,
     registry: registry,
@@ -652,37 +1275,207 @@ var PersonalDetails = function PersonalDetails(_ref11) {
 };
 
 // ---------------------- SERVICE INFORMATION COMPONENT ----------------------
-var ServiceInfo = function ServiceInfo(_ref12) {
-  var formData = _ref12.formData,
-    setFormData = _ref12.setFormData,
-    registry = _ref12.registry,
-    styles = _ref12.styles;
-  // Custom warranty modal state
-  var _useState15 = (0, _react.useState)(false),
-    _useState16 = _slicedToArray(_useState15, 2),
-    showCustomWarrantyModal = _useState16[0],
-    setShowCustomWarrantyModal = _useState16[1];
-  var _useState17 = (0, _react.useState)(''),
-    _useState18 = _slicedToArray(_useState17, 2),
-    customWarrantyType = _useState18[0],
-    setCustomWarrantyType = _useState18[1];
+var ServiceInfo = function ServiceInfo(_ref16) {
+  var formData = _ref16.formData,
+    setFormData = _ref16.setFormData,
+    registry = _ref16.registry,
+    styles = _ref16.styles;
+  var _useState29 = (0, _react.useState)(false),
+    _useState30 = _slicedToArray(_useState29, 2),
+    showCustomWarrantyModal = _useState30[0],
+    setShowCustomWarrantyModal = _useState30[1];
+  var _useState31 = (0, _react.useState)(''),
+    _useState32 = _slicedToArray(_useState31, 2),
+    customWarrantyType = _useState32[0],
+    setCustomWarrantyType = _useState32[1];
+  var _useState33 = (0, _react.useState)(null),
+    _useState34 = _slicedToArray(_useState33, 2),
+    openDropdown = _useState34[0],
+    setOpenDropdown = _useState34[1];
 
-  // Handle warranty selection with custom logic
-  var handleWarrantyChange = function handleWarrantyChange(type) {
-    return function (value) {
-      if (value === 'custom') {
-        setCustomWarrantyType(type);
-        setShowCustomWarrantyModal(true);
-      } else {
-        setFormData(function (prev) {
-          return _objectSpread(_objectSpread({}, prev), {}, _defineProperty({}, type, value));
-        });
-      }
+  // Prefill modal with current values
+  var _useState35 = (0, _react.useState)(formData.warranty.partsAmount || ''),
+    _useState36 = _slicedToArray(_useState35, 2),
+    customPartsAmount = _useState36[0],
+    setCustomPartsAmount = _useState36[1];
+  var _useState37 = (0, _react.useState)(formData.warranty.partsUnit || 'months'),
+    _useState38 = _slicedToArray(_useState37, 2),
+    customPartsUnit = _useState38[0],
+    setCustomPartsUnit = _useState38[1];
+  var _useState39 = (0, _react.useState)(formData.warranty.laborAmount || ''),
+    _useState40 = _slicedToArray(_useState39, 2),
+    customLaborAmount = _useState40[0],
+    setCustomLaborAmount = _useState40[1];
+  var _useState41 = (0, _react.useState)(formData.warranty.laborUnit || 'months'),
+    _useState42 = _slicedToArray(_useState41, 2),
+    customLaborUnit = _useState42[0],
+    setCustomLaborUnit = _useState42[1];
+
+  // Helper to parse preset value
+  var parsePreset = function parsePreset(val) {
+    if (val === 'none') return {
+      amount: '0',
+      unit: 'months'
+    };
+    var _val$split = val.split(' '),
+      _val$split2 = _slicedToArray(_val$split, 2),
+      amount = _val$split2[0],
+      unit = _val$split2[1];
+    return {
+      amount: amount,
+      unit: unit
     };
   };
+
+  // Dropdown handlers
+  var handlePartsDropdown = function handlePartsDropdown(val) {
+    if (val === 'custom') {
+      setCustomPartsAmount(formData.warranty.partsAmount);
+      setCustomPartsUnit(formData.warranty.partsUnit || 'months');
+      setCustomLaborAmount(formData.warranty.laborAmount);
+      setCustomLaborUnit(formData.warranty.laborUnit || 'months');
+      setShowCustomWarrantyModal(true);
+    } else {
+      var parsed = parsePreset(val);
+      setFormData(function (prev) {
+        return _objectSpread(_objectSpread({}, prev), {}, {
+          warranty: _objectSpread(_objectSpread({}, prev.warranty), {}, {
+            partsAmount: parsed.amount,
+            partsUnit: parsed.unit
+          })
+        });
+      });
+    }
+  };
+  var handleLaborDropdown = function handleLaborDropdown(val) {
+    if (val === 'custom') {
+      setCustomPartsAmount(formData.warranty.partsAmount);
+      setCustomPartsUnit(formData.warranty.partsUnit || 'months');
+      setCustomLaborAmount(formData.warranty.laborAmount);
+      setCustomLaborUnit(formData.warranty.laborUnit || 'months');
+      setShowCustomWarrantyModal(true);
+    } else {
+      var parsed = parsePreset(val);
+      setFormData(function (prev) {
+        return _objectSpread(_objectSpread({}, prev), {}, {
+          warranty: _objectSpread(_objectSpread({}, prev.warranty), {}, {
+            laborAmount: parsed.amount,
+            laborUnit: parsed.unit
+          })
+        });
+      });
+    }
+  };
+
+  // Save handler for custom modal
+  var handleCustomWarrantySave = function handleCustomWarrantySave(partsValue, partsUnit, laborValue, laborUnit) {
+    setFormData(function (prev) {
+      return _objectSpread(_objectSpread({}, prev), {}, {
+        warranty: _objectSpread(_objectSpread({}, prev.warranty), {}, {
+          partsAmount: partsValue,
+          partsUnit: partsUnit,
+          laborAmount: laborValue,
+          laborUnit: laborUnit
+        })
+      });
+    });
+    setShowCustomWarrantyModal(false);
+  };
+
+  // Dropdown display value
+  var getDropdownDisplay = function getDropdownDisplay(amount, unit) {
+    if (!amount || amount === '0' || unit === 'none') return 'months';
+    return "".concat(amount, " ").concat(unit);
+  };
+
+  // In ServiceInfo, add helper to get warranty items with custom value:
+  var getWarrantyItems = function getWarrantyItems(amount, unit) {
+    var customValue = amount && unit && amount !== '0' && unit !== 'none' ? "".concat(amount, " ").concat(unit).trim() : null;
+    var baseOptions = [{
+      label: 'None',
+      value: 'none'
+    }, {
+      label: '1 month',
+      value: '1 month'
+    }, {
+      label: '3 months',
+      value: '3 months'
+    }, {
+      label: '6 months',
+      value: '6 months'
+    }, {
+      label: '1 year',
+      value: '1 year'
+    }, {
+      label: '2 years',
+      value: '2 years'
+    }, {
+      label: 'Custom...',
+      value: 'custom'
+    }];
+    if (customValue && !baseOptions.some(function (opt) {
+      return opt.value === customValue;
+    }) && !['1 month', '3 months', '6 months', '1 year', '2 years', 'none', 'custom'].includes(customValue)) {
+      // Insert custom value before 'Custom...'
+      var customOption = {
+        label: customValue,
+        value: customValue
+      };
+      var idx = baseOptions.findIndex(function (opt) {
+        return opt.value === 'custom';
+      });
+      return [].concat(_toConsumableArray(baseOptions.slice(0, idx)), [customOption], _toConsumableArray(baseOptions.slice(idx)));
+    }
+    return baseOptions;
+  };
+
+  // In ServiceInfo, add getUnitItems helper above return:
+  var getUnitItems = function getUnitItems(value) {
+    if (value === "1") {
+      return [{
+        label: 'Day',
+        value: 'day'
+      }, {
+        label: 'Month',
+        value: 'month'
+      }, {
+        label: 'Year',
+        value: 'year'
+      }];
+    }
+    return [{
+      label: 'Days',
+      value: 'days'
+    }, {
+      label: 'Months',
+      value: 'months'
+    }, {
+      label: 'Years',
+      value: 'years'
+    }];
+  };
+
+  // In ServiceInfo, before return, add state for last-used unit options:
+  var _useState43 = (0, _react.useState)(getUnitItems(customPartsAmount)),
+    _useState44 = _slicedToArray(_useState43, 2),
+    partsUnitItems = _useState44[0],
+    setPartsUnitItems = _useState44[1];
+  var _useState45 = (0, _react.useState)(getUnitItems(customLaborAmount)),
+    _useState46 = _slicedToArray(_useState45, 2),
+    laborUnitItems = _useState46[0],
+    setLaborUnitItems = _useState46[1];
+  (0, _react.useEffect)(function () {
+    if (customPartsAmount !== "") {
+      setPartsUnitItems(getUnitItems(customPartsAmount));
+    }
+  }, [customPartsAmount]);
+  (0, _react.useEffect)(function () {
+    if (customLaborAmount !== "") {
+      setLaborUnitItems(getUnitItems(customLaborAmount));
+    }
+  }, [customLaborAmount]);
   return /*#__PURE__*/_react["default"].createElement(FormSection, {
     title: "Service Information",
-    registry: registry,
     styles: styles
   }, /*#__PURE__*/_react["default"].createElement(FormInput, {
     label: "Service Title",
@@ -694,7 +1487,6 @@ var ServiceInfo = function ServiceInfo(_ref12) {
     },
     placeholder: "Professional Plumbing Services",
     required: true,
-    registry: registry,
     styles: styles
   }), /*#__PURE__*/_react["default"].createElement(FormInput, {
     label: "Service Description",
@@ -707,7 +1499,6 @@ var ServiceInfo = function ServiceInfo(_ref12) {
     placeholder: "Describe your services and expertise",
     multiline: true,
     required: true,
-    registry: registry,
     styles: styles
   }), /*#__PURE__*/_react["default"].createElement(FormDropdown, {
     label: "Business Entity Type",
@@ -730,9 +1521,15 @@ var ServiceInfo = function ServiceInfo(_ref12) {
     placeholder: "Select entity type",
     required: true,
     registry: registry,
-    zIndex: 3000,
-    styles: styles
-  }), /*#__PURE__*/_react["default"].createElement(DatePicker, {
+    zIndex: openDropdown === 'Business Entity Type' ? 3000 : 1000,
+    styles: styles,
+    open: openDropdown === 'Business Entity Type',
+    setOpen: setOpenDropdown
+  }), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.label
+  }, "Business Commencement Date", /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.requiredStar
+  }, " *")), /*#__PURE__*/_react["default"].createElement(DatePicker, {
     date: formData.businessCommencementDate,
     setDate: function setDate(date) {
       return setFormData(_objectSpread(_objectSpread({}, formData), {}, {
@@ -742,12 +1539,20 @@ var ServiceInfo = function ServiceInfo(_ref12) {
     registry: registry,
     styles: styles
   }), /*#__PURE__*/_react["default"].createElement(WarrantySelector, {
-    parts: formData.warrantyParts,
-    setParts: handleWarrantyChange('warrantyParts'),
-    labor: formData.warrantyLabor,
-    setLabor: handleWarrantyChange('warrantyLabor'),
+    partsAmount: formData.warranty.partsAmount,
+    partsUnit: formData.warranty.partsUnit,
+    setParts: handlePartsDropdown,
+    laborAmount: formData.warranty.laborAmount,
+    laborUnit: formData.warranty.laborUnit,
+    setLabor: handleLaborDropdown,
     registry: registry,
-    styles: styles
+    styles: styles,
+    openDropdown: openDropdown,
+    setOpenDropdown: setOpenDropdown,
+    onCustomWarranty: function onCustomWarranty() {
+      return setShowCustomWarrantyModal(true);
+    },
+    getWarrantyItems: getWarrantyItems
   }), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
     style: styles.optionsContainer
   }, /*#__PURE__*/_react["default"].createElement(SwitchInput, {
@@ -758,7 +1563,6 @@ var ServiceInfo = function ServiceInfo(_ref12) {
         emergencyServicesProvided: value
       }));
     },
-    registry: registry,
     styles: styles
   }), /*#__PURE__*/_react["default"].createElement(SwitchInput, {
     label: "Permitting Included",
@@ -768,32 +1572,22 @@ var ServiceInfo = function ServiceInfo(_ref12) {
         permittingIncluded: value ? "yes" : "no"
       }));
     },
-    registry: registry,
     styles: styles
-  })), /*#__PURE__*/_react["default"].createElement(CustomSelectorModal, {
+  })), /*#__PURE__*/_react["default"].createElement(CustomWarrantyModal, {
     visible: showCustomWarrantyModal,
-    title: "Custom ".concat(capitalize(customWarrantyType), " Warranty"),
-    inputLabel: "Warranty Duration",
-    initialValue: formData["customWarranty".concat(capitalize(customWarrantyType), "Value")],
-    initialUnit: formData["customWarranty".concat(capitalize(customWarrantyType), "Unit")],
-    unitItems: [{
-      label: 'Days',
-      value: 'days'
-    }, {
-      label: 'Months',
-      value: 'months'
-    }, {
-      label: 'Years',
-      value: 'years'
-    }],
-    onSave: function onSave(value, unit) {
-      var formatted = "".concat(value, " ").concat(unit);
-      setFormData(function (prev) {
-        return _objectSpread(_objectSpread({}, prev), {}, _defineProperty(_defineProperty(_defineProperty({}, "warranty".concat(capitalize(customWarrantyType)), formatted), "customWarranty".concat(capitalize(customWarrantyType), "Value"), value), "customWarranty".concat(capitalize(customWarrantyType), "Unit"), unit));
-      });
-    },
+    partsValue: customPartsAmount,
+    setPartsValue: setCustomPartsAmount,
+    partsUnit: customPartsUnit,
+    setPartsUnit: setCustomPartsUnit,
+    laborValue: customLaborAmount,
+    setLaborValue: setCustomLaborAmount,
+    laborUnit: customLaborUnit,
+    setLaborUnit: setCustomLaborUnit,
+    partsUnitItems: partsUnitItems,
+    laborUnitItems: laborUnitItems,
+    onSave: handleCustomWarrantySave,
     onClose: function onClose() {
-      return setShowCustomWarrantyModal(false);
+      setShowCustomWarrantyModal(false);
     },
     registry: registry,
     styles: styles
@@ -801,23 +1595,32 @@ var ServiceInfo = function ServiceInfo(_ref12) {
 };
 
 // ---------------------- COVERAGE & INSURANCES COMPONENT ----------------------
-var CoverageInsurances = function CoverageInsurances(_ref13) {
-  var formData = _ref13.formData,
-    setFormData = _ref13.setFormData,
-    registry = _ref13.registry,
-    styles = _ref13.styles;
-  var _useState19 = (0, _react.useState)(false),
-    _useState20 = _slicedToArray(_useState19, 2),
-    showLicenseForm = _useState20[0],
-    setShowLicenseForm = _useState20[1];
-  var _useState21 = (0, _react.useState)(false),
-    _useState22 = _slicedToArray(_useState21, 2),
-    showInsuranceForm = _useState22[0],
-    setShowInsuranceForm = _useState22[1];
-  var _useState23 = (0, _react.useState)(false),
-    _useState24 = _slicedToArray(_useState23, 2),
-    showCoverageModal = _useState24[0],
-    setShowCoverageModal = _useState24[1];
+var CoverageInsurances = function CoverageInsurances(_ref17) {
+  var formData = _ref17.formData,
+    setFormData = _ref17.setFormData,
+    registry = _ref17.registry,
+    styles = _ref17.styles;
+  var _useState47 = (0, _react.useState)(formData.licenses.length === 0),
+    _useState48 = _slicedToArray(_useState47, 2),
+    showLicenseForm = _useState48[0],
+    setShowLicenseForm = _useState48[1];
+  var _useState49 = (0, _react.useState)(formData.insurances.length === 0),
+    _useState50 = _slicedToArray(_useState49, 2),
+    showInsuranceForm = _useState50[0],
+    setShowInsuranceForm = _useState50[1];
+  var _useState51 = (0, _react.useState)(null),
+    _useState52 = _slicedToArray(_useState51, 2),
+    openDropdown = _useState52[0],
+    setOpenDropdown = _useState52[1];
+  var _useState53 = (0, _react.useState)(null),
+    _useState54 = _slicedToArray(_useState53, 2),
+    licensePrefill = _useState54[0],
+    setLicensePrefill = _useState54[1];
+  var _useState55 = (0, _react.useState)(null),
+    _useState56 = _slicedToArray(_useState55, 2),
+    insurancePrefill = _useState56[0],
+    setInsurancePrefill = _useState56[1];
+  var Ionicons = registry.Ionicons;
 
   // License Management
   var addLicense = function addLicense(newLicense) {
@@ -827,6 +1630,7 @@ var CoverageInsurances = function CoverageInsurances(_ref13) {
       });
     });
     setShowLicenseForm(false);
+    setLicensePrefill(null);
   };
   var removeLicense = function removeLicense(index) {
     setFormData(function (prev) {
@@ -846,6 +1650,7 @@ var CoverageInsurances = function CoverageInsurances(_ref13) {
       });
     });
     setShowInsuranceForm(false);
+    setInsurancePrefill(null);
   };
   var removeInsurance = function removeInsurance(index) {
     setFormData(function (prev) {
@@ -856,22 +1661,58 @@ var CoverageInsurances = function CoverageInsurances(_ref13) {
       });
     });
   };
+  // In CoverageInsurances, add state for custom coverage modal
+  var _useState57 = (0, _react.useState)(false),
+    _useState58 = _slicedToArray(_useState57, 2),
+    showCustomCoverageModal = _useState58[0],
+    setShowCustomCoverageModal = _useState58[1];
+  var _useState59 = (0, _react.useState)(""),
+    _useState60 = _slicedToArray(_useState59, 2),
+    customCoverageAmount = _useState60[0],
+    setCustomCoverageAmount = _useState60[1];
+  var _useState61 = (0, _react.useState)('Million Dollars'),
+    _useState62 = _slicedToArray(_useState61, 2),
+    customCoverageUnit = _useState62[0],
+    setCustomCoverageUnit = _useState62[1];
+  var unitItems = [{
+    label: 'Dollars',
+    value: 'Dollars'
+  }, {
+    label: 'Thousand',
+    value: 'Thousand Dollars'
+  }, {
+    label: 'Million',
+    value: 'Million Dollars'
+  }];
   return /*#__PURE__*/_react["default"].createElement(FormSection, {
     title: "Credentials & Coverage",
-    registry: registry,
     styles: styles
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
     style: styles.sectionHeader
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.subSectionTitle
-  }, "Licenses"), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+  }, "Licenses"), formData.licenses.length > 0 && !showLicenseForm && /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
     style: styles.addButton,
     onPress: function onPress() {
-      return setShowLicenseForm(true);
+      setLicensePrefill(null);
+      setShowLicenseForm(true);
     }
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.addButtonText
-  }, "+ Add License"))), formData.licenses.map(function (license, index) {
+  }, "+ Add"))), (showLicenseForm || formData.licenses.length === 0) && /*#__PURE__*/_react["default"].createElement(LicenseForm, _extends({
+    onSave: addLicense,
+    onCancel: function onCancel() {
+      setShowLicenseForm(false);
+      setLicensePrefill(null);
+    },
+    registry: registry,
+    styles: styles,
+    openDropdown: openDropdown,
+    setOpenDropdown: setOpenDropdown,
+    hasItems: formData.licenses.length > 0
+  }, licensePrefill ? {
+    initialValues: licensePrefill
+  } : {})), formData.licenses.map(function (license, index) {
     return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
       key: index,
       style: styles.listItem
@@ -883,33 +1724,72 @@ var CoverageInsurances = function CoverageInsurances(_ref13) {
       style: styles.itemDetail
     }, "Issuer: ", license.issuer), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
       style: styles.itemDetail
-    }, "Type: ", license.type)), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+    }, "Type: ", license.type), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+      style: {
+        height: 10
+      }
+    }), license.description && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+      style: styles.itemDetail
+    }, license.description)), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+      style: {
+        flexDirection: 'row'
+      }
+    }, /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+      style: [styles.editButton, {
+        marginTop: -3
+      }],
+      onPress: function onPress() {
+        setLicensePrefill(license);
+        setShowLicenseForm(true);
+        removeLicense(index);
+      }
+    }, /*#__PURE__*/_react["default"].createElement(Ionicons, {
+      name: "pencil",
+      size: 15,
+      color: "#007AFF"
+    })), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
       style: styles.removeButton,
       onPress: function onPress() {
         return removeLicense(index);
       }
     }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
       style: styles.removeButtonText
-    }, "\u2715")));
-  }), showLicenseForm && /*#__PURE__*/_react["default"].createElement(LicenseForm, {
-    onSave: addLicense,
-    onCancel: function onCancel() {
-      return setShowLicenseForm(false);
-    },
+    }, "\u2715"))));
+  }), /*#__PURE__*/_react["default"].createElement(CertificationsSection, {
+    formData: formData,
+    setFormData: setFormData,
     registry: registry,
-    styles: styles
+    styles: styles,
+    hasItems: formData.licenses.length > 0
   }), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
     style: styles.sectionHeader
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.subSectionTitle
-  }, "Insurances"), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+  }, "Insurances"), formData.insurances.length > 0 && !showInsuranceForm && /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
     style: styles.addButton,
     onPress: function onPress() {
-      return setShowInsuranceForm(true);
+      setInsurancePrefill(null);
+      setShowInsuranceForm(true);
     }
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.addButtonText
-  }, "+ Add Insurance"))), formData.insurances.map(function (insurance, index) {
+  }, "+ Add"))), (showInsuranceForm || formData.insurances.length === 0) && /*#__PURE__*/_react["default"].createElement(InsuranceForm, _extends({
+    onSave: addInsurance,
+    onCancel: function onCancel() {
+      setShowInsuranceForm(false);
+      setInsurancePrefill(null);
+    },
+    onCustomCoverage: function onCustomCoverage() {
+      return setShowCustomCoverageModal(true);
+    },
+    registry: registry,
+    styles: styles,
+    openDropdown: openDropdown,
+    setOpenDropdown: setOpenDropdown,
+    hasItems: formData.insurances.length > 0
+  }, insurancePrefill ? {
+    initialValues: insurancePrefill
+  } : {})), formData.insurances.map(function (insurance, index) {
     return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
       key: index,
       style: styles.listItem
@@ -919,201 +1799,238 @@ var CoverageInsurances = function CoverageInsurances(_ref13) {
       style: styles.itemTitle
     }, insurance.type), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
       style: styles.itemDetail
-    }, "Coverage: ", insurance.coverage), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    }, "Coverage: ", insurance.coverageAmount, " ", insurance.coverageUnit), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
       style: styles.itemDetail
-    }, "Issuer: ", insurance.issuer)), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+    }, "Issuer: ", insurance.issuer), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+      style: {
+        height: 10
+      }
+    }), insurance.description && /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+      style: styles.itemDetail
+    }, insurance.description)), /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+      style: {
+        flexDirection: 'row'
+      }
+    }, /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+      style: styles.editButton,
+      onPress: function onPress() {
+        setInsurancePrefill(insurance);
+        setShowInsuranceForm(true);
+        removeInsurance(index);
+      }
+    }, /*#__PURE__*/_react["default"].createElement(Ionicons, {
+      name: "pencil",
+      size: 15,
+      color: "#007AFF",
+      style: {
+        marginTop: -3
+      }
+    })), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
       style: styles.removeButton,
       onPress: function onPress() {
         return removeInsurance(index);
       }
     }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
       style: styles.removeButtonText
-    }, "\u2715")));
-  }), showInsuranceForm && /*#__PURE__*/_react["default"].createElement(InsuranceForm, {
-    onSave: addInsurance,
-    onCancel: function onCancel() {
-      return setShowInsuranceForm(false);
-    },
-    onCustomCoverage: function onCustomCoverage() {
-      return setShowCoverageModal(true);
-    },
-    registry: registry,
-    styles: styles
-  }), /*#__PURE__*/_react["default"].createElement(CustomSelectorModal, {
-    visible: showCoverageModal,
-    title: "Custom Coverage Amount",
-    inputLabel: "Coverage Value",
-    initialValue: "",
-    initialUnit: "dollars",
-    unitItems: [{
-      label: 'Dollars ($)',
-      value: 'dollars'
-    }, {
-      label: 'Thousands (K)',
-      value: 'thousand'
-    }, {
-      label: 'Millions (M)',
-      value: 'million'
-    }],
-    onSave: function onSave(value, unit) {
-      var formatted = "$".concat(value);
-      if (unit === 'thousand') formatted += 'K';
-      if (unit === 'million') formatted += 'M';
-      setFormData(function (prev) {
-        return _objectSpread(_objectSpread({}, prev), {}, {
-          newInsurance: _objectSpread(_objectSpread({}, prev.newInsurance), {}, {
-            coverage: formatted
-          })
+    }, "\u2715"))));
+  }), /*#__PURE__*/_react["default"].createElement(CustomCoverageModal, {
+    visible: showCustomCoverageModal,
+    coverageAmount: customCoverageAmount,
+    coverageUnit: customCoverageUnit,
+    onAmountChange: setCustomCoverageAmount,
+    onUnitChange: setCustomCoverageUnit,
+    setInsurancePrefill: setInsurancePrefill,
+    unitItems: unitItems,
+    onSave: function onSave() {
+      if (insurancePrefill) {
+        setInsurancePrefill(function (prev) {
+          return _objectSpread(_objectSpread({}, prev), {}, {
+            coverageAmount: customCoverageAmount,
+            coverageUnit: customCoverageUnit
+          });
         });
-      });
+      }
+      setShowCustomCoverageModal(false);
     },
-    onClose: function onClose() {
-      return setShowCoverageModal(false);
+    onCancel: function onCancel() {
+      return setShowCustomCoverageModal(false);
     },
-    registry: registry,
-    styles: styles
+    styles: styles,
+    registry: registry
   }));
 };
 
 // ---------------------- PHOTO ALBUM COMPONENT ----------------------
-var PhotoAlbum = function PhotoAlbum(_ref14) {
-  var photos = _ref14.photos,
-    setPhotos = _ref14.setPhotos,
-    registry = _ref14.registry,
-    styles = _ref14.styles;
+var PhotoAlbum = function PhotoAlbum(_ref18) {
+  var photos = _ref18.photos,
+    setFormData = _ref18.setFormData,
+    registry = _ref18.registry,
+    styles = _ref18.styles;
   var ImagePicker = registry.ImagePicker,
     Ionicons = registry.Ionicons;
-  var MAX_PHOTOS = 8;
+  var MAX_PHOTOS = 21;
+
+  // Ensure existing photos have IDs
+  (0, _react.useEffect)(function () {
+    var needsMigration = photos.some(function (photo) {
+      return !photo.id;
+    });
+    if (needsMigration) {
+      setFormData(function (prev) {
+        return _objectSpread(_objectSpread({}, prev), {}, {
+          photos: prev.photos.map(function (photo) {
+            return _objectSpread(_objectSpread({}, photo), {}, {
+              id: photo.id || "migrated-photo-".concat(Math.random().toString(36).substr(2, 9))
+            });
+          })
+        });
+      });
+    }
+  }, []);
   var handleAddPhotos = /*#__PURE__*/function () {
-    var _ref15 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-      var permissionResult, _yield$ImagePicker$re, status, result, newPhotos;
+    var _ref19 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+      var _result$assets, _yield$ImagePicker$re, status, result, existingFileNames, newPhotos;
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
         while (1) switch (_context2.prev = _context2.next) {
           case 0:
             _context2.prev = 0;
-            _context2.next = 3;
-            return ImagePicker.getMediaLibraryPermissionsAsync();
-          case 3:
-            permissionResult = _context2.sent;
-            if (!(!permissionResult.granted && permissionResult.canAskAgain)) {
-              _context2.next = 12;
+            if (!(photos.length >= MAX_PHOTOS)) {
+              _context2.next = 4;
               break;
             }
-            _context2.next = 7;
+            _reactNative.Alert.alert("Limit Reached", "You can only add up to ".concat(MAX_PHOTOS, " photos."));
+            return _context2.abrupt("return");
+          case 4:
+            _context2.next = 6;
             return ImagePicker.requestMediaLibraryPermissionsAsync();
-          case 7:
+          case 6:
             _yield$ImagePicker$re = _context2.sent;
             status = _yield$ImagePicker$re.status;
             if (!(status !== 'granted')) {
-              _context2.next = 12;
+              _context2.next = 11;
               break;
             }
-            _reactNative.Alert.alert('Permission Required', 'Please enable photo access in settings');
+            _reactNative.Alert.alert("Permission Required", "Please enable photo access in settings", [{
+              text: "OK"
+            }]);
             return _context2.abrupt("return");
-          case 12:
-            _context2.next = 14;
+          case 11:
+            _context2.next = 13;
             return ImagePicker.launchImageLibraryAsync({
               mediaTypes: ImagePicker.MediaTypeOptions.Images,
-              allowsMultipleSelection: true,
-              selectionLimit: MAX_PHOTOS - photos.length,
-              quality: 0.8
+              allowsEditing: false,
+              quality: 0.8,
+              allowsMultipleSelection: _reactNative.Platform.OS !== 'web',
+              selectionLimit: MAX_PHOTOS - photos.length
             });
-          case 14:
+          case 13:
             result = _context2.sent;
-            if (!result.canceled && result.assets) {
-              newPhotos = result.assets.filter(function (asset) {
-                return !photos.some(function (p) {
-                  return p.uri === asset.uri;
-                });
-              }).map(function (asset) {
-                return {
+            if (!result.canceled && (_result$assets = result.assets) !== null && _result$assets !== void 0 && _result$assets.length) {
+              existingFileNames = new Set(photos.map(function (p) {
+                return p.fileName;
+              }));
+              newPhotos = result.assets.reduce(function (acc, asset) {
+                if (existingFileNames.has(asset.fileName)) {
+                  return acc;
+                }
+                acc.push({
                   id: "photo-".concat(Date.now(), "-").concat(Math.random().toString(36).substr(2, 9)),
                   uri: asset.uri,
                   width: asset.width,
                   height: asset.height,
                   type: asset.type || 'image',
                   fileName: asset.fileName || "photo-".concat(Date.now(), ".jpg")
-                };
+                });
+                return acc;
+              }, []);
+              setFormData(function (prev) {
+                return _objectSpread(_objectSpread({}, prev), {}, {
+                  photos: [].concat(_toConsumableArray(prev.photos), _toConsumableArray(newPhotos))
+                });
               });
-              if (newPhotos.length > 0) {
-                setPhotos([].concat(_toConsumableArray(photos), _toConsumableArray(newPhotos)));
-              }
             }
-            _context2.next = 22;
+            _context2.next = 21;
             break;
-          case 18:
-            _context2.prev = 18;
+          case 17:
+            _context2.prev = 17;
             _context2.t0 = _context2["catch"](0);
-            _reactNative.Alert.alert('Error', 'Failed to select photos');
             console.error('Photo selection error:', _context2.t0);
-          case 22:
+            _reactNative.Alert.alert("Error", "Failed to select photos");
+          case 21:
           case "end":
             return _context2.stop();
         }
-      }, _callee2, null, [[0, 18]]);
+      }, _callee2, null, [[0, 17]]);
     }));
     return function handleAddPhotos() {
-      return _ref15.apply(this, arguments);
+      return _ref19.apply(this, arguments);
     };
   }();
   var removePhoto = function removePhoto(photoId) {
-    setPhotos(photos.filter(function (photo) {
-      return photo.id !== photoId;
-    }));
+    setFormData(function (prev) {
+      return _objectSpread(_objectSpread({}, prev), {}, {
+        photos: prev.photos.filter(function (photo) {
+          return photo.id !== photoId;
+        })
+      });
+    });
   };
   return /*#__PURE__*/_react["default"].createElement(FormSection, {
-    title: "Photos",
+    title: "Photo Album",
     styles: styles
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.photoHeader
+    style: styles.photoAlbumContainer
+  }, /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.photoHeaderRow
   }, /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.photoAlbumTitle
+  }, "Photos"), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.photoCount
-  }, photos.length, "/", MAX_PHOTOS, " photos")), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+  }, photos.length, " photos")), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+    style: [styles.outlinedButton, styles.fullWidth, photos.length >= MAX_PHOTOS && styles.addPhotoButtonDisabled],
     onPress: handleAddPhotos,
-    disabled: photos.length >= MAX_PHOTOS,
-    style: styles.outlinedButton
+    disabled: photos.length >= MAX_PHOTOS
   }, /*#__PURE__*/_react["default"].createElement(Ionicons, {
-    name: "add",
+    name: "image-outline",
     size: 20,
-    color: "#1877F2"
+    color: "#007AFF",
+    style: {
+      marginRight: 8
+    }
   }), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
     style: styles.outlinedButtonText
-  }, "Add Photos")), photos.length > 0 ? /*#__PURE__*/_react["default"].createElement(_reactNative.FlatList, {
-    data: photos,
-    keyExtractor: function keyExtractor(item) {
-      return item.id;
-    },
-    numColumns: 3,
-    contentContainerStyle: styles.photoGrid,
-    renderItem: function renderItem(_ref16) {
-      var item = _ref16.item;
-      return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-        style: styles.photoContainer
-      }, /*#__PURE__*/_react["default"].createElement(_reactNative.Image, {
-        source: {
-          uri: item.uri
-        },
-        style: styles.photo
-      }), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
-        style: styles.removePhotoButton,
-        onPress: function onPress() {
-          return removePhoto(item.id);
-        }
-      }, /*#__PURE__*/_react["default"].createElement(Ionicons, {
-        name: "close-circle",
-        size: 24,
-        color: "#FF3B30"
-      })));
-    }
-  }) : /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
-    style: styles.emptyState
+  }, "Add Photos")), photos.length > 0 ? /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.photoGrid
+  }, photos.map(function (item) {
+    return /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+      key: item.id,
+      style: styles.photoContainer
+    }, /*#__PURE__*/_react["default"].createElement(_reactNative.Image, {
+      source: {
+        uri: item.uri
+      },
+      style: styles.photo
+    }), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
+      style: styles.removePhotoButton,
+      onPress: function onPress() {
+        return removePhoto(item.id);
+      }
+    }, /*#__PURE__*/_react["default"].createElement(Ionicons, {
+      name: "close-circle",
+      size: 22,
+      color: "#FF3B30"
+    })));
+  })) : /*#__PURE__*/_react["default"].createElement(_reactNative.View, {
+    style: styles.emptyPhotoState
   }, /*#__PURE__*/_react["default"].createElement(Ionicons, {
     name: "images-outline",
-    size: 48,
+    size: 40,
     color: "#CCCCCC"
   }), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
-    style: styles.emptyText
-  }, "No photos added yet")));
+    style: styles.emptyPhotoText
+  }, "No photos added yet"), /*#__PURE__*/_react["default"].createElement(_reactNative.Text, {
+    style: styles.emptyPhotoSubtext
+  }, "Tap \"Add Photos\" to select from your gallery"))));
 };
 
 // ---------------------- HELPER FUNCTIONS ----------------------
@@ -1144,11 +2061,11 @@ var validateData = function validateData(formData, registry) {
     _reactNative.Alert.alert('Error', 'Please select a business commencement date for your offering');
     return;
   }
-  if (formData.warrantyParts === null) {
+  if (formData.warranty.partsAmount === null) {
     _reactNative.Alert.alert('Error', 'Please select a parts warranty period for your offering');
     return;
   }
-  if (formData.warrantyLabor === null) {
+  if (formData.warranty.laborAmount === null) {
     _reactNative.Alert.alert('Error', 'Please select a labor warranty period for your offering');
     return;
   }
@@ -1173,28 +2090,28 @@ var validateData = function validateData(formData, registry) {
 // ------------------------------------------------------------------------
 
 var PlumbingForm = function PlumbingForm() {
-  var _ref17 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-    _ref17$formData = _ref17.formData,
-    initialFormData = _ref17$formData === void 0 ? {} : _ref17$formData,
-    _ref17$setFormData = _ref17.setFormData,
-    setParentFormData = _ref17$setFormData === void 0 ? function () {} : _ref17$setFormData,
-    _ref17$styles = _ref17.styles,
-    parentStyles = _ref17$styles === void 0 ? {} : _ref17$styles,
-    _ref17$offering = _ref17.offering,
-    offering = _ref17$offering === void 0 ? null : _ref17$offering,
-    _ref17$selectedOption = _ref17.selectedOption,
-    selectedOption = _ref17$selectedOption === void 0 ? '' : _ref17$selectedOption,
-    _ref17$breadcrumb = _ref17.breadcrumb,
-    breadcrumb = _ref17$breadcrumb === void 0 ? '' : _ref17$breadcrumb,
-    _ref17$meta = _ref17.meta,
-    meta = _ref17$meta === void 0 ? {} : _ref17$meta,
-    _ref17$navigation = _ref17.navigation,
-    navigation = _ref17$navigation === void 0 ? null : _ref17$navigation,
-    _ref17$GOOGLE_API = _ref17.GOOGLE_API,
-    GOOGLE_API = _ref17$GOOGLE_API === void 0 ? '' : _ref17$GOOGLE_API,
-    registry = _ref17.registry;
+  var _ref20 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+    _ref20$formData = _ref20.formData,
+    initialFormData = _ref20$formData === void 0 ? {} : _ref20$formData,
+    _ref20$setFormData = _ref20.setFormData,
+    setParentFormData = _ref20$setFormData === void 0 ? function () {} : _ref20$setFormData,
+    _ref20$styles = _ref20.styles,
+    parentStyles = _ref20$styles === void 0 ? {} : _ref20$styles,
+    _ref20$offering = _ref20.offering,
+    offering = _ref20$offering === void 0 ? null : _ref20$offering,
+    _ref20$selectedOption = _ref20.selectedOption,
+    selectedOption = _ref20$selectedOption === void 0 ? '' : _ref20$selectedOption,
+    _ref20$breadcrumb = _ref20.breadcrumb,
+    breadcrumb = _ref20$breadcrumb === void 0 ? '' : _ref20$breadcrumb,
+    _ref20$meta = _ref20.meta,
+    meta = _ref20$meta === void 0 ? {} : _ref20$meta,
+    _ref20$navigation = _ref20.navigation,
+    navigation = _ref20$navigation === void 0 ? null : _ref20$navigation,
+    _ref20$GOOGLE_API = _ref20.GOOGLE_API,
+    GOOGLE_API = _ref20$GOOGLE_API === void 0 ? '' : _ref20$GOOGLE_API,
+    registry = _ref20.registry;
   var styles = _objectSpread(_objectSpread({}, localStyles), parentStyles);
-  var _useState25 = (0, _react.useState)(function () {
+  var _useState63 = (0, _react.useState)(function () {
       return _objectSpread(_objectSpread({
         title: '',
         description: '',
@@ -1206,11 +2123,16 @@ var PlumbingForm = function PlumbingForm() {
           address: ''
         },
         licenses: [],
+        certifications: [],
         insurances: [],
         photos: [],
         businessCommencementDate: null,
-        warrantyParts: null,
-        warrantyLabor: null,
+        warranty: {
+          partsAmount: '',
+          partsUnit: '',
+          laborAmount: '',
+          laborUnit: ''
+        },
         emergencyServicesProvided: false,
         permittingIncluded: 'no'
       }, initialFormData), offering ? _objectSpread({
@@ -1218,9 +2140,9 @@ var PlumbingForm = function PlumbingForm() {
         description: offering.description || ''
       }, offering.extraData || {}) : {});
     }),
-    _useState26 = _slicedToArray(_useState25, 2),
-    formData = _useState26[0],
-    setFormData = _useState26[1];
+    _useState64 = _slicedToArray(_useState63, 2),
+    formData = _useState64[0],
+    setFormData = _useState64[1];
   (0, _react.useEffect)(function () {
     setParentFormData(formData);
   }, [formData, setParentFormData]);
@@ -1245,7 +2167,7 @@ var PlumbingForm = function PlumbingForm() {
         insurances: formData.insurances,
         photos: formData.photos,
         businessCommencementDate: formData.businessCommencementDate,
-        warranty: "parts: ".concat(formData.warrantyParts, ", labor: ").concat(formData.warrantyLabor),
+        warranty: "parts: ".concat(formData.warranty.partsAmount, ", labor: ").concat(formData.warranty.laborAmount),
         emergencyServicesProvided: formData.emergencyServicesProvided,
         permittingIncluded: formData.permittingIncluded
       }
@@ -1290,6 +2212,7 @@ var PlumbingForm = function PlumbingForm() {
       });
     },
     registry: registry,
+    setFormData: setFormData,
     styles: styles
   }), /*#__PURE__*/_react["default"].createElement(_reactNative.TouchableOpacity, {
     style: styles.submitButton,
@@ -1302,120 +2225,382 @@ var PlumbingForm = function PlumbingForm() {
 // Local styles for the PlumbingForm component - force force
 var localStyles = _reactNative.StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff'
+    flex: 1
   },
-  formContentContainer: {
-    paddingHorizontal: 20,
-    paddingBottom: 40,
-    width: '100%'
+  dropdownStyle: {
+    backgroundColor: '#fafbfc',
+    borderColor: '#ddd',
+    borderRadius: 5,
+    height: 44
   },
-  // Section header (blue, rounded, centered)
+  dropdownTextStyle: {
+    fontSize: 16,
+    color: '#333'
+  },
+  dropdownContainerStyle: {
+    backgroundColor: '#fff',
+    borderColor: '#ddd',
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    elevation: 4,
+    zIndex: 2000
+  },
+  dropdownItemStyle: {
+    height: 44,
+    justifyContent: 'center'
+  },
+  // Main section headers
   mainSectionHeader: {
-    backgroundColor: '#1877F2',
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 14,
-    marginTop: 28,
-    marginBottom: 18,
-    shadowColor: '#1877F2',
+    backgroundColor: '#007AFF',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    marginTop: 24,
+    marginBottom: 16,
+    borderRadius: 8,
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2
     },
-    shadowOpacity: 0.08,
-    shadowRadius: 4,
-    elevation: 2
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
+    alignItems: 'center'
   },
   mainSectionHeaderText: {
     color: '#fff',
     fontSize: 18,
-    fontWeight: '700',
-    letterSpacing: 0.2
+    fontWeight: 'bold'
   },
-  // Form group
+  modalInputLabel: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 10
+  },
+  // Form content container for FlatList
+  formContentContainer: {
+    paddingHorizontal: 16,
+    paddingBottom: 40,
+    width: '100%'
+  },
+  // Subsection headers
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
+    paddingBottom: 8,
+    marginTop: 24,
+    marginBottom: 16
+  },
+  sectionHeaderText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#444'
+  },
+  // Form group styling
   formGroup: {
     marginBottom: 20
   },
-  // Input and dropdown
-  label: {
-    fontSize: 15,
-    fontWeight: '500',
-    marginBottom: 6,
-    color: '#222'
-  },
-  requiredStar: {
-    color: '#FF3B30',
-    fontWeight: 'bold'
-  },
-  input: {
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderColor: '#E0E0E0',
-    borderRadius: 8,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-    fontSize: 15,
-    color: '#222',
-    marginBottom: 0
-  },
-  multilineInput: {
-    minHeight: 80,
-    textAlignVertical: 'top'
-  },
-  dropdownStyle: {
-    backgroundColor: '#fff',
-    borderColor: '#E0E0E0',
-    borderRadius: 8,
-    minHeight: 48
-  },
-  dropdownTextStyle: {
-    fontSize: 15,
-    color: '#222'
-  },
-  dropdownContainerStyle: {
-    backgroundColor: '#fff',
-    borderColor: '#E0E0E0',
-    borderRadius: 8
-  },
-  // Switches
-  switchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10
-  },
-  switchLabel: {
-    fontSize: 15,
-    color: '#222',
-    flex: 1
-  },
-  switchValue: {
-    fontSize: 15,
-    color: '#1877F2',
-    marginLeft: 8,
-    fontWeight: '600'
-  },
-  // Buttons
+  // Improved add buttons
   addButton: {
-    backgroundColor: '#1877F2',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
+    backgroundColor: '#007AFF',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
     flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'flex-end',
-    marginBottom: 8
+    alignItems: 'center'
   },
   addButtonText: {
+    color: 'white',
+    fontWeight: '600',
+    fontSize: 14
+  },
+  addSmallButton: {
+    backgroundColor: '#007AFF',
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginLeft: 8,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  // Item styling
+  listItem: {
+    backgroundColor: '#f5f5f5',
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 10,
+    borderLeftWidth: 3,
+    borderLeftColor: '#007AFF',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  itemContent: {
+    flex: 1
+  },
+  itemTitle: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginBottom: 4,
+    color: '#333'
+  },
+  itemDetail: {
+    fontSize: 14,
+    marginBottom: 2,
+    color: '#666'
+  },
+  removeItemButton: {
+    padding: 4,
+    alignSelf: 'flex-start'
+  },
+  removeItemButtonText: {
+    color: '#FF3B30',
+    fontSize: 18,
+    fontWeight: 'bold'
+  },
+  // Subform styling
+  subForm: {
+    backgroundColor: '#f9f9f9',
+    padding: 16,
+    borderRadius: 8,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: '#e0e0e0'
+  },
+  // Button styling
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 16
+  },
+  button: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    alignItems: 'center',
+    minWidth: 100
+  },
+  cancelButton: {
+    backgroundColor: '#e0e0e0',
+    // light gray
+    marginRight: 10
+  },
+  saveButton: {
+    backgroundColor: '#2979FF' // bright blue
+  },
+  buttonText: {
     color: '#fff',
+    // white for both
     fontWeight: '600',
     fontSize: 15
   },
+  // Tag item styling
+  tagsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginBottom: 20
+  },
+  tagItem: {
+    backgroundColor: '#e1f5fe',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 16,
+    marginRight: 8,
+    marginBottom: 8,
+    alignSelf: 'flex-start',
+    borderWidth: 1,
+    borderColor: '#81d4fa',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  tagText: {
+    color: '#0277bd',
+    fontSize: 14,
+    marginRight: 6
+  },
+  removeTagButton: {
+    backgroundColor: '#81d4fa',
+    width: 18,
+    height: 18,
+    borderRadius: 9,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  removeTagButtonText: {
+    color: 'white',
+    fontSize: 12,
+    fontWeight: 'bold',
+    lineHeight: 18
+  },
+  // Clear button styling
+  clearButton: {
+    padding: 8,
+    marginLeft: 4
+  },
+  clearButtonText: {
+    color: '#007AFF',
+    fontSize: 16
+  },
+  // Add button disabled styling
+  addButtonDisabled: {
+    backgroundColor: '#e0e0e0'
+  },
+  // Outlined button styling (for Add Photos)
+  outlinedButton: {
+    borderWidth: 2,
+    borderColor: '#007AFF',
+    backgroundColor: 'white',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  outlinedButtonText: {
+    color: '#007AFF',
+    fontWeight: '600',
+    fontSize: 16
+  },
+  // Row container styling
+  rowContainer: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  // Warranty styling
+  warrantyContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10
+  },
+  warrantyInput: {
+    width: '48%' // Give a little space between the two dropdowns
+  },
+  warrantyLabel: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#444',
+    marginBottom: 6
+  },
+  // Custom Warranty Modal styling
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    width: '80%',
+    maxHeight: '80%'
+  },
+  modalTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center'
+  },
+  modalForm: {
+    marginBottom: 20
+  },
+  modalInputRow: {
+    flexDirection: 'row',
+    marginBottom: 20
+  },
+  modalInput: {
+    flex: 1,
+    height: 50,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 5,
+    fontSize: 16,
+    backgroundColor: '#fafbfc',
+    marginRight: 10
+  },
+  modalDropdown: {
+    flex: 1,
+    height: 40,
+    marginLeft: 0
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  modalCancelButton: {
+    backgroundColor: '#e0e0e0',
+    padding: 10,
+    borderRadius: 5,
+    minWidth: 100,
+    alignItems: 'center'
+  },
+  modalCancelButtonText: {
+    color: '#333',
+    fontWeight: '600'
+  },
+  modalSaveButton: {
+    backgroundColor: '#007AFF',
+    padding: 10,
+    borderRadius: 5,
+    marginLeft: 10,
+    minWidth: 100,
+    alignItems: 'center'
+  },
+  modalSaveButtonText: {
+    color: 'white',
+    fontWeight: '600'
+  },
+  modalButtonDisabled: {
+    backgroundColor: '#e0e0e0'
+  },
+  buttonDisabled: {
+    backgroundColor: '#e0e0e0'
+  },
+  emailErrorText: {
+    color: '#d32f2f',
+    fontSize: 13,
+    marginTop: -14,
+    marginBottom: 10,
+    marginLeft: 2,
+    fontWeight: '400'
+  },
+  requiredStar: {
+    color: 'red',
+    fontWeight: 'bold'
+  },
+  switchRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 24
+  },
+  switchLabel: {
+    fontSize: 16,
+    color: '#333',
+    fontWeight: '500',
+    flex: 1
+  },
+  switchControl: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  switchValueText: {
+    fontSize: 16,
+    color: '#333',
+    marginLeft: 8,
+    fontWeight: '500'
+  },
   submitButton: {
+    // backgroundColor: '#007AFF',
     backgroundColor: '#28a745',
     padding: 16,
-    borderRadius: 10,
+    borderRadius: 8,
     alignItems: 'center',
     marginTop: 20,
     marginBottom: 40
@@ -1423,60 +2608,271 @@ var localStyles = _reactNative.StyleSheet.create({
   submitButtonText: {
     color: '#fff',
     fontSize: 18,
-    fontWeight: '700',
-    letterSpacing: 0.2
+    fontWeight: '600'
   },
-  // Photo album
-  photoHeader: {
+  // Updated styles for address search
+  searchContainer: {
+    position: 'relative',
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%'
+  },
+  addressInput: {
+    backgroundColor: '#f5f5f5',
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    fontSize: 16,
+    flex: 1,
+    height: 56,
+    paddingRight: 40 // Space for icon
+  },
+  selectedAddressContainer: {
+    backgroundColor: '#e8eaf6',
+    borderRadius: 8,
+    padding: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    minHeight: 56
+  },
+  selectedAddressText: {
+    flex: 1,
+    fontSize: 16,
+    color: '#333',
+    flexWrap: 'wrap',
+    paddingRight: 8
+  },
+  removeAddressButton: {
+    padding: 4
+  },
+  removeAddressButtonText: {
+    color: '#FF3B30',
+    fontSize: 20,
+    fontWeight: 'bold'
+  },
+  iconContainer: {
+    position: 'absolute',
+    right: 10,
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1
+  },
+  inputIcon: {
+    padding: 8,
+    backgroundColor: 'transparent'
+  },
+  suggestionsList: {
+    width: '100%',
+    backgroundColor: '#fff',
+    borderColor: '#ddd',
+    zIndex: 1000,
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    maxHeight: 200,
+    marginTop: 5,
+    borderRadius: 8
+  },
+  suggestionItem: {
+    padding: 13,
+    paddingLeft: 16,
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0'
+  },
+  suggestionText: {
+    fontSize: 14,
+    color: '#333'
+  },
+  // Updated styles for date picker
+  datePickerButton: {
+    backgroundColor: '#f5f5f5',
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    borderRadius: 8,
+    padding: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    height: 56,
+    position: 'relative'
+  },
+  datePickerButtonText: {
+    fontSize: 16,
+    color: '#333'
+  },
+  calendarIcon: {
+    backgroundColor: '#ede9fe',
+    borderRadius: 20,
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  // Modal styles for iOS date picker
+  datePickerContainer: {
+    backgroundColor: 'white',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    paddingBottom: 20
+  },
+  datePickerHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 10
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0'
+  },
+  datePickerTitle: {
+    fontSize: 18,
+    fontWeight: 'bold'
+  },
+  datePickerCancel: {
+    color: '#999',
+    fontSize: 16
+  },
+  datePickerDone: {
+    color: '#007AFF',
+    fontSize: 16,
+    fontWeight: '600'
+  },
+  datePickerIOS: {
+    height: 240
+  },
+  // Modal styles for iOS date picker
+  datePickerModalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    justifyContent: 'flex-end'
+  },
+  datePickerModalContent: {
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    paddingBottom: 20,
+    paddingTop: 10,
+    paddingHorizontal: 16
+  },
+  datePickerCancelText: {
+    color: '#999',
+    fontSize: 16
+  },
+  datePickerConfirmText: {
+    color: '#007AFF',
+    fontSize: 16,
+    fontWeight: '600'
+  },
+  photoAlbumContainer: {
+    marginVertical: 15,
+    paddingHorizontal: 0
+  },
+  photoHeaderRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+    paddingHorizontal: 4
+  },
+  photoAlbumTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333'
   },
   photoCount: {
     fontSize: 14,
-    color: '#888'
+    color: '#777'
   },
-  outlinedButton: {
+  fullWidthButton: {
+    width: '100%',
+    alignSelf: 'center',
+    marginBottom: 18,
     borderWidth: 1.5,
-    borderColor: '#1877F2',
+    borderColor: '#007AFF',
+    borderRadius: 8,
     backgroundColor: '#fff',
-    paddingVertical: 10,
-    paddingHorizontal: 18,
-    borderRadius: 8,
-    alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'center',
-    marginBottom: 10
-  },
-  outlinedButtonText: {
-    color: '#1877F2',
-    fontWeight: '600',
-    fontSize: 16,
-    marginLeft: 6
-  },
-  emptyState: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#f9f9f9',
-    borderRadius: 8,
-    padding: 30,
-    marginTop: 10
+    paddingVertical: 12,
+    paddingHorizontal: 0
   },
-  emptyStateText: {
+  emptyPhotoState: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fafbfc',
+    borderRadius: 10,
+    padding: 30,
+    marginTop: 5,
+    marginHorizontal: 1
+  },
+  emptyPhotoText: {
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: '600',
     color: '#888',
     marginTop: 12,
+    marginBottom: 2
+  },
+  emptyPhotoSubtext: {
+    fontSize: 14,
+    color: '#999',
+    marginTop: 2,
     textAlign: 'center'
   },
-  // Misc
-  errorText: {
-    color: '#FF3B30',
+  photoGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginTop: 10,
+    marginHorizontal: -2
+  },
+  photoContainer: {
+    width: '33.333%',
+    aspectRatio: 1,
+    padding: 2,
+    position: 'relative'
+  },
+  photo: {
+    flex: 1,
+    borderRadius: 4,
+    backgroundColor: '#f0f0f0'
+  },
+  removePhotoButton: {
+    position: 'absolute',
+    top: -8,
+    right: -8,
+    backgroundColor: 'white',
+    borderRadius: 12,
+    padding: 0,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+    elevation: 2,
+    zIndex: 1
+  },
+  phoneErrorText: {
+    color: '#d32f2f',
     fontSize: 13,
-    marginTop: 4
+    marginTop: -14,
+    marginBottom: 10,
+    marginLeft: 2,
+    fontWeight: '400'
+  },
+  editButton: {
+    marginRight: 8,
+    padding: 4,
+    alignSelf: 'flex-start'
   }
 });
-
-// force force force
 var _default = exports["default"] = PlumbingForm;
