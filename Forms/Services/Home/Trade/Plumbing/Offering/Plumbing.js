@@ -2173,6 +2173,7 @@ var PlumbingForm = function PlumbingForm() {
       }
     };
     console.log('Submitting offering:', formattedData);
+    console.log('navigation', navigation);
     navigation === null || navigation === void 0 || navigation.navigate('CreateHave', {
       selectedOption: selectedOption,
       breadcrumb: breadcrumb,

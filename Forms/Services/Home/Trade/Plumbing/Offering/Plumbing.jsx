@@ -1801,6 +1801,7 @@ const PlumbingForm = ({
     };
 
     console.log('Submitting offering:', formattedData);
+    console.log('navigation', navigation);
     navigation?.navigate('CreateHave', { 
       selectedOption,
       breadcrumb,
