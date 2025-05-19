@@ -1,0 +1,61 @@
+Plumbing Have Booking
+Have header title (topic wheel meta data): Availability and Rates
+
+{
+  # Availability Section
+  availability: [{
+    days: [string] # type: select, options: ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+    startTime: string # type: time
+    endTime: string # type: time
+  }]
+
+  # Rates Section
+  booking: {
+    calId: string
+    poolId: string
+    rates: [{
+      title*: string
+      description: string
+      priceMode*: string # type: select, options: ["hourly", "unit", "fixed", "custom"]
+      hourlyRate: string # required if priceMode is hourly
+      unitRate: string # required if priceMode is unit
+      unitType: string # required if priceMode is unit
+      fixedPrice: string # required if priceMode is fixed
+      privateNotes: string
+    }]
+    globalAddons: [{
+      title*: string
+      description: string
+      priceMode*: string # type: select, options: ["hourly", "unit", "fixed", "custom"]
+      hourlyRate: string # required if priceMode is hourly
+      unitRate: string # required if priceMode is unit
+      unitType: string # required if priceMode is unit
+      fixedPrice: string # required if priceMode is fixed
+      privateNotes: string
+    }]
+    bookSlice: number
+    minSlice: number
+    maxSlice: number
+    gapSlice: number
+  }
+
+  # Notifications Section
+  notifications: {
+    enabled: boolean
+    addressType*: string # type: select, options: ["offeringAddress", "currentLocation", "newAddress"]
+    address: string # required if addressType is newAddress
+    radius: number # default: 5
+  }
+
+  # Emergency Notifications Section
+  emergencyNotifications: {
+    enabled: boolean
+    radius: number # default: 2
+    schedule: [{
+      days: [string] # type: select, options: ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+      startTime: string # type: time
+      endTime: string # type: time
+    }]
+  }
+}
+
