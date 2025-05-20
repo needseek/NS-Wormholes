@@ -87,43 +87,43 @@ var iconTypes = {
   services: {
     asset: "https://i.imgur.com/LDEF2IS.png",
     ratio: {
-      width: 1,
-      height: 1
+      width: 1.6,
+      height: 1.6
     }
   },
   thingsToDo: {
     asset: "https://i.imgur.com/GkyRUr8.png",
     ratio: {
-      width: 1,
-      height: 1
+      width: 1.2,
+      height: 1.2
     }
   },
   commercial: {
     asset: "https://i.imgur.com/eiThdKt.png",
     ratio: {
-      width: 1,
-      height: 1
+      width: 1.3,
+      height: 1.3
     }
   },
   plumber: {
-    fullAsset: "https://i.imgur.com/WEx2eYL.png",
+    asset: "https://i.imgur.com/WEx2eYL.png",
     ratio: {
-      width: 1,
-      height: 1
+      width: 1.1,
+      height: 1.1
     }
   },
   carpenter: {
-    fullAsset: "https://i.imgur.com/ZLfjEiM.png",
+    asset: "https:/i.imgur.com/5c3XTle.png",
     ratio: {
-      width: 1,
-      height: 1
+      width: 1.1,
+      height: 1.1
     }
   },
   person: {
     asset: "https://i.imgur.com/Y4pf0bN.png",
     ratio: {
-      width: 1,
-      height: 1
+      width: 1.5,
+      height: 1.5
     }
   },
   // not in use
