@@ -72,16 +72,16 @@ var iconTypes = {
   home: {
     fullAsset: "https://i.imgur.com/HKCwwfQ.png",
     ratio: {
-      width: 1,
-      height: 1
+      width: 1.05,
+      height: 1.05
     }
   },
   // ----------- TRADE ICONS ------------
   trade: {
     fullAsset: "https://i.imgur.com/pgJwxrF.png",
     ratio: {
-      width: 1.2,
-      height: 1.2
+      width: 1.3,
+      height: 1.3
     }
   },
   services: {
